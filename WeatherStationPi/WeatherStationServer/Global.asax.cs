@@ -8,7 +8,7 @@ namespace WeatherStationServer
     {
         protected void Application_Start(object sender, EventArgs e)
         {
-            RouteTable.Routes.Add(new ServiceRoute("mysvc", new WebServiceHostFactory(), typeof(RestServiceImpl)));
+            RouteTable.Routes.Add(new ServiceRoute("api", new WebServiceHostFactory(), typeof(RestServiceImpl)));
         }
     }
 }

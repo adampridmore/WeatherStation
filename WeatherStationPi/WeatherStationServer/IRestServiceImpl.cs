@@ -3,6 +3,8 @@ using System.ServiceModel.Web;
 
 namespace WeatherStationServer
 {
+    // http://localhost:59653/api/json/1
+    // http://calf:59653/api/json/1
     [ServiceContract]
     public interface IRestServiceImpl
     {
