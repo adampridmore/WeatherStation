@@ -97,9 +97,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="api\IRestServiceImpl.cs" />
+    <Compile Include="api\IRestService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="api\RestServiceImpl.cs" />
+    <Compile Include="api\RestService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

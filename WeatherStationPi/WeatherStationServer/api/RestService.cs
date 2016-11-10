@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ServiceModel;
 using WeatherStationServer.api.ApiDto;
 
 namespace WeatherStationServer.api
 {
-    public class RestServiceImpl : IRestServiceImpl
+    public class RestService : IRestService
     {
         public string XmlData(string id)
         {
