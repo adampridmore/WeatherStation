@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net;
+using System.Security.Policy;
 using RestSharp;
 using WeatherStationClient.ServerDto;
 using WeatherStationServer.api.ApiDto;
+using static System.Configuration.ConfigurationManager;
+using static System.Configuration.ConfigurationSettings;
 
 namespace WeatherStationClient
 {
@@ -14,7 +18,9 @@ namespace WeatherStationClient
         public WeatherStationServerApi()
         {
             //var url = "http://calf/WeatherStationServer/api/serverDateTimeUtc";
-            var url = "http://localhost:59653/api/";
+            //var url = "http://localhost:59653/api/";
+
+            var url = ConfigurationManager.AppSettings["WeatherStationServeerUrl"];
 
             _client = new RestClient(url);
 
@@ -39,14 +45,14 @@ namespace WeatherStationClient
             {
                 DataPoints = dataPoints
             };
-            
+
             request.AddJsonBody(requestData);
 
             var url = _client.BuildUri(request);
             System.Diagnostics.Debugger.Log(0, "", url.ToString());
 
             var response = _client.Execute(request);
-            
+
             Console.WriteLine(response.Content);
         }
     }
