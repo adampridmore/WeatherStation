@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
+using WeatherStationServer.api.ApiDto;
 
-namespace WeatherStationServer
+namespace WeatherStationServer.api
 {
     // http://localhost:59653/api/json/1
     // http://calf:59653/api/json/1
@@ -29,5 +32,14 @@ namespace WeatherStationServer
              BodyStyle = WebMessageBodyStyle.Wrapped,
              UriTemplate = "serverDateTimeUtc")]
         DateTime ServerDateTimeUtc();
+
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+             ResponseFormat = WebMessageFormat.Json,
+             RequestFormat = WebMessageFormat.Json,
+             BodyStyle = WebMessageBodyStyle.Bare,
+             UriTemplate = "dataPoints")]
+        int AddDataPoints(AddDataPointsRequest dataPointsRequest);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
-using RestSharp;
+using System.Collections;
+using System.Collections.Generic;
 using WeatherStationClient.ServerDto;
 
 namespace WeatherStationClient
@@ -10,20 +11,28 @@ namespace WeatherStationClient
         {
             Console.WriteLine("Hello Weather Station Client");
 
-            var url = "http://calf/WeatherStationServer/api/serverDateTimeUtc";
+            var weatherStationServerApi =  new WeatherStationServerApi();
 
-            var client = new RestClient(url);
+            //for (var i = 0; i < 30; i++)
+            //{
+            //    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
 
-            var request = new RestRequest(Method.GET);
+            //    Console.WriteLine(weatherStationServerApi.ServerDateTimeUtc());
+            //}
 
-            for (var i = 0; i < 30; i++)
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+            Console.WriteLine(weatherStationServerApi.ServerDateTimeUtc());
+
+            var dataPoints = new List<DataPoint>
             {
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
-
-                var r = client.Execute<ServerDateTimeUtcResultDto>(request);
-
-                Console.WriteLine(r.Data.ServerDateTimeUtcResult);
-            }
+                new DataPoint
+                {
+                    SensorValueText = "My Sensor Value",
+                    TimeStampUtc = DateTime.UtcNow
+                }
+            };
+            weatherStationServerApi.SendDataPoints(dataPoints);
         }
     }
 }

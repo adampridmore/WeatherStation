@@ -94,12 +94,14 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="api\ApiDto\DataPoint.cs" />
+    <Compile Include="api\ApiDto\AddDataPointsRequest.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="IRestServiceImpl.cs" />
+    <Compile Include="api\IRestServiceImpl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RestServiceImpl.cs" />
+    <Compile Include="api\RestServiceImpl.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
