@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using WeatherStationClient.ServerDto;
+using WeatherStationServer.api.ApiDto;
 
 namespace WeatherStationClient
 {
@@ -29,7 +29,7 @@ namespace WeatherStationClient
                 new DataPoint
                 {
                     SensorValueText = "My Sensor Value",
-                    TimeStampUtc = DateTime.UtcNow
+                    TimeStampUtc = DateTime.UtcNow.ToString("o")
                 }
             };
             weatherStationServerApi.SendDataPoints(dataPoints);

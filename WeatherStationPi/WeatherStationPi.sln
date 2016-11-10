@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherStationClient", "Wea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherStationServer", "WeatherStationServer\WeatherStationServer.csproj", "{082993F5-072E-4AB4-A308-434557056647}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiDtos", "ApiDtos\ApiDtos.csproj", "{49DA2DDB-8BE5-4D5F-AE87-528E96C8E4FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{082993F5-072E-4AB4-A308-434557056647}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{082993F5-072E-4AB4-A308-434557056647}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{082993F5-072E-4AB4-A308-434557056647}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49DA2DDB-8BE5-4D5F-AE87-528E96C8E4FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49DA2DDB-8BE5-4D5F-AE87-528E96C8E4FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49DA2DDB-8BE5-4D5F-AE87-528E96C8E4FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49DA2DDB-8BE5-4D5F-AE87-528E96C8E4FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

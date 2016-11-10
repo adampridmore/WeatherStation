@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WeatherStationClient.ServerDto
+﻿namespace WeatherStationServer.api.ApiDto
 {
     public class DataPoint
     {
@@ -12,7 +10,6 @@ namespace WeatherStationClient.ServerDto
 
         public double SensorValueNumber { get; set; }
 
-        // TODO - Need to handle ISO Date string -> .Net DateTime serialization
-        public DateTime TimeStampUtc { get; set; }
+        public string TimeStampUtc { get; set; }
     }
 }

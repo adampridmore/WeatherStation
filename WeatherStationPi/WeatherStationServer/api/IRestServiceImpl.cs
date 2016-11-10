@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using WeatherStationServer.api.ApiDto;

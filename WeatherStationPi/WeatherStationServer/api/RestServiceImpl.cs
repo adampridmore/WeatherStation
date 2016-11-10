@@ -43,7 +43,7 @@ namespace WeatherStationServer.api
 
             foreach (var dataPoint in dataPointsRequest.DataPoints)
             {
-                System.Diagnostics.Debugger.Log(0, "", dataPoint.SensorValueText);
+                System.Diagnostics.Debugger.Log(0, "", $"{dataPoint.SensorValueText}{Environment.NewLine}");
             }
 
             return 100;

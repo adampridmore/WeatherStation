@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using RestSharp;
 using WeatherStationClient.ServerDto;
+using WeatherStationServer.api.ApiDto;
 
 namespace WeatherStationClient
 {
