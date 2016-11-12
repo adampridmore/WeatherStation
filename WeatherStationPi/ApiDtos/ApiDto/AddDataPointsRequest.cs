@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WeatherStationServer.api.ApiDto
+namespace ApiDtos.ApiDto
 {
     public class AddDataPointsRequest
     {

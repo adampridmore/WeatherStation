@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using WeatherStationClient.ServerDto;
-using WeatherStationServer.api.ApiDto;
+using ApiDtos.ApiDto;
 
 namespace WeatherStationClient
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
-using WeatherStationServer.api.ApiDto;
+using ApiDtos.ApiDto;
+using Repository;
 
 namespace WeatherStationServer.api
 {
@@ -45,6 +46,14 @@ namespace WeatherStationServer.api
             }
 
             return 100;
+        }
+
+        public string Test()
+        {
+            var repository = new DataPointRepository();
+            repository.Save(new Repository.DataPoint {SensorValueText = DateTime.UtcNow.ToString()});
+
+            return "OK";
         }
     }
 }

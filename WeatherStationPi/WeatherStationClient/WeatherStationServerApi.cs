@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Net;
 using System.Security.Policy;
+using ApiDtos.ApiDto;
 using RestSharp;
 using WeatherStationClient.ServerDto;
-using WeatherStationServer.api.ApiDto;
 using static System.Configuration.ConfigurationManager;
 using static System.Configuration.ConfigurationSettings;
 

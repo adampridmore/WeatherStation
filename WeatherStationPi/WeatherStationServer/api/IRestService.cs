@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using WeatherStationServer.api.ApiDto;
+using ApiDtos.ApiDto;
 
 namespace WeatherStationServer.api
 {
@@ -39,5 +40,12 @@ namespace WeatherStationServer.api
              BodyStyle = WebMessageBodyStyle.Bare,
              UriTemplate = "dataPoints")]
         int AddDataPoints(AddDataPointsRequest dataPointsRequest);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+             ResponseFormat = WebMessageFormat.Json,
+             RequestFormat = WebMessageFormat.Json,
+             UriTemplate = "test")]
+        string Test();
     }
 }
