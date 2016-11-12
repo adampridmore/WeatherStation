@@ -9,19 +9,34 @@ sense = SenseHat()
 
 current_time = datetime.datetime.now().time() 
 
-print(sense.get_temperature())
+temp = sense.get_temperature() 
+
+print(temp)
 
 # url = 'http://www.google.com/someservice'
-#url = 'http://calf/WeatherStationServer/api/serverDateTimeUtc'
-url = 'http://calf/WeatherStationServer/api/test'
-# postdata = {'key':'value'}
+# url = 'http://calf/WeatherStationServer/api/serverDateTimeUtc'
+# url = 'http://calf/WeatherStationServer/api/test'
+url = 'http://calf/WeatherStationServer/api/dataPoints'
 
-req = urllib2.Request(url)
+postdata = { 
+	"DataPoints" : [{
+	    "SensorValueText" : str(temp)
+    }]
+}
+
+# POST: http://localhost:59653/api/dataPoints
+# {
+#	"DataPoints" : [{
+#		"SensorValueText" : "ValueText"
+#		}]
+#	}/
+
+req = urllib2.Request(url, postdata)
 req.add_header('Content-Type','application/json')
-#data = json.dumps(postdata)
+data = json.dumps(postdata)
 
 #response = urllib2.urlopen(req,data)
-response = urllib2.urlopen(req)
+response = urllib2.urlopen(req, data)
 print(response.read())
 
 
