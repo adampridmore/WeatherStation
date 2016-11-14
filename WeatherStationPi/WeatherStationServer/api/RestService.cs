@@ -40,10 +40,19 @@ namespace WeatherStationServer.api
                 return -2;
             }
 
+            var repository = new DataPointRepository();
+
             foreach (var dataPoint in dataPointsRequest.DataPoints)
             {
                 System.Diagnostics.Debugger.Log(0, "", $"{dataPoint.SensorValueText}{Environment.NewLine}");
+
+                repository.Save(new Repository.DataPoint
+                {
+                    SensorValueText = dataPoint.SensorValueText,
+                    TimeStamp = DateTime.UtcNow
+                });
             }
+
 
             return 100;
         }
