@@ -1,4 +1,6 @@
-﻿namespace Repository
+﻿using Repository.RepositoryDto;
+
+namespace Repository
 {
     public class DataPointRepository
     {

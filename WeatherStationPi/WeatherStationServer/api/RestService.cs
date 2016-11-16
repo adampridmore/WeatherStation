@@ -1,6 +1,7 @@
 ﻿using System;
 using ApiDtos.ApiDto;
 using Repository;
+using DataPoint = Repository.RepositoryDto.DataPoint;
 
 namespace WeatherStationServer.api
 {
@@ -46,21 +47,27 @@ namespace WeatherStationServer.api
             {
                 System.Diagnostics.Debugger.Log(0, "", $"{dataPoint.SensorValueText}{Environment.NewLine}");
 
-                repository.Save(new Repository.DataPoint
-                {
-                    SensorValueText = dataPoint.SensorValueText,
-                    TimeStamp = DateTime.UtcNow
-                });
+                repository.Save(CreateDataPointRepositoryDto(dataPoint, DateTime.UtcNow));
             }
 
 
             return 100;
         }
 
+        private static DataPoint CreateDataPointRepositoryDto(ApiDtos.ApiDto.DataPoint dataPoint, DateTime now)
+        {
+            return DataPoint.Create(
+                dataPoint.StationId,
+                dataPoint.SensorType,
+                dataPoint.SensorValueText,
+                dataPoint.SensorValueNumber,
+                now);
+        }
+
         public string Test()
         {
             var repository = new DataPointRepository();
-            repository.Save(new Repository.DataPoint {SensorValueText = DateTime.UtcNow.ToString()});
+            repository.Save(new DataPoint {SensorValueText = DateTime.UtcNow.ToString()});
 
             return "OK";
         }

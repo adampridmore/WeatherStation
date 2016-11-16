@@ -10,6 +10,7 @@
 
         public double SensorValueNumber { get; set; }
 
-        public string TimeStampUtc { get; set; }
+        //// TODO - Lower case Timestamp
+        //public string TimeStampUtc { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using Repository.RepositoryDto;
 
 namespace Repository
 {

@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataPoint.cs" />
+    <Compile Include="RepositoryDto\DataPoint.cs" />
     <Compile Include="DataPointRepository.cs" />
     <Compile Include="WeatherStationDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
