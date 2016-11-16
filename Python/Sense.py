@@ -16,7 +16,7 @@ def main():
         send_data("Humidity", sense.get_humidity())
         send_data("Pressure", sense.get_pressure())
 
-        sense.show_message(str(int(temperature)))
+        sense.show_message(str(int(temperature)) + "c")
 
         # temp = 100
         # sensor_type= "fakeTemperature"
