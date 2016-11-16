@@ -4,6 +4,11 @@ namespace Repository.RepositoryDto
 {
     public class DataPoint
     {
+        public override string ToString()
+        {
+            return $"{nameof(Id)}: {Id}, {nameof(StationId)}: {StationId}, {nameof(SensorType)}: {SensorType}, {nameof(SensorValueText)}: {SensorValueText}, {nameof(SensorValueNumber)}: {SensorValueNumber}, {nameof(TimeStamp)}: {TimeStamp}";
+        }
+
         public int Id { get; set; }
         public string StationId { get; set; }
 
