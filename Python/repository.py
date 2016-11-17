@@ -14,20 +14,6 @@ def create_tables(conn):
         SentTimeStamp       DATETIME    NULL)''')
 
 
-def main():
-    conn = sqlite3.connect('test.db')
-    print("Opened database successfully")
-
-    create_tables(conn)
-
-    sensor_type = "TestSensor"
-    sensor_value = 456
-    save_data_point(conn, sensor_type, sensor_value)
-
-    data = conn.execute("SELECT * FROM DataPoints").fetchall()
-    print(data)
-
-
 def save_data_point(conn, sensor_type, sensor_value):
     now = datetime.datetime.now()
 
@@ -37,4 +23,8 @@ def save_data_point(conn, sensor_type, sensor_value):
     conn.commit()
 
 
-main()
+def connect():
+    conn = sqlite3.connect('test.db')
+    print("Opened database successfully")
+
+    return conn
