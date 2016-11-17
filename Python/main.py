@@ -1,13 +1,14 @@
 import SensorDataRepository
 import datetime
 import time
-import SensorModuleMock as SensorModule
+# import SensorModuleMock as SensorModule
+import SensorModule as SensorModule
 import WeatherStationServer
 
 defaultPollTime = 5
-# weatherStationServerUrl = 'http://calf/WeatherStationServer/api/dataPoints'
+weatherStationServerUrl = 'http://calf/WeatherStationServer/api/dataPoints'
 # weatherStationServerUrl = 'http://localhost/WeatherStationServer/api/dataPoints'
-weatherStationServerUrl = 'http://localhost:59653/api/dataPoints'
+# weatherStationServerUrl = 'http://localhost:59653/api/dataPoints'
 
 
 def main():

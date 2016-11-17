@@ -21,9 +21,8 @@ namespace Repository
             using (var context = new WeatherStationDbContext())
             {
                 return context
-                    .DataPoints
-                    .AsQueryable()
-                    .Where(dp => dp.StationId == stationId && dp.SensorType == sensorType)
+                    .DataPoints.AsQueryable()
+                    .Where(dataPoint => dataPoint.StationId == stationId && dataPoint.SensorType == sensorType)
                     .OrderBy(dp => dp.TimeStamp)
                     .ToList()
                     ;

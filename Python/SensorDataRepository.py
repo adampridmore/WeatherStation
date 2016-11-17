@@ -68,6 +68,6 @@ class SensorDataRepository:
         }
 
     def flag_all_as_unsent(self):
-        self.connection.execute("UPDATE DataPoints SET SEntTimeStamp = NULL")
+        self.connection.execute("UPDATE DataPoints SET SentTimeStamp = NULL")
 
         self.connection.commit()

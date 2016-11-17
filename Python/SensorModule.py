@@ -2,19 +2,19 @@ from sense_hat import SenseHat
 
 
 class SensorModule:
-    sence = None
+    sense = None
 
     def __init__(self):
-        sense = SenseHat()
+        self.sense = SenseHat()
 
     def get_temperature(self):
-        self.sence.get_temperature()
+        return self.sense.get_temperature()
 
     def get_humidity(self):
-        self.sence.get_humidity()
+        return self.sense.get_humidity()
 
     def get_pressure(self):
-        self.sence.get_pressure()
+        return self.sense.get_pressure()
 
     def show_message(self, message):
-        self.sence.show_message(message)
+        self.sense.show_message(message)

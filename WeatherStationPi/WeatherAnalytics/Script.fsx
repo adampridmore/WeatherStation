@@ -10,22 +10,24 @@ open FSharp.Data
 open FSharp.Charting
 
 // Define your library scripting code here
+let stationId = "weatherStation1_raspberrypi"
+//let stationId = "weatherStation1_MNAB-DEV14L"
 
 let repository = new Repository.DataPointRepository()
+let dataPointToString (dp : DataPoint) = sprintf "%s - %s" dp.SensorValueText (dp.TimeStamp.Value.ToString("O"))
 
-let dataPointToString (dp:DataPoint) = 
-    sprintf "%s - %s" dp.SensorValueText (dp.TimeStamp.Value.ToString("O"))
-
-let chartForStationSendor stationId sensorType =
+let chartForStationSendor stationId sensorType = 
     repository.GetDataPoints(stationId, sensorType)
     //|> Seq.map dataPointToString
     //|> Seq.iter (printfn "%A")
-    |> Seq.map (fun (dp:DataPoint) -> dp.TimeStamp.Value, dp.SensorValueNumber)
-    |> Seq.filter (fun (_ , v) -> v <> 0.0)
-    |> Chart.Line |> Chart.WithTitle sensorType
+    |> Seq.map (fun (dp : DataPoint) -> dp.TimeStamp.Value, dp.SensorValueNumber)
+    |> Seq.filter (fun (_, v) -> v <> 0.0)
+    |> Chart.Line
+//    |> Chart.WithYAxis (Min = 950.0 , Max = 990.0)
+    |> Chart.WithTitle (Text = (sprintf "%s (%s)" sensorType stationId), InsideArea = false)
 
-[   chartForStationSendor "weatherStation1_raspberrypi" "Temperature";
-    chartForStationSendor "weatherStation1_raspberrypi" "Humidity";
-    chartForStationSendor "weatherStation1_raspberrypi" "Pressure"]
+[ chartForStationSendor stationId "Temperature"
+  chartForStationSendor stationId "Humidity"
+  chartForStationSendor stationId "Pressure" ]
 |> Chart.Rows
 |> Chart.Show
