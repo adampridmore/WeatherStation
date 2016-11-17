@@ -4,11 +4,16 @@ import time
 import SensorModule as SensorModule
 import WeatherStationServer
 
+defaultPollTime = 5
+# weatherStationServerUrl = 'http://calf/WeatherStationServer/api/dataPoints'
+# weatherStationServerUrl = 'http://localhost/WeatherStationServer/api/dataPoints'
+weatherStationServerUrl = 'http://localhost:59653/api/dataPoints'
+
 
 def main():
     repository = SensorDataRepository.SensorDataRepository()
     sensor = SensorModule.SensorModule()
-    weather_station_server = WeatherStationServer.WeatherStationServer()
+    weather_station_server = WeatherStationServer.WeatherStationServer(weatherStationServerUrl)
 
     repository.create_tables()
 
@@ -26,7 +31,7 @@ def collect_and_send_data(repository, sensor, weather_station_server):
     # repository.print_all_rows()
     print(repository.get_data_stats())
 
-    time.sleep(5)
+    time.sleep(defaultPollTime)
 
 
 def try_send_data(repository, weather_station_server):

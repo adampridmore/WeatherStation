@@ -31,7 +31,6 @@ namespace WeatherStationServer.api
         */
         public string AddDataPoints(AddDataPointsRequest dataPointsRequest)
         {
-            throw new ApplicationException("Bang!");
             if (dataPointsRequest == null)
             {
                 return "no dataPointsRequest";
@@ -50,7 +49,7 @@ namespace WeatherStationServer.api
 
                 repository.Save(CreateDataPointRepositoryDto(dataPoint, DateTime.UtcNow));
             }
-            
+
             return "OK";
         }
 
@@ -67,7 +66,7 @@ namespace WeatherStationServer.api
         public string Test()
         {
             var repository = new DataPointRepository();
-            repository.Save(new DataPoint {SensorValueText = DateTime.UtcNow.ToString()});
+            repository.Save(new DataPoint { SensorValueText = DateTime.UtcNow.ToString() });
 
             return "OK";
         }
