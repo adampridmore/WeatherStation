@@ -1,7 +1,7 @@
 import SensorDataRepository
 import datetime
 import time
-import SensorModule as SensorModule
+import SensorModuleMock as SensorModule
 import WeatherStationServer
 
 defaultPollTime = 5
@@ -20,6 +20,9 @@ def main():
     # repository.delete_all();
 
     while True:
+        temp = sensor.get_temperature()
+        sensor.show_message("{}c".format(round(temp,1)))
+
         collect_and_send_data(repository, sensor, weather_station_server)
 
 
