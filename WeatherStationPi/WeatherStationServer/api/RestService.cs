@@ -31,6 +31,7 @@ namespace WeatherStationServer.api
         */
         public string AddDataPoints(AddDataPointsRequest dataPointsRequest)
         {
+            throw new ApplicationException("Bang!");
             if (dataPointsRequest == null)
             {
                 return "no dataPointsRequest";
