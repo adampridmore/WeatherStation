@@ -6,7 +6,8 @@ namespace Repository.RepositoryDto
     {
         public override string ToString()
         {
-            return $"{nameof(Id)}: {Id}, {nameof(StationId)}: {StationId}, {nameof(SensorType)}: {SensorType}, {nameof(SensorValueText)}: {SensorValueText}, {nameof(SensorValueNumber)}: {SensorValueNumber}, {nameof(TimeStamp)}: {TimeStamp}";
+            return
+                $"{nameof(Id)}: {Id}, {nameof(StationId)}: {StationId}, {nameof(SensorType)}: {SensorType}, {nameof(SensorValueText)}: {SensorValueText}, {nameof(SensorValueNumber)}: {SensorValueNumber}, {nameof(SensorTimestampUtc)}: {SensorTimestampUtc}";
         }
 
         public int Id { get; set; }
@@ -18,14 +19,17 @@ namespace Repository.RepositoryDto
 
         public double SensorValueNumber { get; set; }
 
-        // TODO - Lower case Timestamp
-        public DateTime? TimeStamp { get; set; }
+        public DateTime SensorTimestampUtc { get; set; }
 
-        public static DataPoint Create(string stationId,
+        public DateTime ReceivedTimestampUtc { get; set; }
+
+        public static DataPoint Create(
+            string stationId,
             string sensorType,
             string sensorValueText,
             double sensorValueNumber,
-            DateTime timeStamp)
+            DateTime sensorTimestampUtc,
+            DateTime reveivedTimestampUtc)
         {
             return new DataPoint
             {
@@ -33,7 +37,8 @@ namespace Repository.RepositoryDto
                 SensorType = sensorType,
                 SensorValueText = sensorValueText,
                 SensorValueNumber = sensorValueNumber,
-                TimeStamp = timeStamp
+                SensorTimestampUtc = sensorTimestampUtc,
+                ReceivedTimestampUtc = reveivedTimestampUtc
             };
         }
     }

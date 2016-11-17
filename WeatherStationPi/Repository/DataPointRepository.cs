@@ -23,7 +23,7 @@ namespace Repository
                 return context
                     .DataPoints.AsQueryable()
                     .Where(dataPoint => dataPoint.StationId == stationId && dataPoint.SensorType == sensorType)
-                    .OrderBy(dp => dp.TimeStamp)
+                    .OrderBy(dp => dp.SensorTimestampUtc)
                     .ToList()
                     ;
             }

@@ -1,12 +1,14 @@
 import SensorDataRepository
 import datetime
 import time
-# import SensorModuleMock as SensorModule
-import SensorModule as SensorModule
+import SensorModuleMock as SensorModule
+# import SensorModule as SensorModule
 import WeatherStationServer
 
 defaultPollTime = 5
 weatherStationServerUrl = 'http://calf/WeatherStationServer/api/dataPoints'
+
+
 # weatherStationServerUrl = 'http://localhost/WeatherStationServer/api/dataPoints'
 # weatherStationServerUrl = 'http://localhost:59653/api/dataPoints'
 
@@ -22,7 +24,7 @@ def main():
 
     while True:
         temp = sensor.get_temperature()
-        sensor.show_message("{}c".format(round(temp,1)))
+        sensor.show_message("{}c".format(round(temp, 1)))
 
         collect_and_send_data(repository, sensor, weather_station_server)
 
@@ -45,7 +47,12 @@ def try_send_data(repository, weather_station_server):
 
     for point in repository.get_unsent_data():
         # TODO - Send the client's timestamp for the datapoint. Need to update the server.
-        if weather_station_server.try_send_data(point["SensorType"], point["SensorValue"]):
+        sent_ok = weather_station_server.try_send_data(
+            point["SensorType"],
+            point["SensorValue"],
+            point["ReadingTimeStamp"])
+
+        if sent_ok:
             repository.set_as_sent(point, now)
             sent_count += 1
         else:

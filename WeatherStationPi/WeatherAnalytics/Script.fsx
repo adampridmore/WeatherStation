@@ -14,13 +14,13 @@ let stationId = "weatherStation1_raspberrypi"
 //let stationId = "weatherStation1_MNAB-DEV14L"
 
 let repository = new Repository.DataPointRepository()
-let dataPointToString (dp : DataPoint) = sprintf "%s - %s" dp.SensorValueText (dp.TimeStamp.Value.ToString("O"))
+let dataPointToString (dp : DataPoint) = sprintf "%s - %s" dp.SensorValueText (dp.SensorTimestampUtc.ToString("O"))
 
 let chartForStationSendor stationId sensorType = 
     repository.GetDataPoints(stationId, sensorType)
     //|> Seq.map dataPointToString
     //|> Seq.iter (printfn "%A")
-    |> Seq.map (fun (dp : DataPoint) -> dp.TimeStamp.Value, dp.SensorValueNumber)
+    |> Seq.map (fun (dp : DataPoint) -> dp.SensorTimestampUtc, dp.SensorValueNumber)
     |> Seq.filter (fun (_, v) -> v <> 0.0)
     |> Chart.Line
 //    |> Chart.WithYAxis (Min = 950.0 , Max = 990.0)

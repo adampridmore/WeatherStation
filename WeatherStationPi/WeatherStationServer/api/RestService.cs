@@ -29,6 +29,7 @@ namespace WeatherStationServer.api
         	    }]
             }
         */
+
         public string AddDataPoints(AddDataPointsRequest dataPointsRequest)
         {
             if (dataPointsRequest == null)
@@ -60,13 +61,14 @@ namespace WeatherStationServer.api
                 dataPoint.SensorType,
                 dataPoint.SensorValueText,
                 dataPoint.SensorValueNumber,
+                DateTime.Parse(dataPoint.SensorTimestampUtc),
                 now);
         }
 
         public string Test()
         {
             var repository = new DataPointRepository();
-            repository.Save(new DataPoint { SensorValueText = DateTime.UtcNow.ToString() });
+            repository.Save(new DataPoint {SensorValueText = DateTime.UtcNow.ToString()});
 
             return "OK";
         }
