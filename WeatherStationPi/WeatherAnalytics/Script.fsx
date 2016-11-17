@@ -27,4 +27,5 @@ let chartForStationSendor stationId sensorType =
 [   chartForStationSendor "weatherStation1_raspberrypi" "Temperature";
     chartForStationSendor "weatherStation1_raspberrypi" "Humidity";
     chartForStationSendor "weatherStation1_raspberrypi" "Pressure"]
+|> Chart.Rows
 |> Chart.Show

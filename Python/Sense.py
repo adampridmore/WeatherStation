@@ -16,7 +16,7 @@ def main():
         send_data("Humidity", sense.get_humidity())
         send_data("Pressure", sense.get_pressure())
 
-        sense.show_message(str(int(temperature)) + "c")
+        sense.show_message(str(int(temperature)))
 
         # temp = 100
         # sensor_type= "fakeTemperature"
@@ -48,7 +48,7 @@ def send_data(sensor_type, sensor_value):
 
     # print(jsondata, response_body)
     # print(sensor_type, sensor_value, response_body)
-    print('{0:15} {1:20} - {2}'.format(sensor_type, sensor_value, response_body))
+    print('{0:15} {1:15} - {2}'.format(sensor_type, sensor_value, response_body))
 
 
 main()
