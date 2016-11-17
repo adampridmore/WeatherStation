@@ -22,13 +22,14 @@ let chartForStationSendor stationId sensorType =
         |> Seq.map (fun (dp : DataPoint) -> dp.SensorTimestampUtc, dp.SensorValueNumber)
         |> Seq.filter (fun (_, v) -> v <> 0.0)            
     
-    let minValue = dataPoints |> Seq.map snd |> Seq.min |> (fun x -> x * 0.9)
-    let maxValue = dataPoints |> Seq.map snd |> Seq.max |> (fun x -> x * 1.1)
+    let minValue = dataPoints |> Seq.map snd |> Seq.min 
+    let maxValue = dataPoints |> Seq.map snd |> Seq.max
+    let minMaxBorder = (maxValue - minValue) * 0.1
 
     dataPoints    
     |> Chart.Line
 //    |> Chart.Point
-    |> Chart.WithYAxis (Min = minValue, Max = double maxValue)
+    |> Chart.WithYAxis (Min = minValue - minMaxBorder, Max = maxValue + minMaxBorder)
     |> Chart.WithTitle (Text = (sprintf "%s (%s)" sensorType stationId), InsideArea = false)
 
 [ chartForStationSendor stationId "Temperature"
