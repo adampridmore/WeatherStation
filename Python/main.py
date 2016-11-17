@@ -1,11 +1,11 @@
 import SensorDataRepository
 import datetime
 import time
-import SensorModuleMock as SensorModule
-# import SensorModule as SensorModule
+# import SensorModuleMock as SensorModule
+import SensorModule as SensorModule
 import WeatherStationServer
 
-defaultPollTime = 5
+defaultPollTime = 60
 weatherStationServerUrl = 'http://calf/WeatherStationServer/api/dataPoints'
 
 

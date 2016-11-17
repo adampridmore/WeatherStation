@@ -17,13 +17,18 @@ let repository = new Repository.DataPointRepository()
 let dataPointToString (dp : DataPoint) = sprintf "%s - %s" dp.SensorValueText (dp.SensorTimestampUtc.ToString("O"))
 
 let chartForStationSendor stationId sensorType = 
-    repository.GetDataPoints(stationId, sensorType)
-    //|> Seq.map dataPointToString
-    //|> Seq.iter (printfn "%A")
-    |> Seq.map (fun (dp : DataPoint) -> dp.SensorTimestampUtc, dp.SensorValueNumber)
-    |> Seq.filter (fun (_, v) -> v <> 0.0)
+    let dataPoints = 
+        repository.GetDataPoints(stationId, sensorType)
+        |> Seq.map (fun (dp : DataPoint) -> dp.SensorTimestampUtc, dp.SensorValueNumber)
+        |> Seq.filter (fun (_, v) -> v <> 0.0)            
+    
+    let minValue = dataPoints |> Seq.map snd |> Seq.min |> (fun x -> x * 0.9)
+    let maxValue = dataPoints |> Seq.map snd |> Seq.max |> (fun x -> x * 1.1)
+
+    dataPoints    
     |> Chart.Line
-//    |> Chart.WithYAxis (Min = 950.0 , Max = 990.0)
+//    |> Chart.Point
+    |> Chart.WithYAxis (Min = minValue, Max = double maxValue)
     |> Chart.WithTitle (Text = (sprintf "%s (%s)" sensorType stationId), InsideArea = false)
 
 [ chartForStationSendor stationId "Temperature"
