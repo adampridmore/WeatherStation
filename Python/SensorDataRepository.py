@@ -16,7 +16,7 @@ class SensorDataRepository:
 
         self.connection.row_factory = dict_factory
 
-    def create_table(self):
+    def create_tables(self):
         # conn.execute('''DROP TABLE DataPoints''')
         # print("Table dropped")
 
@@ -51,3 +51,20 @@ class SensorDataRepository:
     def print_all_rows(self):
         for row in self.get_all_data_points():
             print(row)
+
+    def get_data_stats(self):
+        sent = self.connection.execute("SELECT COUNT(*) As Count\
+                                        FROM DataPoints \
+                                        WHERE SentTimeStamp IS NOT NULL").fetchone()["Count"]
+        to_send = self.connection.execute(" SELECT COUNT(*) As Count \
+                                            FROM DataPoints \
+                                            WHERE SentTimeStamp IS NULL").fetchone()["Count"]
+
+        return {
+            "sent": sent,
+            "to_send": to_send,
+            "total": (sent + to_send)
+        }
+
+    def flag_all_as_unsent(self):
+        self.connection.execute("UPDATE DataPoints SET SEntTimeStamp = NULL")
