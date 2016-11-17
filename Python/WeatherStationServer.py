@@ -10,7 +10,7 @@ class WeatherStationServer:
     def __init__(self, url):
         self.url = url
 
-    def send_data(self, sensor_type, sensor_value):
+    def try_send_data(self, sensor_type, sensor_value):
         json_data_bytes = self.__create_post_data_bytes(sensor_type, sensor_value)
 
         req = urllib.request.Request(self.url)

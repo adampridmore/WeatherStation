@@ -25,6 +25,8 @@ def main():
 
         collect_and_send_data(repository, sensor, weather_station_server)
 
+        time.sleep(defaultPollTime)
+
 
 def collect_and_send_data(repository, sensor, weather_station_server):
     collect_and_save_sensor_data(repository, sensor)
@@ -34,18 +36,15 @@ def collect_and_send_data(repository, sensor, weather_station_server):
     # repository.print_all_rows()
     print(repository.get_data_stats())
 
-    time.sleep(defaultPollTime)
-
 
 def try_send_data(repository, weather_station_server):
-    unsent_data = repository.get_unsent_data()
     now = datetime.datetime.now()
-
     sent_count = 0
     error_count = 0
-    for point in unsent_data:
+
+    for point in repository.get_unsent_data():
         # TODO - Send the client's timestamp for the datapoint. Need to update the server.
-        if weather_station_server.send_data(point["SensorType"], point["SensorValue"]):
+        if weather_station_server.try_send_data(point["SensorType"], point["SensorValue"]):
             repository.set_as_sent(point, now)
             sent_count += 1
         else:

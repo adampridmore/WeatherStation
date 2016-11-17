@@ -47,6 +47,7 @@ class SensorDataRepository:
 
     def delete_all(self):
         self.connection.execute("DELETE FROM DataPoints")
+        self.connection.commit()
 
     def print_all_rows(self):
         for row in self.get_all_data_points():
@@ -68,3 +69,5 @@ class SensorDataRepository:
 
     def flag_all_as_unsent(self):
         self.connection.execute("UPDATE DataPoints SET SEntTimeStamp = NULL")
+
+        self.connection.commit()
