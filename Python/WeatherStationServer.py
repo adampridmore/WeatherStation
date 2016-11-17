@@ -10,6 +10,18 @@ class WeatherStationServer:
     url = 'http://localhost:59653/api/dataPoints'
 
     def send_data(self, sensor_type, sensor_value):
+        json_data_bytes = self.create_post_data_bytes(sensor_type, sensor_value)
+
+        req = urllib.request.Request(self.url)
+        req.add_header('Content-Type', 'application/json')
+
+        response = urllib.request.urlopen(req, json_data_bytes)
+        response_body = str(response.read())
+        print(response_body)
+
+        # print('{0:15} {1:15} - {2}'.format(sensor_type, sensor_value, response_body))
+
+    def create_post_data_bytes(self, sensor_type, sensor_value):
         postdata = {
             "DataPoints": [{
                 "StationId": "weatherStation1_" + socket.gethostname(),
@@ -18,15 +30,6 @@ class WeatherStationServer:
                 "SensorValueNumber": sensor_value,
             }]
         }
-
-        req = urllib.request.Request(self.url)
-        req.add_header('Content-Type', 'application/json')
         jsondata = json.dumps(postdata)
         jsondatabytes = jsondata.encode('utf-8')
-
-        response = urllib.request.urlopen(req, jsondatabytes)
-        response_body = str(response.read())
-
-        # print(jsondata, response_body)
-        # print(sensor_type, sensor_value, response_body)
-        print('{0:15} {1:15} - {2}'.format(sensor_type, sensor_value, response_body))
+        return jsondatabytes

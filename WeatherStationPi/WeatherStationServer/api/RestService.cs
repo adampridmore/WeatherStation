@@ -29,16 +29,16 @@ namespace WeatherStationServer.api
         	    }]
             }
         */
-        public int AddDataPoints(AddDataPointsRequest dataPointsRequest)
+        public string AddDataPoints(AddDataPointsRequest dataPointsRequest)
         {
             if (dataPointsRequest == null)
             {
-                return -1;
+                return "no dataPointsRequest";
             }
 
             if (dataPointsRequest.DataPoints == null)
             {
-                return -2;
+                return "no dataPointsRequest.DataPoints";
             }
 
             var repository = new DataPointRepository();
@@ -49,9 +49,8 @@ namespace WeatherStationServer.api
 
                 repository.Save(CreateDataPointRepositoryDto(dataPoint, DateTime.UtcNow));
             }
-
-
-            return 100;
+            
+            return "OK";
         }
 
         private static DataPoint CreateDataPointRepositoryDto(ApiDtos.ApiDto.DataPoint dataPoint, DateTime now)

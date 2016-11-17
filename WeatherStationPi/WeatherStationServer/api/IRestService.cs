@@ -39,7 +39,7 @@ namespace WeatherStationServer.api
              RequestFormat = WebMessageFormat.Json,
              BodyStyle = WebMessageBodyStyle.Bare,
              UriTemplate = "dataPoints")]
-        int AddDataPoints(AddDataPointsRequest dataPointsRequest);
+        string AddDataPoints(AddDataPointsRequest dataPointsRequest);
 
         [OperationContract]
         [WebInvoke(Method = "GET",
