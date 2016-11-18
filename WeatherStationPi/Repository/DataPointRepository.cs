@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using Repository.RepositoryDto;
 
@@ -42,6 +44,35 @@ ORDER BY StationId, SensorType";
                 var results = context.Database.SqlQuery<SensorDetails>(sql);
                 return new SummaryReport(results.ToList());
             }
+        }
+
+        public List<DataPoint> GetLastValues(string stationId)
+        {
+            using (var context = new WeatherStationDbContext())
+            {
+                return new List<DataPoint>
+                {
+                    GetLatestDataPointForStationIdAndSensorType(context, stationId, "Temperature"),
+                    GetLatestDataPointForStationIdAndSensorType(context, stationId, "Humidity"),
+                    GetLatestDataPointForStationIdAndSensorType(context, stationId, "Pressure")
+                };
+            }
+        }
+
+        private static DataPoint GetLatestDataPointForStationIdAndSensorType(
+            WeatherStationDbContext context,
+            string stationId,
+            string sensorType)
+        {
+            const string sql = @"SELECT TOP 1 *
+FROM DataPoints
+WHERE StationId = @stationId AND SensorType = @sensorType
+ORDER BY SensorTimestampUtc DESC";
+            
+            var dataPoint = context.DataPoints
+                .SqlQuery(sql, new SqlParameter("stationId",stationId), new SqlParameter("sensorType", sensorType))
+                .FirstOrDefault();
+            return dataPoint;
         }
     }
 }

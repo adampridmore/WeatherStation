@@ -8,5 +8,6 @@ namespace WeatherStationServer.Model.Home
         public SummaryReport SummaryReport { get; set; }
         public string ChartHtml { get; set; }
         public List<string> ChartHtmlList { get; set; }
+        public List<DataPoint> LatestDataPoints { get; set; }
     }
 }
