@@ -16,14 +16,17 @@ let stationId = "weatherStation1_MNAB-DEV14L"
 let getChartForSensor sensorType = 
     let repository = new Repository.DataPointRepository()
 
-    let chart =     
-        repository.GetDataPoints(stationId, sensorType)
+    let data = repository.GetDataPoints(stationId, sensorType)
+
+    if (data.Count <> 0) then 
+        data
         |> Seq.map (fun (dp : DataPoint) -> dp.SensorTimestampUtc, dp.SensorValueNumber)
         |> Seq.filter (fun (_, v) -> v <> 0.0)            
         |> Chart.Line
         |> Chart.WithOptions(Options(title=sensorType))
-
-    chart.GetInlineHtml()
+        |> (fun c -> c.GetInlineHtml()) 
+    else
+        ""
 
 let getChartsHtml() =
     [

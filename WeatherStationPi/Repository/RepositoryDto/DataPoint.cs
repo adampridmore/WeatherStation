@@ -41,5 +41,10 @@ namespace Repository.RepositoryDto
                 ReceivedTimestampUtc = reveivedTimestampUtc
             };
         }
+
+        public static DataPoint Empty()
+        {
+            return new DataPoint();
+        }
     }
 }

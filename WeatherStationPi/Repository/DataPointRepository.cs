@@ -83,6 +83,12 @@ ORDER BY SensorTimestampUtc DESC";
             var dataPoint = context.DataPoints
                 .SqlQuery(sql, new SqlParameter("stationId",stationId), new SqlParameter("sensorType", sensorType))
                 .FirstOrDefault();
+
+            if (dataPoint == null)
+            {
+                return DataPoint.Empty();
+            }
+
             return dataPoint;
         }
     }
