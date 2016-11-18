@@ -1,4 +1,4 @@
-﻿@model Repository.RepositoryDto.SummaryReport
+﻿@model WeatherStationServer.Model.Home.IndexModel
 @{
     ViewBag.Title = "Index";
 }
@@ -16,7 +16,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var sensor in Model.SensorDetails)
+    @foreach (var sensor in Model.SummaryReport.SensorDetails)
     {
         <tr>
             <td>@sensor.StationId</td>
@@ -28,3 +28,7 @@
     }
     </tbody>
 </table>
+
+<div>
+    @Html.Raw(@Model.ChartHtml)
+</div>
