@@ -51,6 +51,8 @@
   <ItemGroup>
     <Compile Include="RepositoryDto\DataPoint.cs" />
     <Compile Include="DataPointRepository.cs" />
+    <Compile Include="RepositoryDto\SensorDetails.cs" />
+    <Compile Include="RepositoryDto\SummaryReport.cs" />
     <Compile Include="WeatherStationDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

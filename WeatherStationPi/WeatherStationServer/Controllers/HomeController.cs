@@ -9,10 +9,9 @@ namespace WeatherStationServer.Controllers
         {
 
             var repository = new Repository.DataPointRepository();
-            repository.GetSummaryReport();
-
-
-            return View();
+            var summary = repository.GetSummaryReport();
+            
+            return View(summary);
         }
     }
 }

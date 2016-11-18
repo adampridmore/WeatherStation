@@ -1,8 +1,30 @@
-﻿
+﻿@model Repository.RepositoryDto.SummaryReport
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
 
-Hello World!
+<table>
+    <thead>
+    <tr>
+        <th>Station Id</th>
+        <th>Sensor Type</th>
+        <th>Number of data points</th>
+        <th>Earliest data point</th>
+        <th>Latest data point</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var sensor in Model.SensorDetails)
+    {
+        <tr>
+            <td>@sensor.StationId</td>
+            <td>@sensor.SensorType</td>
+            <td>@sensor.Count</td>
+            <td>@sensor.Min</td>
+            <td>@sensor.Max</td>
+        </tr>
+    }
+    </tbody>
+</table>
