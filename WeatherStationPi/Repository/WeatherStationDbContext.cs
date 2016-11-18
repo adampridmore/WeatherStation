@@ -5,7 +5,7 @@ namespace Repository
 {
     public class WeatherStationDbContext : DbContext
     {
-        public WeatherStationDbContext() : base("server=.\\SQLEXPRESS;database=WeatherStation;Integrated Security = True; Connect Timeout = 5")
+        public WeatherStationDbContext(string nameOrConnectionString) : base(nameOrConnectionString)
         {
         }
 

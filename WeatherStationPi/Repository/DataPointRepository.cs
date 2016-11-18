@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using Repository.RepositoryDto;
@@ -8,9 +7,21 @@ namespace Repository
 {
     public class DataPointRepository
     {
+        private readonly string _nameOrConnectionString;
+
+        public DataPointRepository() : this("name = DefaultConnection")
+        {
+            
+        }
+
+        public DataPointRepository(string nameOrConnectionString)
+        {
+            _nameOrConnectionString = nameOrConnectionString;
+        }
+
         public void Save(DataPoint dataPoint)
         {
-            using (var context = new WeatherStationDbContext())
+            using (var context = new WeatherStationDbContext(_nameOrConnectionString))
             {
                 context.DataPoints.Add(dataPoint);
 
@@ -20,7 +31,7 @@ namespace Repository
 
         public IList<DataPoint> GetDataPoints(string stationId, string sensorType)
         {
-            using (var context = new WeatherStationDbContext())
+            using (var context = new WeatherStationDbContext(_nameOrConnectionString))
             {
                 return context
                         .DataPoints.AsQueryable()
@@ -33,7 +44,7 @@ namespace Repository
 
         public SummaryReport GetSummaryReport()
         {
-            using (var context = new WeatherStationDbContext())
+            using (var context = new WeatherStationDbContext(_nameOrConnectionString))
             {
                 const string sql = @"
 SELECT StationId,SensorType, COUNT(*) AS Count, MIN(SensorTimestampUtc) AS Min,MAX(SensorTimestampUtc) AS Max
@@ -48,7 +59,7 @@ ORDER BY StationId, SensorType";
 
         public List<DataPoint> GetLastValues(string stationId)
         {
-            using (var context = new WeatherStationDbContext())
+            using (var context = new WeatherStationDbContext(_nameOrConnectionString))
             {
                 return new List<DataPoint>
                 {

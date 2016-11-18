@@ -12,7 +12,9 @@ open FSharp.Charting
 //let stationId = "weatherStation1_raspberrypi"
 let stationId = "weatherStation1_MNAB-DEV14L"
 
-let repository = new Repository.DataPointRepository()
+let connectionString = @"server=.\SQLEXPRESS;database=WeatherStation;Integrated Security = True; Connect Timeout = 5"
+
+let repository = new Repository.DataPointRepository(connectionString)
 let dataPointToString (dp : DataPoint) = sprintf "%s - %s" dp.SensorValueText (dp.SensorTimestampUtc.ToString("O"))
 
 let chartForStationSensor sensorType = 
