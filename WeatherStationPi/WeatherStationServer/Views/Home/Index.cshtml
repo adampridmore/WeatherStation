@@ -3,32 +3,38 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="row">
+    <h2>Index</h2>
 
-<table class="table table-striped">
-    <thead class="thead-default">
-    <tr>
-        <th>Station Id</th>
-        <th>Sensor Type</th>
-        <th>Number of data points</th>
-        <th>Earliest data point</th>
-        <th>Latest data point</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var sensor in Model.SummaryReport.SensorDetails)
-    {
+    <table class="table table-striped">
+        <thead class="thead-default">
         <tr>
-            <td>@sensor.StationId</td>
-            <td>@sensor.SensorType</td>
-            <td>@sensor.Count</td>
-            <td>@sensor.Min</td>
-            <td>@sensor.Max</td>
+            <th>Station Id</th>
+            <th>Sensor Type</th>
+            <th>Number of data points</th>
+            <th>Earliest data point</th>
+            <th>Latest data point</th>
         </tr>
-    }
-    </tbody>
-</table>
-
-<div>
-    @Html.Raw(@Model.ChartHtml)
+        </thead>
+        <tbody>
+        @foreach (var sensor in Model.SummaryReport.SensorDetails)
+        {
+            <tr>
+                <td>@sensor.StationId</td>
+                <td>@sensor.SensorType</td>
+                <td>@sensor.Count</td>
+                <td>@sensor.Min</td>
+                <td>@sensor.Max</td>
+            </tr>
+        }
+        </tbody>
+    </table>
 </div>
+
+
+@foreach (var chartHtml in Model.ChartHtmlList)
+{
+    <div class="row">
+        @Html.Raw(@chartHtml)
+    </div>
+}

@@ -1,4 +1,5 @@
-﻿using Repository.RepositoryDto;
+﻿using System.Collections.Generic;
+using Repository.RepositoryDto;
 
 namespace WeatherStationServer.Model.Home
 {
@@ -6,5 +7,6 @@ namespace WeatherStationServer.Model.Home
     {
         public SummaryReport SummaryReport { get; set; }
         public string ChartHtml { get; set; }
+        public List<string> ChartHtmlList { get; set; }
     }
 }

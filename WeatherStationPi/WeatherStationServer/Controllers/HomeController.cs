@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using WeatherStationServer.Model.Home;
 
 namespace WeatherStationServer.Controllers
@@ -14,7 +15,7 @@ namespace WeatherStationServer.Controllers
             var model = new IndexModel
             {
                 SummaryReport = summary,
-                ChartHtmlForTemperature = WeatherCharts.getChartHtmlForTemperature()
+                ChartHtmlList = WeatherCharts.getChartsHtml().ToList()
             };
             
             return View(model);

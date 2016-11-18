@@ -11,24 +11,26 @@ let getChartHtml() =
 
     chart.GetInlineHtml()
     
-let getChartHtmlForTemperature() = 
-    let stationId = "weatherStation1_MNAB-DEV14L"
-
+let stationId = "weatherStation1_MNAB-DEV14L"
+  
+let getChartForSensor sensorType = 
     let repository = new Repository.DataPointRepository()
-    let dataPointToString (dp : DataPoint) = sprintf "%s - %s" dp.SensorValueText (dp.SensorTimestampUtc.ToString("O"))
 
-    let chartForStationSensor sensorType = 
-        let dataPoints = 
-            repository.GetDataPoints(stationId, sensorType)
-            |> Seq.map (fun (dp : DataPoint) -> dp.SensorTimestampUtc, dp.SensorValueNumber)
-            |> Seq.filter (fun (_, v) -> v <> 0.0)            
-    
-        dataPoints
+    let chart =     
+        repository.GetDataPoints(stationId, sensorType)
+        |> Seq.map (fun (dp : DataPoint) -> dp.SensorTimestampUtc, dp.SensorValueNumber)
+        |> Seq.filter (fun (_, v) -> v <> 0.0)            
         |> Chart.Line
         |> Chart.WithOptions(Options(title=sensorType))
 
-    let chart = "Temperature" |> chartForStationSensor
     chart.GetInlineHtml()
 
-//    "Humidity" |> chartForStationSensor;
-//    "Pressure" |> chartForStationSensor
+let getChartsHtml() =
+    [
+        "Temperature" |> getChartForSensor 
+        "Humidity" |> getChartForSensor 
+        "Pressure" |> getChartForSensor 
+    ] |> List.toSeq
+        
+let getChartHtmlForTemperature() = 
+    "Temperature" |> getChartForSensor
