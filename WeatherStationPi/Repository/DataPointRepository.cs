@@ -28,5 +28,10 @@ namespace Repository
                     ;
             }
         }
+
+        public SummaryReport GetSummaryReport()
+        {
+            return new SummaryReport();
+        }
     }
 }

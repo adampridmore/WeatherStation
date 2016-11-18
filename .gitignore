@@ -246,3 +246,4 @@ ModelManifest.xml
 .idea
 /Python/Scratch/test.db
 /Python/test.db
+/Python/__pycache__

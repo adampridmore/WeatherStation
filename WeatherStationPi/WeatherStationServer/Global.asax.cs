@@ -1,7 +1,6 @@
 ﻿using System;
-using System.ServiceModel.Activation;
+using System.Web.Mvc;
 using System.Web.Routing;
-using WeatherStationServer.api;
 
 namespace WeatherStationServer
 {
@@ -9,7 +8,8 @@ namespace WeatherStationServer
     {
         protected void Application_Start(object sender, EventArgs e)
         {
-            RouteTable.Routes.Add(new ServiceRoute("api", new WebServiceHostFactory(), typeof(RestService)));
+            AreaRegistration.RegisterAllAreas();
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
     }
 }
