@@ -37,7 +37,7 @@ namespace Repository
 SELECT StationId,SensorType, COUNT(*) AS Count, MIN(SensorTimestampUtc) AS Min,MAX(SensorTimestampUtc) AS Max
 FROM DataPoints
 GROUP BY StationId, SensorType
-ORDER BY StationId";
+ORDER BY StationId, SensorType";
 
                 var results = context.Database.SqlQuery<SensorDetails>(sql);
                 return new SummaryReport(results.ToList());
