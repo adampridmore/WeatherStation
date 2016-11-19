@@ -4,13 +4,12 @@
 }
 
 <div class="row">
-    <h2>Index</h2>
-
+    <h1>All Weather Stations Sensors</h1>
     <table class="table table-striped">
         <thead class="thead-default">
         <tr>
             <th>Station Id</th>
-            <th>Sensor Type</th>
+            <th>Sensor</th>
             <th>Number of data points</th>
             <th>Earliest data point</th>
             <th>Latest data point</th>
@@ -20,7 +19,7 @@
         @foreach (var sensor in Model.SummaryReport.SensorDetails)
         {
             <tr>
-                <td>@Html.RouteLink(sensor.StationId, "Default", new {stationId=sensor.StationId})</td>
+                <td>@Html.RouteLink(sensor.StationId, "Default", new {stationId = sensor.StationId})</td>
                 <td>@sensor.StationId</td>
                 <td>@sensor.SensorType</td>
                 <td>@sensor.Count</td>
@@ -32,38 +31,51 @@
     </table>
 </div>
 
-<div>
-    <h2>Station Id: @Model.StationId</h2>
-</div>
+<div class="row">
+    <h1>Weather Station</h1>
+    <div class="panel panel-default">
 
-<div>
-    <table class="table table-striped">
-        <thead class="thead-default">
-            <tr>
-                <th>Station Id</th>
-                <th>Sensor Type</th>
-                <th>Value</th>
-                <th>Timestamp</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var dataPoint in Model.LatestDataPoints)
-            {
+        <div class="panel-heading">
+            <div class="dropdown">
+                Weather Station:
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    @Model.StationId
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    @foreach (var stationId in @Model.SummaryReport.StationIds)
+                    {
+                        <li>@Html.RouteLink(stationId, "Default", new {stationId = stationId})</li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead class="thead-default">
                 <tr>
-                    <td>@dataPoint.StationId</td>
-                    <td>@dataPoint.SensorType</td>
-                    <td>@dataPoint.SensorValueNumber</td>
-                    <td>@dataPoint.SensorTimestampUtc</td>
+                    <th>Sensor</th>
+                    <th>Current reading</th>
+                    <th>Reading timestamp</th>
                 </tr>
+                </thead>
+                <tbody>
+                @foreach (var dataPoint in Model.LatestDataPoints)
+                {
+                    <tr>
+                        <td>@dataPoint.SensorType</td>
+                        <td>@dataPoint.SensorValueNumber</td>
+                        <td>@dataPoint.SensorTimestampUtc</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            @foreach (var chartHtml in Model.ChartHtmlList)
+            {
+                <div class="row">
+                    @Html.Raw(@chartHtml)
+                </div>
             }
-        </tbody>
-    </table>
-</div>
-
-
-@foreach (var chartHtml in Model.ChartHtmlList)
-{
-    <div class="row">
-        @Html.Raw(@chartHtml)
+        </div>
     </div>
-}
+</div>
