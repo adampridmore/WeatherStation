@@ -60,9 +60,10 @@ def try_send_data(repository, weather_station_server):
     now = datetime.datetime.now()
     sent_count = 0
     error_count = 0
+    remaining = 0
 
-    for point in repository.get_unsent_data():
-        # TODO - Send the client's timestamp for the datapoint. Need to update the server.
+    unsent_data = repository.get_unsent_data()
+    for point in unsent_data:
         sent_ok = weather_station_server.try_send_data(
             point["SensorType"],
             point["SensorValue"],
@@ -73,8 +74,10 @@ def try_send_data(repository, weather_station_server):
             sent_count += 1
         else:
             error_count += 1
+            remaining += (len(unsent_data) - sent_count - error_count)
+            break
 
-    print("Sent {} data points. Failed {} data points.".format(sent_count, error_count))
+    print("Sent {} data points. Failed {} data points. Remaining {}".format(sent_count, error_count, remaining))
 
 
 def collect_and_save_sensor_data(repository, sensor):
