@@ -27,6 +27,8 @@ class SensorDataRepository:
         ReadingTimeStamp    DATETIME    NOT NULL,
         SentTimeStamp       DATETIME    NULL)''')
 
+        self.connection.execute('''CREATE INDEX IF NOT EXISTS SentTimeStamp ON DataPoints (SentTimeStamp);''')
+
     def save_data_point(self, sensor_type, sensor_value):
         now = datetime.datetime.now()
 
