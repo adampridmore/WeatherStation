@@ -1,12 +1,17 @@
 class SensorModule:
     def get_temperature(self):
-        return 25.1234567
+        return 10.123
 
     def get_humidity(self):
-        return 30.1234567
+        return 30.123
 
     def get_pressure(self):
-        return 900.1234567
+        return 500.123
 
     def show_message(self, message):
         print("HAT: " + message)
+
+    def show_verion(self):
+        print("*****************************")
+        print("**** MOCK HAT SENSOR !!! ****")
+        print("*****************************")

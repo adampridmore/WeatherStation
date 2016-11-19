@@ -18,3 +18,6 @@ class SensorModule:
 
     def show_message(self, message):
         self.sense.show_message(message)
+
+    def show_verion(self):
+        print("real HAT sensor")

@@ -1,0 +1,1 @@
+scp -i id_rsa.pub  *.py pi@raspberrypi:~/weatherStationClient/

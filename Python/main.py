@@ -1,22 +1,38 @@
 import SensorDataRepository
 import datetime
 import time
-# import SensorModuleMock as SensorModule
-import SensorModule as SensorModule
 import WeatherStationServer
+import sys
 
-defaultPollTime = 60
+
+def is_test_mode():
+    return (len(sys.argv) > 1) and (sys.argv[1] == "-test")
+
+
+if is_test_mode():
+    import SensorModuleMock as SensorModule
+
+    defaultPollTime = 5
+else:
+    import SensorModule as SensorModule
+
+    defaultPollTime = 300  # 5 minutes
+
 weatherStationServerUrl = 'http://calf/WeatherStationServer/api/dataPoints'
-
 
 # weatherStationServerUrl = 'http://localhost/WeatherStationServer/api/dataPoints'
 # weatherStationServerUrl = 'http://localhost:59653/api/dataPoints'
+# weatherStationServerUrl = 'http://weatherstat.azurewebsites.net/api/dataPoints'
+
+print("Server URL:" + weatherStationServerUrl)
 
 
 def main():
     repository = SensorDataRepository.SensorDataRepository()
     sensor = SensorModule.SensorModule()
     weather_station_server = WeatherStationServer.WeatherStationServer(weatherStationServerUrl)
+
+    sensor.show_verion()
 
     repository.create_tables()
 

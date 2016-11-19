@@ -62,6 +62,7 @@ class SensorDataRepository:
                                             WHERE SentTimeStamp IS NULL").fetchone()["Count"]
 
         return {
+            "now": datetime.datetime.now().isoformat(),
             "sent": sent,
             "to_send": to_send,
             "total": (sent + to_send)
