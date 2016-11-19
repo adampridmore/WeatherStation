@@ -68,7 +68,7 @@ namespace WeatherStationServer.api
         public string Test()
         {
             var repository = new DataPointRepository();
-            repository.Save(new DataPoint {SensorValueText = DateTime.UtcNow.ToString()});
+            repository.Save(new DataPoint {SensorValueText = DateTime.UtcNow.ToString("o")});
 
             return "OK";
         }

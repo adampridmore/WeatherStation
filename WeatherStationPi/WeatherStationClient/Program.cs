@@ -6,7 +6,7 @@ namespace WeatherStationClient
 {
     static class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Console.WriteLine("Hello Weather Station Client");
 

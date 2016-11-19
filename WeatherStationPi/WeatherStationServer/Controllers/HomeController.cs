@@ -15,9 +15,9 @@ namespace WeatherStationServer.Controllers
 
             stationId = GetStattionId(summary.StationIds, stationId);
 
-            var model = new IndexModel
+            var model = new HomeIndexModel
             {
-                SummaryReport = summary,
+                AllStationIds = summary.StationIds,
                 StationId = stationId,
                 ChartHtmlList = WeatherCharts.getChartsHtml(stationId).ToList(),
                 LatestDataPoints = repository.GetLastValues(stationId).ToList()

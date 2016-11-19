@@ -1,0 +1,32 @@
+﻿@model WeatherStationServer.Model.Station.StationIndexModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <h1>All Weather Stations Sensors</h1>
+    <table class="table table-striped">
+        <thead class="thead-default">
+        <tr>
+            <th>Station Id</th>
+            <th>Sensor</th>
+            <th>Number of data points</th>
+            <th>Earliest data point</th>
+            <th>Latest data point</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var sensor in Model.SummaryReport.SensorDetails)
+        {
+            <tr>
+                <td>@Html.RouteLink(sensor.StationId, "Default", new {Controller = "Home", Action = "Index", stationId = sensor.StationId})</td>
+                <td>@sensor.StationId</td>
+                <td>@sensor.SensorType</td>
+                <td>@sensor.Count</td>
+                <td>@sensor.Min</td>
+                <td>@sensor.Max</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
