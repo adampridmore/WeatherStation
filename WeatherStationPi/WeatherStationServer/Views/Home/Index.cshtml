@@ -20,6 +20,7 @@
         @foreach (var sensor in Model.SummaryReport.SensorDetails)
         {
             <tr>
+                <td>@Html.RouteLink(sensor.StationId, "Default", new {stationId=sensor.StationId})</td>
                 <td>@sensor.StationId</td>
                 <td>@sensor.SensorType</td>
                 <td>@sensor.Count</td>
@@ -29,6 +30,10 @@
         }
         </tbody>
     </table>
+</div>
+
+<div>
+    <h2>Station Id: @Model.StationId</h2>
 </div>
 
 <div>
