@@ -35,6 +35,7 @@
     <table class="table table-striped">
         <thead class="thead-default">
             <tr>
+                <th>Station Id</th>
                 <th>Sensor Type</th>
                 <th>Value</th>
                 <th>Timestamp</th>
@@ -44,6 +45,7 @@
             @foreach (var dataPoint in Model.LatestDataPoints)
             {
                 <tr>
+                    <td>@dataPoint.StationId</td>
                     <td>@dataPoint.SensorType</td>
                     <td>@dataPoint.SensorValueNumber</td>
                     <td>@dataPoint.SensorTimestampUtc</td>

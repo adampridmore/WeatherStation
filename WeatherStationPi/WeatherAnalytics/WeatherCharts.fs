@@ -11,9 +11,8 @@ let getChartHtml() =
 
     chart.GetInlineHtml()
     
-let stationId = "weatherStation1_MNAB-DEV14L"
   
-let getChartForSensor sensorType = 
+let getChartForSensor stationId sensorType = 
     let repository = new Repository.DataPointRepository()
 
     let data = repository.GetDataPoints(stationId, sensorType)
@@ -28,11 +27,11 @@ let getChartForSensor sensorType =
     else
         ""
 
-let getChartsHtml() =
+let getChartsHtml(stationId) =
     [
-        "Temperature" |> getChartForSensor 
-        "Humidity" |> getChartForSensor 
-        "Pressure" |> getChartForSensor 
+        "Temperature" |> getChartForSensor stationId
+        "Humidity" |> getChartForSensor stationId
+        "Pressure" |> getChartForSensor stationId
     ] |> List.toSeq
         
 let getChartHtmlForTemperature() = 

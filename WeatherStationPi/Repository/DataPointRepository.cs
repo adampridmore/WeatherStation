@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using Repository.RepositoryDto;
@@ -53,7 +54,15 @@ GROUP BY StationId, SensorType
 ORDER BY StationId, SensorType";
 
                 var results = context.Database.SqlQuery<SensorDetails>(sql);
-                return new SummaryReport(results.ToList());
+
+                var sensorDetails = results.ToList();
+
+                var stationIds = sensorDetails
+                    .GroupBy(s => s.StationId)
+                    .Select(g => g.Key)
+                    .ToList();
+
+                return new SummaryReport(sensorDetails, stationIds);
             }
         }
 
@@ -79,9 +88,9 @@ ORDER BY StationId, SensorType";
 FROM DataPoints
 WHERE StationId = @stationId AND SensorType = @sensorType
 ORDER BY SensorTimestampUtc DESC";
-            
+
             var dataPoint = context.DataPoints
-                .SqlQuery(sql, new SqlParameter("stationId",stationId), new SqlParameter("sensorType", sensorType))
+                .SqlQuery(sql, new SqlParameter("stationId", stationId), new SqlParameter("sensorType", sensorType))
                 .FirstOrDefault();
 
             if (dataPoint == null)
