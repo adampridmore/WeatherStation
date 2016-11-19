@@ -5,8 +5,6 @@ from urllib.error import HTTPError, URLError
 
 
 class WeatherStationServer:
-    url = None
-
     def __init__(self, url):
         self.url = url
 

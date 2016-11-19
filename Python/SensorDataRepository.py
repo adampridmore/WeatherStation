@@ -3,8 +3,6 @@ import datetime
 
 
 class SensorDataRepository:
-    connection = None
-
     def __init__(self):
         def dict_factory(cursor, row):
             d = {}

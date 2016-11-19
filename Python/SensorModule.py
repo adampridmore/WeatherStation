@@ -2,8 +2,6 @@ from sense_hat import SenseHat
 
 
 class SensorModule:
-    sense = None
-
     def __init__(self):
         self.sense = SenseHat()
 
