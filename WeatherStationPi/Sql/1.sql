@@ -39,6 +39,7 @@ DROP CONSTRAINT [PK_dbo.DataPoints]
 ALTER TABLE DataPoints ALTER COLUMN StationId nvarchar(128) NOT NULL
 ALTER TABLE DataPoints ALTER COLUMN SensorType nvarchar(128) NOT NULL
 ALTER TABLE DataPoints ALTER COLUMN SensorTimestampUtc  datetime NOT NULL
+ALTER TABLE DataPoints DROP COLUMN SensorValueText
 ALTER TABLE DataPoints DROP COLUMN Id
 
 
