@@ -39,12 +39,5 @@ namespace WeatherStationServer.api
              BodyStyle = WebMessageBodyStyle.Bare,
              UriTemplate = "dataPoints")]
         string AddDataPoints(AddDataPointsRequest dataPointsRequest);
-
-        [OperationContract]
-        [WebInvoke(Method = "GET",
-             ResponseFormat = WebMessageFormat.Json,
-             RequestFormat = WebMessageFormat.Json,
-             UriTemplate = "test")]
-        string Test();
     }
 }

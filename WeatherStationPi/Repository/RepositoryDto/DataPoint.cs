@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Repository.RepositoryDto
 {
@@ -6,27 +8,25 @@ namespace Repository.RepositoryDto
     {
         public override string ToString()
         {
-            return
-                $"{nameof(Id)}: {Id}, {nameof(StationId)}: {StationId}, {nameof(SensorType)}: {SensorType}, {nameof(SensorValueText)}: {SensorValueText}, {nameof(SensorValueNumber)}: {SensorValueNumber}, {nameof(SensorTimestampUtc)}: {SensorTimestampUtc}";
+            return $"{nameof(StationId)}: {StationId}, {nameof(SensorType)}: {SensorType}, {nameof(SensorValueNumber)}: {SensorValueNumber}, {nameof(SensorTimestampUtc)}: {SensorTimestampUtc}, {nameof(ReceivedTimestampUtc)}: {ReceivedTimestampUtc}";
         }
 
-        public int Id { get; set; }
+        [Key, Column(Order = 0)]
         public string StationId { get; set; }
 
+        [Key, Column(Order = 1)]
         public string SensorType { get; set; }
 
-        public string SensorValueText { get; set; }
+        [Key, Column(Order = 2)]
+        public DateTime SensorTimestampUtc { get; set; }
 
         public double SensorValueNumber { get; set; }
-
-        public DateTime SensorTimestampUtc { get; set; }
 
         public DateTime ReceivedTimestampUtc { get; set; }
 
         public static DataPoint Create(
             string stationId,
             string sensorType,
-            string sensorValueText,
             double sensorValueNumber,
             DateTime sensorTimestampUtc,
             DateTime reveivedTimestampUtc)
@@ -35,7 +35,6 @@ namespace Repository.RepositoryDto
             {
                 StationId = stationId,
                 SensorType = sensorType,
-                SensorValueText = sensorValueText,
                 SensorValueNumber = sensorValueNumber,
                 SensorTimestampUtc = sensorTimestampUtc,
                 ReceivedTimestampUtc = reveivedTimestampUtc

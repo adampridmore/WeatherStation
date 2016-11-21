@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Linq;
 using Repository.RepositoryDto;
@@ -21,9 +22,9 @@ namespace Repository
 
         public void Save(DataPoint dataPoint)
         {
-            using (var context = new WeatherStationDbContext(_nameOrConnectionString))
+            using (var context = CreateContext())
             {
-                context.DataPoints.Add(dataPoint);
+                context.DataPoints.AddOrUpdate(dataPoint);
 
                 context.SaveChanges();
             }
@@ -31,7 +32,7 @@ namespace Repository
 
         public IList<DataPoint> GetDataPoints(string stationId, string sensorType)
         {
-            using (var context = new WeatherStationDbContext(_nameOrConnectionString))
+            using (var context = CreateContext())
             {
                 return context
                         .DataPoints.AsQueryable()
@@ -44,7 +45,7 @@ namespace Repository
 
         public SummaryReport GetSummaryReport()
         {
-            using (var context = new WeatherStationDbContext(_nameOrConnectionString))
+            using (var context = CreateContext())
             {
                 const string sql = @"
 SELECT StationId,SensorType, COUNT(*) AS Count, MIN(SensorTimestampUtc) AS Min,MAX(SensorTimestampUtc) AS Max
@@ -63,6 +64,11 @@ ORDER BY StationId, SensorType";
 
                 return new SummaryReport(sensorDetails, stationIds);
             }
+        }
+
+        private WeatherStationDbContext CreateContext()
+        {
+            return new WeatherStationDbContext(_nameOrConnectionString);
         }
 
         public List<DataPoint> GetLastValues(string stationId)
@@ -98,6 +104,23 @@ ORDER BY SensorTimestampUtc DESC";
             }
 
             return dataPoint;
+        }
+
+        public IList<DataPoint> FindAll()
+        {
+            using (var context = CreateContext())
+            {
+                return context.DataPoints.AsQueryable().ToList();
+            }
+        }
+
+        public void DeleteAll()
+        {
+            using (var context = CreateContext())
+            {
+                context.DataPoints.RemoveRange(context.DataPoints.AsQueryable());
+                context.SaveChanges();
+            }
         }
     }
 }

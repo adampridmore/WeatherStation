@@ -46,7 +46,7 @@ namespace WeatherStationServer.api
 
             foreach (var dataPoint in dataPointsRequest.DataPoints)
             {
-                System.Diagnostics.Debugger.Log(0, "", $"{dataPoint.SensorValueText}{Environment.NewLine}");
+                System.Diagnostics.Debugger.Log(0, "", $"{dataPoint.SensorValueNumber}{Environment.NewLine}");
 
                 repository.Save(CreateDataPointRepositoryDto(dataPoint, DateTime.UtcNow));
             }
@@ -59,18 +59,9 @@ namespace WeatherStationServer.api
             return DataPoint.Create(
                 dataPoint.StationId,
                 dataPoint.SensorType,
-                dataPoint.SensorValueText,
                 dataPoint.SensorValueNumber,
                 DateTime.Parse(dataPoint.SensorTimestampUtc),
                 now);
-        }
-
-        public string Test()
-        {
-            var repository = new DataPointRepository();
-            repository.Save(new DataPoint {SensorValueText = DateTime.UtcNow.ToString("o")});
-
-            return "OK";
         }
     }
 }

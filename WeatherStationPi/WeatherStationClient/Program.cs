@@ -27,7 +27,7 @@ namespace WeatherStationClient
             {
                 new DataPoint
                 {
-                    SensorValueText = "My Sensor Value",
+                    SensorValueNumber= 123,
                     //TimeStampUtc = DateTime.UtcNow.ToString("o")
                 }
             };
