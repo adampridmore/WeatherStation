@@ -22,8 +22,8 @@
                 <td>@Html.RouteLink(sensor.StationId, "Default", new {Controller = "Home", Action = "Index", stationId = sensor.StationId})</td>
                 <td>@Html.RouteLink(sensor.SensorType, "Default", new {Controller = "Sensor", Action = "Details", stationId = sensor.StationId, sensorType=sensor.SensorType, size=550, reloadSeconds = 60})</td>
                 <td>@sensor.Count</td>
-                <td>@sensor.Min</td>
-                <td>@sensor.Max</td>
+                <td>@sensor.Min.ToString("s")</td>
+                <td>@sensor.Max.ToString("s")</td>
             </tr>
         }
         </tbody>
