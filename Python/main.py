@@ -17,15 +17,16 @@ if is_test_mode():
 else:
     import SensorModule as SensorModule
 
-    defaultPollTime = 300  # 5 minutes
+    # defaultPollTime = 300  # 5 minutes
+    defaultPollTime = 900  # 15 minutes
 
-weatherStationServerUrl = 'http://calf/WeatherStationServer/api/dataPoints'
-
+# weatherStationServerUrl = 'http://calf/WeatherStationServer/api/dataPoints'
 # weatherStationServerUrl = 'http://localhost/WeatherStationServer/api/dataPoints'
 # weatherStationServerUrl = 'http://localhost:59653/api/dataPoints'
-# weatherStationServerUrl = 'http://weatherstat.azurewebsites.net/api/dataPoints'
+weatherStationServerUrl = 'http://weatherstat.azurewebsites.net/api/dataPoints'
 
 print("Server URL:" + weatherStationServerUrl)
+print("Poll time:" + str(defaultPollTime))
 
 
 def main():
