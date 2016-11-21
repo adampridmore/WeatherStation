@@ -5,6 +5,10 @@ namespace Repository
 {
     public class WeatherStationDbContext : DbContext
     {
+        public WeatherStationDbContext()
+        {
+        }
+
         public WeatherStationDbContext(string nameOrConnectionString) : base(nameOrConnectionString)
         {
         }
