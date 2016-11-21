@@ -1,6 +1,5 @@
 namespace Repository.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
     
     public partial class V1 : DbMigration

@@ -19,10 +19,10 @@ else:
 
     defaultPollTime = 300  # 5 minutes
 
-# weatherStationServerUrl = 'http://calf/WeatherStationServer/api/dataPoints'
+weatherStationServerUrl = 'http://calf/WeatherStationServer/api/dataPoints'
 
 # weatherStationServerUrl = 'http://localhost/WeatherStationServer/api/dataPoints'
-weatherStationServerUrl = 'http://localhost:59653/api/dataPoints'
+# weatherStationServerUrl = 'http://localhost:59653/api/dataPoints'
 # weatherStationServerUrl = 'http://weatherstat.azurewebsites.net/api/dataPoints'
 
 print("Server URL:" + weatherStationServerUrl)

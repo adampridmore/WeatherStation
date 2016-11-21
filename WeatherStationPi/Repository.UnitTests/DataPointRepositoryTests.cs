@@ -7,12 +7,12 @@ namespace Repository.UnitTests
     [TestClass]
     public class DataPointRepositoryTests
     {
-        private string connectionString = @"server=.\SQLEXPRESS;database=WeatherStation_unitTests;Integrated Security = True";
+        private const string ConnectionString = @"server=.\SQLEXPRESS;database=WeatherStation_unitTests;Integrated Security = True";
 
         [TestMethod]
         public void SaveAndLoad()
         {
-            var repository = new DataPointRepository(connectionString);
+            var repository = new DataPointRepository(ConnectionString);
 
             repository.DeleteAll();
 
@@ -34,7 +34,7 @@ namespace Repository.UnitTests
         [TestMethod]
         public void Save_twice_is_idempotent()
         {
-            var repository = new DataPointRepository(connectionString);
+            var repository = new DataPointRepository(ConnectionString);
 
             repository.DeleteAll();
 
