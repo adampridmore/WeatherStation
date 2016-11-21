@@ -8,12 +8,26 @@ class WeatherStationServer:
     def __init__(self, url):
         self.url = url
 
-    def try_send_data(self, sensor_type, sensor_value, sensor_timestamp_utc):
-        json_data_bytes = self.__create_post_data_bytes(sensor_type, sensor_value, sensor_timestamp_utc)
+    def try_send_data(self, points):
+        postdata = {
+            "DataPoints": []
+        }
 
+        for point in points:
+            pointDto = self.__create_data_point_json_dto(
+                point["ReadingTimeStamp"],
+                point["SensorType"],
+                point["SensorValue"], )
+            postdata["DataPoints"].append(pointDto)
+
+        jsondata = json.dumps(postdata)
+        jsondatabytes = jsondata.encode('utf-8')
+
+        return self.__do_post__(jsondatabytes)
+
+    def __do_post__(self, json_data_bytes):
         req = urllib.request.Request(self.url)
         req.add_header('Content-Type', 'application/json')
-
         try:
             return self.__post(json_data_bytes, req)
         except (URLError, HTTPError) as e:
@@ -30,16 +44,11 @@ class WeatherStationServer:
             print("Failed server call. Body: " + str(response_body))
             return False
 
-    def __create_post_data_bytes(self, sensor_type, sensor_value, sensor_timestamp_utc):
-        postdata = {
-            "DataPoints": [{
-                "StationId": "weatherStation1_" + socket.gethostname(),
-                "SensorType": sensor_type,
-                "SensorValueText": str(sensor_value),
-                "SensorValueNumber": sensor_value,
-                "SensorTimestampUtc": sensor_timestamp_utc
-            }]
+    def __create_data_point_json_dto(self, sensor_timestamp_utc, sensor_type, sensor_value):
+        return {
+            "StationId": "weatherStation1_" + socket.gethostname(),
+            "SensorType": sensor_type,
+            "SensorValueText": str(sensor_value),
+            "SensorValueNumber": sensor_value,
+            "SensorTimestampUtc": sensor_timestamp_utc
         }
-        jsondata = json.dumps(postdata)
-        jsondatabytes = jsondata.encode('utf-8')
-        return jsondatabytes
