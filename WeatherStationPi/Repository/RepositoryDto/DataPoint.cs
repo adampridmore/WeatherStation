@@ -17,6 +17,21 @@ namespace Repository.RepositoryDto
         [Key, Column(Order = 1)]
         public string SensorType { get; set; }
 
+        [NotMapped]
+        public SensorTypeEnum? SensorTypeEnum
+        {
+
+            get
+            {
+                SensorTypeEnum e;
+                if (Enum.TryParse(SensorType, true, out e))
+                {
+                    return e;
+                }
+                return null;
+            }
+        }
+
         [Key, Column(Order = 2)]
         public DateTime SensorTimestampUtc { get; set; }
 

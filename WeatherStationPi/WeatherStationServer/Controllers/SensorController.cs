@@ -6,6 +6,7 @@ using Repository;
 using Repository.RepositoryDto;
 using WeatherStationServer.Model.Sensor;
 using XPlot.GoogleCharts;
+using DataPoint = Repository.RepositoryDto.DataPoint;
 
 namespace WeatherStationServer.Controllers
 {
@@ -49,10 +50,10 @@ namespace WeatherStationServer.Controllers
 
             var data = new List<Tuple<string, decimal>>
             {
-                new Tuple<string, decimal>(GetUnit(dataPoint.SensorType), FotmatSensorNumber(dataPoint))
+                new Tuple<string, decimal>(GetUnit(dataPoint.SensorTypeEnum), FotmatSensorNumber(dataPoint))
             };
 
-            var options = CreateOptions(dataPoint.SensorType);
+            var options = CreateOptions(dataPoint.SensorTypeEnum);
 
             var guage = Chart.Gauge(
                 data,
@@ -64,42 +65,38 @@ namespace WeatherStationServer.Controllers
             return guage.GetInlineHtml();
         }
 
-        private static string GetUnit(string sensorType)
+        private static string GetUnit(SensorTypeEnum? sensorType)
         {
             switch (sensorType)
             {
-                case "Temperature":
+                case SensorTypeEnum.Temperature:
                     return "C";
-                case "Pressure":
-                    return "mb";
-                case "Humidity":
+                case SensorTypeEnum.Humidity:
                     return "RH";
+                case SensorTypeEnum.Pressure:
+                    return "mb";
                 default:
                     return "";
             }
         }
 
-        private static Configuration.Options CreateOptions(string sensorType)
+        private static Configuration.Options CreateOptions(SensorTypeEnum? sensorTypeEnum)
         {
-            switch (sensorType)
+            switch (sensorTypeEnum)
             {
-                case "Temperature":
-                    var max = 30;
-                    var min = -10;
+                case SensorTypeEnum.Temperature:
                     return new Configuration.Options
                     {
-                        yellowFrom = min,
+                        yellowFrom = -10,
                         yellowTo = 0,
                         yellowColor = "#aaaaff",
-                        //greenFrom = 15,
-                        //greenTo = 25,
                         redFrom = 30,
-                        redTo = max,
-                        min = min,
-                        max = max,
+                        redTo = 30,
+                        min = -10,
+                        max = 30,
                         minorTicks = 5,
                     };
-                case "Pressure":
+                case SensorTypeEnum.Pressure:
                     return new Configuration.Options
                     {
                         min = 900,
