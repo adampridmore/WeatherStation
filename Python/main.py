@@ -5,6 +5,7 @@ import WeatherStationServer
 import sys
 import batch
 
+
 def is_test_mode():
     return (len(sys.argv) > 1) and (sys.argv[1] == "-test")
 
