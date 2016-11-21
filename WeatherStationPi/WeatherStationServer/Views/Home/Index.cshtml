@@ -6,7 +6,7 @@
 <div class="row">
     <h1>My Weather Station</h1>
     <div class="panel panel-default">
-
+        
         <div class="panel-heading">
             <div class="dropdown">
                 Weather Station:
@@ -22,6 +22,7 @@
                 </ul>
             </div>
         </div>
+        
         <div class="panel-body">
             <table class="table table-striped">
                 <thead class="thead-default">
@@ -45,7 +46,7 @@
             @foreach (var chartHtml in Model.ChartHtmlList)
             {
                 <div class="row">
-                    @Html.Raw(@chartHtml)
+                    @Html.Raw(chartHtml)
                 </div>
             }
         </div>

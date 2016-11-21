@@ -1,0 +1,23 @@
+﻿@model WeatherStationServer.Model.Sensor.SensorDetailsModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    @Html.Raw(Model.GuageHtml)
+</div>
+<div class="row">
+    <h4>Station: @Model.StationId</h4>
+    <h4>Sensor: @Model.SensorType</h4>
+    <h4>Timestamp: @Model.Timestamp</h4>
+</div>
+
+@if (Model.ReloadTimeSpan.HasValue)
+{
+    <script type="text/javascript">
+        setTimeout(function() {
+                window.location.reload(1);
+            },
+            @Model.ReloadTimeSpan.Value.TotalMilliseconds)
+    </script>
+}

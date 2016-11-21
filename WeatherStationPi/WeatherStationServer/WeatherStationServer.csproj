@@ -132,11 +132,13 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SensorController.cs" />
     <Compile Include="Controllers\StationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="api\IRestService.cs" />
+    <Compile Include="Model\Sensor\SensorDetailsModel.cs" />
     <Compile Include="Model\Station\StationIndexModel.cs" />
     <Compile Include="Model\Home\HomeIndexModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -156,6 +158,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Station\Index.cshtml" />
+    <Content Include="Views\Sensor\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

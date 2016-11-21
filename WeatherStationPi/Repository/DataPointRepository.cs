@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Linq;
@@ -12,7 +13,6 @@ namespace Repository
 
         public DataPointRepository() : this("name = DefaultConnection")
         {
-            
         }
 
         public DataPointRepository(string nameOrConnectionString)
@@ -69,6 +69,14 @@ ORDER BY StationId, SensorType";
         private WeatherStationDbContext CreateContext()
         {
             return new WeatherStationDbContext(_nameOrConnectionString);
+        }
+
+        public DataPoint GetLastValues(string stationId, string sensorType)
+        {
+            using (var context = new WeatherStationDbContext(_nameOrConnectionString))
+            {
+                return GetLatestDataPointForStationIdAndSensorType(context, stationId, sensorType);
+            }
         }
 
         public List<DataPoint> GetLastValues(string stationId)
