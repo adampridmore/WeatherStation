@@ -60,6 +60,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RepositoryDto\DataPoint.cs" />
     <Compile Include="DataPointRepository.cs" />
+    <Compile Include="RepositoryDto\DateTimeRange.cs" />
     <Compile Include="RepositoryDto\SensorDetails.cs" />
     <Compile Include="RepositoryDto\SensorTypeEnum.cs" />
     <Compile Include="RepositoryDto\SummaryReport.cs" />

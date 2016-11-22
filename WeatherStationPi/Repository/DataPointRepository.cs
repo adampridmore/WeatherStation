@@ -29,16 +29,26 @@ namespace Repository
             }
         }
 
-        public IList<DataPoint> GetDataPoints(string stationId, string sensorType)
+        public IList<DataPoint> GetDataPoints(string stationId, string sensorType, DateTimeRange dateTimeRange)
         {
             using (var context = CreateContext())
             {
-                return context
-                        .DataPoints.AsQueryable()
-                        .Where(dataPoint => dataPoint.StationId == stationId && dataPoint.SensorType == sensorType)
-                        .OrderBy(dp => dp.SensorTimestampUtc)
-                        .ToList()
-                    ;
+                var query = context.DataPoints
+                    .AsQueryable()
+                    .Where(dataPoint => dataPoint.StationId == stationId)
+                    .Where(dataPoint => dataPoint.SensorType == sensorType);
+
+                if (dateTimeRange.Start.HasValue)
+                {
+                    query = query.Where(dataPoint => dataPoint.SensorTimestampUtc > dateTimeRange.Start.Value);
+                }
+
+                if (dateTimeRange.End.HasValue)
+                {
+                    query = query.Where(dataPoint => dataPoint.SensorTimestampUtc < dateTimeRange.End.Value);
+                }
+
+                return query.OrderBy(dp => dp.SensorTimestampUtc).ToList();
             }
         }
 
@@ -80,11 +90,10 @@ ORDER BY StationId, SensorType";
 
         public List<DataPoint> GetLastValues(string stationId)
         {
-            var sensorTypes = System.Enum.GetNames(typeof(SensorTypeEnum));
-
             using (var context = new WeatherStationDbContext(_nameOrConnectionString))
             {
-                return sensorTypes
+                return SensorDetails
+                    .GetSensorTypeValues()
                     .Select(sensorType => TryGetLatestDataPointForStationIdAndSensorType(context, stationId, sensorType))
                     .Where(dp => dp != null)
                     .ToList();

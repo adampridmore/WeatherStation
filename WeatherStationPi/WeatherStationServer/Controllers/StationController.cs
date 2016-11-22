@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Microsoft.FSharp.Core;
 using Repository;
+using Repository.RepositoryDto;
 using WeatherStationServer.Model.Station;
 using XPlot.GoogleCharts;
 
@@ -14,6 +15,8 @@ namespace WeatherStationServer.Controllers
         //GET: Home
         public ActionResult Details(string stationId, DateTime? startDateTime, DateTime? endDateTime)
         {
+            var dateTimeRange = DateTimeRange.Create(startDateTime, endDateTime);
+
             var repository = new DataPointRepository();
             var summary = repository.GetSummaryReport();
 
@@ -23,35 +26,39 @@ namespace WeatherStationServer.Controllers
             {
                 AllStationIds = summary.StationIds,
                 StationId = stationId,
-                ChartHtmlList = CreateChartHtmlList(stationId).ToList(),
+                ChartHtmlList = CreateChartHtmlList(stationId, dateTimeRange),
                 LatestDataPoints = repository.GetLastValues(stationId)
             };
 
             return View(model);
         }
 
-        private static IEnumerable<string> CreateChartHtmlList(string stationId)
+        private static List<string> CreateChartHtmlList(string stationId, DateTimeRange dateTimeRange)
         {
             var repository = new DataPointRepository();
 
-            yield return GetChartHtmlForStationSensor(stationId, repository, "Temperature");
-            yield return GetChartHtmlForStationSensor(stationId, repository, "Humidity");
-            yield return GetChartHtmlForStationSensor(stationId, repository, "Pressure");
+            return SensorDetails
+                .GetSensorTypeValues()
+                .Select(sensorType => GetChartHtmlForStationSensor(stationId, repository, sensorType, dateTimeRange))
+                .Where(x => x != null)
+                .ToList();
         }
 
-        private static string GetChartHtmlForStationSensor(string stationId, DataPointRepository repository, string sensorType)
+        private static string GetChartHtmlForStationSensor(string stationId, 
+            DataPointRepository repository, 
+            string sensorType, 
+            DateTimeRange dateTimeRange)
         {
-            var dataPoints = repository.GetDataPoints(stationId, sensorType)
+            var dataPoints = repository.GetDataPoints(stationId, sensorType, dateTimeRange)
                 .Where(dp => dp.SensorValueNumber != 0.0d)
                 .Select(dp => new Tuple<DateTime, double>(dp.SensorTimestampUtc, dp.SensorValueNumber))
                 .ToList();
 
             if (!dataPoints.Any())
             {
-                return string.Empty;
+                return null;
             }
-
-
+            
             var chart = Chart.Line(dataPoints, FSharpOption<IEnumerable<string>>.None,
                 FSharpOption<Configuration.Options>.None);
             chart.WithOptions(new Configuration.Options() {title = sensorType});

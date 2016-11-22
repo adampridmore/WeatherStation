@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Repository.RepositoryDto
 {
@@ -9,5 +11,7 @@ namespace Repository.RepositoryDto
         public int Count { get; set; }
         public DateTime Min { get; set; }
         public DateTime Max { get; set; }
+
+        public static IList<string> GetSensorTypeValues() => Enum.GetNames(typeof(SensorTypeEnum)).ToList();
     }
 }
