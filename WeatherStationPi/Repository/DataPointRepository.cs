@@ -130,5 +130,18 @@ ORDER BY SensorTimestampUtc DESC";
                 context.SaveChanges();
             }
         }
+
+        public void DeleteAllByStationId(string stationId)
+        {
+            using (var context = CreateContext())
+            {
+                var query = context.DataPoints
+                    .AsQueryable()
+                    .Where(dp => dp.StationId == stationId);
+
+                context.DataPoints.RemoveRange(query);
+                context.SaveChanges();
+            }
+        }
     }
 }

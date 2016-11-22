@@ -15,17 +15,19 @@ let getChartHtml() =
 let getChartForSensor stationId sensorType = 
     let repository = new Repository.DataPointRepository()
 
-    let data = repository.GetDataPoints(stationId, sensorType)
-
-    if (data.Count <> 0) then 
+    let data = 
+        repository.GetDataPoints(stationId, sensorType) 
+        |> Seq.filter (fun dp -> dp.SensorValueNumber <> 0.0)
+        |> Seq.toList
+    
+    if (data.IsEmpty) then 
+        ""
+    else
         data
         |> Seq.map (fun (dp : DataPoint) -> dp.SensorTimestampUtc, dp.SensorValueNumber)
-        |> Seq.filter (fun (_, v) -> v <> 0.0)            
         |> Chart.Line
         |> Chart.WithOptions(Options(title=sensorType))
         |> (fun c -> c.GetInlineHtml()) 
-    else
-        ""
 
 let getChartsHtml(stationId) =
     [

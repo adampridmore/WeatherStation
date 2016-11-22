@@ -13,7 +13,7 @@ namespace WeatherStationServer.Controllers
 
             var model = new StationIndexModel
             {
-                SummaryReport = summary,
+                SummaryReport = summary
             };
 
             return View(model);
