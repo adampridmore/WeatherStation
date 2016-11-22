@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Linq;
@@ -75,24 +74,24 @@ ORDER BY StationId, SensorType";
         {
             using (var context = new WeatherStationDbContext(_nameOrConnectionString))
             {
-                return GetLatestDataPointForStationIdAndSensorType(context, stationId, sensorType);
+                return TryGetLatestDataPointForStationIdAndSensorType(context, stationId, sensorType);
             }
         }
 
         public List<DataPoint> GetLastValues(string stationId)
         {
+            var sensorTypes = System.Enum.GetNames(typeof(SensorTypeEnum));
+
             using (var context = new WeatherStationDbContext(_nameOrConnectionString))
             {
-                return new List<DataPoint>
-                {
-                    GetLatestDataPointForStationIdAndSensorType(context, stationId, "Temperature"),
-                    GetLatestDataPointForStationIdAndSensorType(context, stationId, "Humidity"),
-                    GetLatestDataPointForStationIdAndSensorType(context, stationId, "Pressure")
-                };
+                return sensorTypes
+                    .Select(sensorType => TryGetLatestDataPointForStationIdAndSensorType(context, stationId, sensorType))
+                    .Where(dp => dp != null)
+                    .ToList();
             }
         }
 
-        private static DataPoint GetLatestDataPointForStationIdAndSensorType(
+        private static DataPoint TryGetLatestDataPointForStationIdAndSensorType(
             WeatherStationDbContext context,
             string stationId,
             string sensorType)
@@ -105,11 +104,6 @@ ORDER BY SensorTimestampUtc DESC";
             var dataPoint = context.DataPoints
                 .SqlQuery(sql, new SqlParameter("stationId", stationId), new SqlParameter("sensorType", sensorType))
                 .FirstOrDefault();
-
-            if (dataPoint == null)
-            {
-                return DataPoint.Empty();
-            }
 
             return dataPoint;
         }

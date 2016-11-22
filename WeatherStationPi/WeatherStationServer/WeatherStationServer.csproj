@@ -181,10 +181,6 @@
       <Project>{BB226442-81D9-4D41-8E2C-0F729B39AFF3}</Project>
       <Name>Repository</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WeatherAnalytics\WeatherAnalytics.fsproj">
-      <Project>{da30413b-1122-4ba2-8d55-9c62ca5b8dac}</Project>
-      <Name>WeatherAnalytics</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
