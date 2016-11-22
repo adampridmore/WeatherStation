@@ -20,7 +20,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @Html.RouteLink("Weather Station", "Default", null, new {@class = "navbar-brand"})
+            
+            @Html.RouteLink("My Weather Station", "Default", new { Controller = "Station", Action = "Details" }, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
