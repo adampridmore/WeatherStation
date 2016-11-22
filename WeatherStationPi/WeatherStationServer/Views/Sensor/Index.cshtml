@@ -1,4 +1,6 @@
-﻿@model WeatherStationServer.Model.Sensor.SensorIndexModel
+﻿@using Repository.RepositoryDto
+@using WeatherStationServer.Model
+@model WeatherStationServer.Model.Sensor.SensorIndexModel
 @{
     ViewBag.Title = "Index";
 }
@@ -20,7 +22,7 @@
         {
             <tr>
                 <td>@Html.RouteLink(sensor.StationId, "Default", new {Controller = "Station", Action = "Details", stationId = sensor.StationId})</td>
-                <td>@Html.RouteLink(sensor.SensorType, "Default", new {Controller = "Sensor", Action = "Details", stationId = sensor.StationId, sensorType=sensor.SensorType, size=550, reloadSeconds = 60})</td>
+                <td>@Html.Partial("SensorLink",new SensorModel(sensor.StationId, sensor.SensorType))</td>
                 <td>@sensor.Count</td>
                 <td>@sensor.Min.ToString("s")</td>
                 <td>@sensor.Max.ToString("s")</td>

@@ -15,7 +15,7 @@ namespace WeatherStationServer.Controllers
         // GET: Station
         public ActionResult Index()
         {
-            var repository = new Repository.DataPointRepository();
+            var repository = new DataPointRepository();
             var summary = repository.GetSummaryReport();
 
             var model = new SensorIndexModel

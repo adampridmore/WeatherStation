@@ -139,6 +139,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="api\IRestService.cs" />
+    <Compile Include="Model\SensorModel.cs" />
     <Compile Include="Model\Sensor\SensorDetailsModel.cs" />
     <Compile Include="Model\Sensor\SensorIndexModel.cs" />
     <Compile Include="Model\Station\StationDetailsModel.cs" />
@@ -163,6 +164,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Sensor\Index.cshtml" />
     <Content Include="Views\Sensor\Details.cshtml" />
+    <Content Include="Views\Shared\SensorLink.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -26,14 +26,14 @@ namespace WeatherStationServer.Controllers
             return View(model);
         }
 
-        private string GetStattionId(List<string> summaryStationIds, string stationId)
+        private string GetStattionId(List<string> allStationIds, string stationId)
         {
-            var foundStationId = summaryStationIds
+            var foundStationId = allStationIds
                 .FirstOrDefault(s => s == stationId);
 
             if (foundStationId == null)
             {
-                return summaryStationIds.FirstOrDefault();
+                return allStationIds.FirstOrDefault();
             }
 
             return foundStationId;
