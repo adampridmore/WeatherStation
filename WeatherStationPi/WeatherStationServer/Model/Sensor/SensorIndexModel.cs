@@ -1,8 +1,8 @@
 ﻿using Repository.RepositoryDto;
 
-namespace WeatherStationServer.Model.Station
+namespace WeatherStationServer.Model.Sensor
 {
-    public class StationIndexModel
+    public class SensorIndexModel
     {
         public SummaryReport SummaryReport { get; set; }
     }

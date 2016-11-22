@@ -140,14 +140,16 @@
     </Compile>
     <Compile Include="api\IRestService.cs" />
     <Compile Include="Model\Sensor\SensorDetailsModel.cs" />
-    <Compile Include="Model\Station\StationIndexModel.cs" />
+    <Compile Include="Model\Sensor\SensorIndexModel.cs" />
     <Compile Include="Model\Home\HomeIndexModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="api\RestService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Model\Station\" />
     <Folder Include="Views\About\" />
+    <Folder Include="Views\Station\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -159,7 +161,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Station\Index.cshtml" />
+    <Content Include="Views\Sensor\Index.cshtml" />
     <Content Include="Views\Sensor\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

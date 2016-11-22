@@ -12,6 +12,20 @@ namespace WeatherStationServer.Controllers
 {
     public class SensorController : Controller
     {
+        // GET: Station
+        public ActionResult Index()
+        {
+            var repository = new Repository.DataPointRepository();
+            var summary = repository.GetSummaryReport();
+
+            var model = new SensorIndexModel
+            {
+                SummaryReport = summary
+            };
+
+            return View(model);
+        }
+
         // GET: Sensor
         public ActionResult Details(string stationId, string sensorType, int size = 300, int? reloadSeconds = null)
         {
