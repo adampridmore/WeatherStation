@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Repository.RepositoryDto;
 
-namespace WeatherStationServer.Model.Home
+namespace WeatherStationServer.Model.Station
 {
-    public class HomeIndexModel
+    public class StationDetailsModel
     {
         public List<string> ChartHtmlList { get; set; }
         public List<DataPoint> LatestDataPoints { get; set; }

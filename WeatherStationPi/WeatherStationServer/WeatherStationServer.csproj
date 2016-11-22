@@ -141,21 +141,21 @@
     <Compile Include="api\IRestService.cs" />
     <Compile Include="Model\Sensor\SensorDetailsModel.cs" />
     <Compile Include="Model\Sensor\SensorIndexModel.cs" />
-    <Compile Include="Model\Home\HomeIndexModel.cs" />
+    <Compile Include="Model\Station\StationDetailsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="api\RestService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Model\Station\" />
+    <Folder Include="Model\Home\" />
     <Folder Include="Views\About\" />
-    <Folder Include="Views\Station\" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Station\Details.cshtml" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />

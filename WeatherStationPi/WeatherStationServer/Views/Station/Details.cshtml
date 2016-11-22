@@ -1,4 +1,4 @@
-﻿@model WeatherStationServer.Model.Home.HomeIndexModel
+﻿@model WeatherStationServer.Model.Station.StationDetailsModel
 @{
     ViewBag.Title = "Index";
 }
@@ -17,7 +17,7 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                     @foreach (var stationId in @Model.AllStationIds)
                     {
-                        <li>@Html.RouteLink(stationId, "Default", new {stationId})</li>
+                        <li>@Html.RouteLink(stationId, "Default", new {Controller = "Sensor", Action = "Details", stationId = stationId})</li>
                     }
                 </ul>
             </div>
