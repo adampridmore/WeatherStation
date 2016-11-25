@@ -7,7 +7,7 @@
 <div class="row">
     <h1>My Weather Station</h1>
     <div class="panel panel-default">
-        
+
         <div class="panel-heading">
             <div class="dropdown">
                 Weather Station:
@@ -22,8 +22,20 @@
                     }
                 </ul>
             </div>
+            <div>
+                @Html.RouteLink("Last year", "Default", new {Controller = "Station", Action = "Details", LastHours = 8760})
+            </div>
+            <div>
+                @Html.RouteLink("Last month", "Default", new {Controller = "Station", Action = "Details", LastHours = (24*30)})
+            </div>
+            <div>
+                @Html.RouteLink("Last week", "Default", new {Controller = "Station", Action = "Details", LastHours = (24*7)})
+            </div>
+            <div>
+                @Html.RouteLink("Last day", "Default", new {Controller = "Station", Action = "Details", LastHours = 24})
+            </div>
         </div>
-        
+
         <div class="panel-body">
             <table class="table table-striped">
                 <thead class="thead-default">

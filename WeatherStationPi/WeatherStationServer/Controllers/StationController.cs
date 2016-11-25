@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -13,9 +13,10 @@ namespace WeatherStationServer.Controllers
     public class StationController : Controller
     {
         //GET: Home
-        public ActionResult Details(string stationId, DateTime? startDateTime, DateTime? endDateTime)
+        public ActionResult Details(string stationId, string lastHours = "24")
         {
-            var dateTimeRange = DateTimeRange.Create(startDateTime, endDateTime);
+            //var dateTimeRange = DateTimeRange.Create(startDateTime, endDateTime);
+            var dateTimeRange = CreateDateTimeRange(lastHours);
 
             var repository = new DataPointRepository();
             var summary = repository.GetSummaryReport();
@@ -31,6 +32,19 @@ namespace WeatherStationServer.Controllers
             };
 
             return View(model);
+        }
+
+        private DateTimeRange CreateDateTimeRange(string lastHours)
+        {
+            if (string.IsNullOrWhiteSpace(lastHours))
+            {
+                return DateTimeRange.Unbounded;
+            }
+
+            var hoursInt = int.Parse(lastHours);
+            var timeSpan = TimeSpan.FromHours(hoursInt);
+
+            return DateTimeRange.Create(DateTime.UtcNow - timeSpan, null);
         }
 
         private static List<string> CreateChartHtmlList(string stationId, DateTimeRange dateTimeRange)

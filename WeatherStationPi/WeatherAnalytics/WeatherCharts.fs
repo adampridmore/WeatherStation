@@ -16,7 +16,7 @@ let getChartForSensor stationId sensorType =
     let repository = new Repository.DataPointRepository()
 
     let data = 
-        repository.GetDataPoints(stationId, sensorType) 
+        repository.GetDataPoints(stationId, sensorType,DateTimeRange.Unbounded) 
         |> Seq.filter (fun dp -> dp.SensorValueNumber <> 0.0)
         |> Seq.toList
     

@@ -7,6 +7,8 @@ namespace Repository.RepositoryDto
         public DateTime? Start { get; }
         public DateTime? End { get; }
 
+        public static DateTimeRange Unbounded => Create(null, null);
+
         private DateTimeRange(DateTime? start, DateTime? end)
         {
             Start = start;
