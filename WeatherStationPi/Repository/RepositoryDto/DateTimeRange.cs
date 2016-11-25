@@ -9,6 +9,8 @@ namespace Repository.RepositoryDto
 
         public static DateTimeRange Unbounded => Create(null, null);
 
+        public static DateTimeRange Last24Hours => Create(DateTime.UtcNow - TimeSpan.FromDays(7), null);
+
         private DateTimeRange(DateTime? start, DateTime? end)
         {
             Start = start;

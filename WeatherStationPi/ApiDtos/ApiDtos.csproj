@@ -34,6 +34,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiDto\GetDataPointsResponse.cs" />
+    <Compile Include="ApiDto\GetDataPointsRequest.cs" />
     <Compile Include="ApiDto\AddDataPointsRequest.cs" />
     <Compile Include="ApiDto\DataPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

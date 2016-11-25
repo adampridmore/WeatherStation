@@ -2,8 +2,9 @@
 
 namespace ApiDtos.ApiDto
 {
-    public class AddDataPointsRequest
+    public class GetDataPointsRequest
     {
-        public IList<DataPoint> DataPoints { get; set; }
+        public string StationId { get; set; }
+        public string SensorType { get; set; }
     }
 }
