@@ -23,16 +23,16 @@
                 </ul>
             </div>
             <div>
-                @Html.RouteLink("Last year", "Default", new {Controller = "Station", Action = "Details", LastHours = 8760})
+                @Html.RouteLink("Last year", "Default", new {Controller = "Station", Action = "Details", LastHours = 365*24, stationId = Model.StationId})
             </div>
             <div>
-                @Html.RouteLink("Last month", "Default", new {Controller = "Station", Action = "Details", LastHours = (24*30)})
+                @Html.RouteLink("Last month", "Default", new {Controller = "Station", Action = "Details", LastHours = 24*30, stationId = Model.StationId })
             </div>
             <div>
-                @Html.RouteLink("Last week", "Default", new {Controller = "Station", Action = "Details", LastHours = (24*7)})
+                @Html.RouteLink("Last week", "Default", new {Controller = "Station", Action = "Details", LastHours = 24*7, stationId = Model.StationId })
             </div>
             <div>
-                @Html.RouteLink("Last day", "Default", new {Controller = "Station", Action = "Details", LastHours = 24})
+                @Html.RouteLink("Last day", "Default", new {Controller = "Station", Action = "Details", LastHours = 24, stationId = Model.StationId })
             </div>
         </div>
 
