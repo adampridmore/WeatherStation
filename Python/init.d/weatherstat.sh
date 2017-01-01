@@ -1,7 +1,6 @@
 #!/bin/sh
-
 ### BEGIN INIT INFO
-# Provides:          myservice
+# Provides:          weatherstat
 # Required-Start:    $remote_fs $syslog
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
@@ -11,16 +10,16 @@
 ### END INIT INFO
 
 # Change the next 3 lines to suit where you install your script and what you want to call it
-DIR=/home/pi/weatherStationClient
-DAEMON=$DIR/main.py
-DAEMON_NAME=weatherClient
+DIR=/etc/weatherstat
+DAEMON=python3 $DIR/main.py -test
+DAEMON_NAME=weatherstat
 
 # Add any command line options for your daemon here
 DAEMON_OPTS=""
 
 # This next line determines what user the script runs as.
 # Root generally not recommended but necessary if you are using the Raspberry Pi GPIO from Python.
-DAEMON_USER=pi
+DAEMON_USER=root
 
 # The process ID of the script when it runs is stored here:
 PIDFILE=/var/run/$DAEMON_NAME.pid

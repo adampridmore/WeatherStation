@@ -13,7 +13,7 @@ def is_test_mode():
 if is_test_mode():
     import SensorModuleMock as SensorModule
 
-    defaultPollTime = 5
+    defaultPollTime = 60
 else:
     import SensorModule as SensorModule
 
