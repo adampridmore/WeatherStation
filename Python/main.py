@@ -1,3 +1,5 @@
+from telnetlib import DO
+
 import SensorDataRepository
 import datetime
 import time
@@ -6,8 +8,19 @@ import sys
 import batch
 
 
+def is_arg_present(arg_name_to_match):
+    for argName in sys.argv:
+        if argName == "-" + arg_name_to_match:
+            return True
+    return False
+
+
+def is_single_poll():
+    return is_arg_present("pollOnce")
+
+
 def is_test_mode():
-    return (len(sys.argv) > 1) and (sys.argv[1] == "-test")
+    return is_arg_present("test")
 
 
 if is_test_mode():
@@ -38,13 +51,18 @@ def main():
 
     repository.create_tables()
 
-    while True:
-        temp = sensor.get_temperature()
-        sensor.show_message("{}c".format(round(temp, 1)))
+    if is_single_poll():
+        DoSensorPollAndSend(repository, sensor, weather_station_server)
+    else:
+        while True:
+            DoSensorPollAndSend(repository, sensor, weather_station_server)
+            time.sleep(defaultPollTime)
 
-        collect_and_send_data(repository, sensor, weather_station_server)
 
-        time.sleep(defaultPollTime)
+def DoSensorPollAndSend(repository, sensor, weather_station_server):
+    temp = sensor.get_temperature()
+    sensor.show_message("{}c".format(round(temp, 1)))
+    collect_and_send_data(repository, sensor, weather_station_server)
 
 
 def collect_and_send_data(repository, sensor, weather_station_server):
