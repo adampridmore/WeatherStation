@@ -1,0 +1,1 @@
+*/15 * * * * (cd /home/pi/weatherStationClient/ ; python3 main.py -pollOnce)
