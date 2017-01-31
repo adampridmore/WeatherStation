@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Station - Station</title>
+    <link href="/WeatherStationServer/Content/Site.css" rel="stylesheet" type="text/css"/>
+    <link href="/WeatherStationServer/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+    <style>
+        [ng-cloak] { display: none !important; }
+    </style>
+
+    <!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
+    <!--<script type="text/javascript">google.load('visualization', '1', { 'packages': ['corechart', 'gauge'] });</script>-->
+</head>
+<body ng-cloak ng-controller="myController">
+{{message}}
+
+<script src="/WeatherStationServer/Scripts/modernizr-2.8.3.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script src="/WeatherStationServer/Content/Angular/app.js"></script>
+
+</body>
+</html>
