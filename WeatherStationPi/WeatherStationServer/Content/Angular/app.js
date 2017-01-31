@@ -15,6 +15,28 @@
 
 angular
     .module('myApp', [])
-    .controller('myController', ['$scope', function($scope) {
-        $scope.message = 'Hello World from angular!';
-    }]);
+    .controller('myController',
+    [
+        '$scope', function($scope) {
+            $scope.message = 'Hello World from angular!';
+            $scope.stationIds = ['testStation', 'weatherStation1_raspberrypi'];
+        }
+    ]);
+
+angular.module('myApp')
+    .component('stationPicker',{
+        bindings: {
+            ids: "<",
+            name: "@"
+        },
+        controller: ["$scope", function($scope) {
+            console.log("this.name = " + this.name);
+            console.log("this.ids = " + this.ids);
+        }],
+        template: '<div>' +
+            'Weather Station:' +
+            '<select>' +
+            '    <option ng-repeat="id in $ctrl.ids" value="{{id}}">{{id}}</option>' +
+            '</select>' +
+            '</div>'
+    });

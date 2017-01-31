@@ -45,17 +45,7 @@
         <h1>My Weather Station</h1>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <div class="dropdown">
-                    Weather Station:
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        weatherStation1_raspberrypi
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="/WeatherStationServer/Index.html?stationId=testStation">testStation</a></li>
-                        <li><a href="/WeatherStationServer/Index.html?stationId=weatherStation1_raspberrypi">weatherStation1_raspberrypi</a></li>
-                    </ul>
-                </div>
+                <station-picker name="dave" ids="stationIds"></station-picker>
 
                 <!--<div>
                     <a href="/WeatherStationServer/?LastHours=8760&amp;stationId=testStation">Last year</a>
