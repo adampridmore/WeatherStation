@@ -14,7 +14,7 @@
 //}]);
 
 angular
-    .module("myApp", [])
+    .module("myApp", ['ngRoute', 'ui.bootstrap'])
     .controller("myController",
     [
         "$scope", function($scope) {
