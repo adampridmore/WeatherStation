@@ -31,22 +31,3 @@ angular
             }
         }
     ]);
-
-angular.module("myApp")
-    .component("stationPicker",
-    {
-        bindings: {
-            ids: "<"
-        },
-        controller: [
-            function() {
-            }
-        ],
-        template:
-            "<div>" +
-                "  Weather Station:" +
-                "  <select>" +
-                "    <option ng-repeat='id in $ctrl.ids' value='{{id}}'>{{id}}</option>" +
-                "  </select>" +
-                "</div>"
-    });
