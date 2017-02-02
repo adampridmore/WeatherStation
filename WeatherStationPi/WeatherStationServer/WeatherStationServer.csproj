@@ -189,6 +189,8 @@
     <Content Include="Index.html" />
     <Content Include="Scripts\app\Component\stationPicker-template.html" />
     <Content Include="Scripts\app\Component\stationPicker.js" />
+    <Content Include="Scripts\app\Component\weatherPage-template.html" />
+    <Content Include="Scripts\app\Component\weatherPage.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.1.1-vsdoc.js" />

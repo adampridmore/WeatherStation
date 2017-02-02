@@ -9,6 +9,7 @@
   <style>
     [ng-cloak] { display: none !important; }
   </style>
+  <base href='/WeatherStationServer/index.html'/>
 
   <!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
   <!--<script type="text/javascript">google.load('visualization', '1', { 'packages': ['corechart', 'gauge'] });</script>-->
@@ -42,6 +43,9 @@
 <div class="container body-content">
 
   <div class="row">
+    <a href="/WeatherStationServer/index.html/page/station">MyPage</a>
+    <ng-view></ng-view>
+
     <h1>My Weather Station</h1>
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -115,5 +119,6 @@
 
 <script src="Scripts/app/app.js"></script>
 <script src="Scripts/app/Component/stationPicker.js"></script>
+<script src="Scripts/app/Component/weatherPage.js"></script>
 </body>
 </html>
