@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
 
 namespace WeatherStationServer
@@ -10,6 +11,7 @@ namespace WeatherStationServer
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            Bundles.RegisterBundles(BundleTable.Bundles);
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿<div class="dropdown">
+﻿<div>
   Weather Station:
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    testStation
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    <li ng-repeat="id in $ctrl.ids">
-      <a href="/WeatherStationServer/Index.html/station/stationId={{id}}">{{id}}</a>
-    </li>
-  </ul>
+  <div class="btn-group" uib-dropdown is-open="status.isopen">
+    <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
+      Menu
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+      <li data-ng-repeat="id in $ctrl.ids" role="menuitem"><a href="{{'/V2/' + id}}">{{id}}</a></li>
+    </ul>
+  </div>
 </div>
