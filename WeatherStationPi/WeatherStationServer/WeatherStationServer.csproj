@@ -200,10 +200,11 @@
     <Content Include="Scripts\angular-route.min.js.map" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Index.html" />
-    <Content Include="Scripts\app\Component\stationPicker-template.html" />
-    <Content Include="Scripts\app\Component\stationPicker.js" />
-    <Content Include="Scripts\app\Component\weatherPage-template.html" />
-    <Content Include="Scripts\app\Component\weatherPage.js" />
+    <Content Include="Scripts\app\Component\stationPicker\stationPicker-template.html" />
+    <Content Include="Scripts\app\Component\stationPicker\stationPicker.js" />
+    <Content Include="Scripts\app\Component\weatherPage\weatherPage-template.html" />
+    <Content Include="Scripts\app\Component\weatherPage\weatherPage.js" />
+    <Content Include="Scripts\app\routing.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.1.1-vsdoc.js" />
@@ -242,6 +243,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Model\Home\" />
+    <Folder Include="Scripts\app\Views\" />
     <Folder Include="Views\About\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>
