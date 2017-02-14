@@ -1,5 +1,5 @@
 ﻿(function() {
-    var app = angular.module("myApp", ['ngRoute', 'ui.bootstrap']);
+    var app = angular.module("myApp", ["ngRoute", "ui.bootstrap"]);
 
     app.controller("myController",
     [
@@ -17,6 +17,4 @@
             }
         }
     ]);
-
-
 })();

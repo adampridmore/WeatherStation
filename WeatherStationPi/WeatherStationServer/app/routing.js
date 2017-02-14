@@ -3,16 +3,16 @@
         $locationProvider.html5Mode(true);
         $routeProvider.when("/V2/MyWeatherStation",
             {
-                template: '<weather-page name="{{pageName}}"></weather-page>',
+                templateUrl: "app/Views/myWeatherStation/myWeatherStationView-template.html",
                 controller: "myWeatherStationView",
                 controllerAs : "vw"
             })
             .otherwise({
-                template: '<weather-page name="default"></state-page>'
+                template: "<h1>Otherwise</h1>"
             });
     }
 
     angular
         .module("myApp")
-        .config(['$locationProvider', '$routeProvider', configFunction]);
+        .config(["$locationProvider", "$routeProvider", configFunction]);
 })();

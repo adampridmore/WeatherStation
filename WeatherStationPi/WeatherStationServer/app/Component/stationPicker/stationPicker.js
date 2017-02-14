@@ -12,6 +12,6 @@
                 ids: "<"
             },
             controller: [controllerFunction],
-            templateUrl: "Scripts/app/Component/stationPicker/stationPicker-template.html"
+            templateUrl: "app/Component/stationPicker/stationPicker-template.html"
         });
 })();

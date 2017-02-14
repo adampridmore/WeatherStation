@@ -128,7 +128,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\app\app.js" />
+    <Content Include="app\app.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -199,13 +199,11 @@
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-route.min.js.map" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
-    <Content Include="Scripts\app\Component\stationPicker\stationPicker-template.html" />
-    <Content Include="Scripts\app\Component\stationPicker\stationPicker.js" />
-    <Content Include="Scripts\app\Component\weatherPage\weatherPage-template.html" />
-    <Content Include="Scripts\app\Component\weatherPage\weatherPage.js" />
-    <Content Include="Scripts\app\routing.js" />
-    <Content Include="Scripts\app\Views\myWeatherStation\myWeatherStationView-template.html" />
-    <Content Include="Scripts\app\Views\myWeatherStation\myWeatherStationView.js" />
+    <Content Include="app\Component\stationPicker\stationPicker-template.html" />
+    <Content Include="app\Component\stationPicker\stationPicker.js" />
+    <Content Include="app\routing.js" />
+    <Content Include="app\Views\myWeatherStation\myWeatherStationView-template.html" />
+    <Content Include="app\Views\myWeatherStation\myWeatherStationView.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.1.1-vsdoc.js" />

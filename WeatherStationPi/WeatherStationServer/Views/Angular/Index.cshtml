@@ -47,65 +47,13 @@
 <div class="container body-content">
 
   <div class="row">
-    <a href="~/V2/page/station">MyPage</a>
     <ng-view></ng-view>
-
-    <h1>My Weather Station</h1>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <station-picker ids="stationIds"></station-picker>
-      </div>
-
-      @*<div class="panel-body">
-            <table class="table table-striped">
-              <thead class="thead-default">
-              <tr>
-                <th>Sensor</th>
-                <th>Current reading</th>
-                <th>Reading timestamp</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td>
-                  <a href="/WeatherStationServer/Sensor?stationId=testStation&amp;sensorType=Temperature&amp;size=550&amp;reloadSeconds=60">Temperature</a>
-                </td>
-                <td>27.6231250762939</td>
-                <td>2016-11-17T17:42:29</td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="/WeatherStationServer/Sensor?stationId=testStation&amp;sensorType=Humidity&amp;size=550&amp;reloadSeconds=60">Humidity</a>
-                </td>
-                <td>40.1887130737305</td>
-                <td>2016-11-17T17:42:20</td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="/WeatherStationServer/Sensor?stationId=testStation&amp;sensorType=Pressure&amp;size=550&amp;reloadSeconds=60">Pressure</a>
-                </td>
-                <td>971.98583984375</td>
-                <td>2016-11-17T17:42:20</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>*@
-    </div>
     <hr/>
     <footer>
       <p>&copy; 2017 - WeatherStation (Version 10)</p>
     </footer>
   </div>
 </div>
-
-{{message}}
-
-@*<script src="Scripts/modernizr-2.8.3.js"></script>
-<script src="~/Scripts/jquery-3.1.1.js"></script>
-<script src="~/Scripts/bootstrap.js"></script>*@
-
-@*<script src="~/Scripts/angular.js"></script>*@
-@*<script src="~/Scripts/angular-route.js"></script>*@
 
 @Scripts.Render("~/bundles/angular")
 @Scripts.Render("~/bundles/bootstrap")

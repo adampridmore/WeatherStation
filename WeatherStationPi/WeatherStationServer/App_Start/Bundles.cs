@@ -18,7 +18,7 @@ namespace WeatherStationServer
             ); 
 
             bundles.Add(new ScriptBundle("~/bundles/app")
-                    .IncludeDirectory("~/Scripts/app", "*.js", true)
+                    .IncludeDirectory("~/app", "*.js", true)
             );
 
             //BundleTable.EnableOptimizations = true;
