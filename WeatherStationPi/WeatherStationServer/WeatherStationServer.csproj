@@ -199,7 +199,6 @@
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-route.min.js.map" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
-    <Content Include="Index.html" />
     <Content Include="Scripts\app\Component\stationPicker\stationPicker-template.html" />
     <Content Include="Scripts\app\Component\stationPicker\stationPicker.js" />
     <Content Include="Scripts\app\Component\weatherPage\weatherPage-template.html" />
