@@ -129,6 +129,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\Views\allWeatherSensorsView\allWeatherSensorsView-template.html" />
+    <Content Include="app\Views\allWeatherSensorsView\allWeatherSensorsView.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -202,8 +204,8 @@
     <Content Include="app\Component\stationPicker\stationPicker-template.html" />
     <Content Include="app\Component\stationPicker\stationPicker.js" />
     <Content Include="app\routing.js" />
-    <Content Include="app\Views\myWeatherStation\myWeatherStationView-template.html" />
-    <Content Include="app\Views\myWeatherStation\myWeatherStationView.js" />
+    <Content Include="app\Views\myWeatherStationView\myWeatherStationView-template.html" />
+    <Content Include="app\Views\myWeatherStationView\myWeatherStationView.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.1.1-vsdoc.js" />
