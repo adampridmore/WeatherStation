@@ -205,6 +205,8 @@
     <Content Include="Scripts\app\Component\weatherPage\weatherPage-template.html" />
     <Content Include="Scripts\app\Component\weatherPage\weatherPage.js" />
     <Content Include="Scripts\app\routing.js" />
+    <Content Include="Scripts\app\Views\myWeatherStation\myWeatherStationView-template.html" />
+    <Content Include="Scripts\app\Views\myWeatherStation\myWeatherStationView.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.1.1-vsdoc.js" />
@@ -243,7 +245,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Model\Home\" />
-    <Folder Include="Scripts\app\Views\" />
     <Folder Include="Views\About\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>

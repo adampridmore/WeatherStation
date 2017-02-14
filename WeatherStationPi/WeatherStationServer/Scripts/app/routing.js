@@ -1,15 +1,11 @@
 ﻿(function() {
     var configFunction = function($locationProvider, $routeProvider) {
         $locationProvider.html5Mode(true);
-        $routeProvider.when("/index.html/page/:pageName",
+        $routeProvider.when("/V2/MyWeatherStation",
             {
                 template: '<weather-page name="{{pageName}}"></weather-page>',
-                controller: [
-                    '$scope', '$routeParams', function($scope, $routeParams) {
-                        console.log($routeParams);
-                        $scope.pageName = $routeParams.pageName;
-                    }
-                ]
+                controller: "myWeatherStationView",
+                controllerAs : "vw"
             })
             .otherwise({
                 template: '<weather-page name="default"></state-page>'
