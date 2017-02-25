@@ -19,13 +19,13 @@ namespace WeatherStationServer.Controllers
             var dateTimeRange = CreateDateTimeRange(lastHours);
 
             var repository = new DataPointRepository();
-            var summary = repository.GetSummaryReport();
+            var stationIds = repository.GetStationIds();
 
-            stationId = GetStattionId(summary.StationIds, stationId);
+            stationId = GetStattionId(stationIds, stationId);
 
             var model = new StationDetailsModel
             {
-                AllStationIds = summary.StationIds,
+                AllStationIds = stationIds,
                 StationId = stationId,
                 ChartHtmlList = CreateChartHtmlList(stationId, dateTimeRange),
                 LatestDataPoints = repository.GetLastValues(stationId)
