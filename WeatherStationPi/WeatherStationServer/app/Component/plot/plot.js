@@ -5,7 +5,7 @@
 
         var createChartData = function(data) {
             var rows = data.map(function(sensorValue) {
-                return [new Date(sensorValue.timestampUtc), sensorValue.value];
+                return [new Date(sensorValue.t), sensorValue.v];
             });
 
             var dataTable = new google.visualization.DataTable();

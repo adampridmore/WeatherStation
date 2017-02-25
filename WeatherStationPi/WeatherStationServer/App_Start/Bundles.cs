@@ -1,4 +1,5 @@
-﻿using System.Web.Optimization;
+﻿using System.Configuration;
+using System.Web.Optimization;
 
 namespace WeatherStationServer
 {
@@ -21,7 +22,18 @@ namespace WeatherStationServer
                     .IncludeDirectory("~/app", "*.js", true)
             );
 
-            //BundleTable.EnableOptimizations = true;
+            BundleTable.EnableOptimizations = IsBundleTableEnableOptimizationsEnabled();
+        }
+
+        private static bool IsBundleTableEnableOptimizationsEnabled()
+        {
+            bool value;
+            if (bool.TryParse(ConfigurationManager.AppSettings["BundleTable.EnableOptimizations"], out value))
+            {
+                return value;
+            }
+
+            return false;
         }
     }
 }

@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Repository;
+using Repository.ExtensionMethods;
 using Repository.RepositoryDto;
 using WeatherStationServer.Controllers.Api.Dto;
 
@@ -75,11 +77,11 @@ namespace WeatherStationServer.Controllers.Api
         {
             return new SensorValue
             {
-                Value = dataPoint.SensorValueNumber,
-                TimestampUtc = dataPoint.SensorTimestampUtc
+                V = Math.Round(dataPoint.SensorValueNumber, 2),
+                T = dataPoint.SensorTimestampUtc.GetCurrentUnixTimestampMillis()// ToString("s")
             };
         }
-
+        
         private List<LastValue> ToLastValues(List<DataPoint> lastValues)
         {
             return lastValues
