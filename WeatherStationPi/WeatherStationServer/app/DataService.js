@@ -27,7 +27,7 @@
 
         var getStationData = function(stationId) {
             // TODO - should encode station id onto URL
-            var url = "api/Station/data/" + stationId;
+            var url = "api/Station/lastValues/" + stationId;
             return $http
                 .get(url)
                 .then(function(response) {
