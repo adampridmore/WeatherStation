@@ -21,7 +21,7 @@ namespace WeatherStationServer.Controllers
             var repository = new DataPointRepository();
             var stationIds = repository.GetStationIds();
 
-            stationId = GetStattionId(stationIds, stationId);
+            stationId = GetStationId(stationIds, stationId);
 
             var model = new StationDetailsModel
             {
@@ -80,7 +80,7 @@ namespace WeatherStationServer.Controllers
             return chart.GetInlineHtml();
         }
 
-        private string GetStattionId(List<string> allStationIds, string stationId)
+        private string GetStationId(List<string> allStationIds, string stationId)
         {
             if (!string.IsNullOrWhiteSpace(stationId))
             {
