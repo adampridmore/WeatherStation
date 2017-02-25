@@ -3,9 +3,8 @@
         var vm = this;
         vm.elementId = uniqueIdService.getId();
 
-        var createChartData = function(data)
-        {
-            var rows = data.map(function (sensorValue) {
+        var createChartData = function(data) {
+            var rows = data.map(function(sensorValue) {
                 return [new Date(sensorValue.timestampUtc), sensorValue.value];
             });
 
@@ -27,7 +26,13 @@
             var chart = new google.visualization.LineChart(div);
             var options = {
                 title: vm.title,
-                legend: "none"
+                legend: "none",
+                width: 900,
+                height: 500,
+                vAxis: {
+                    // TODO Pass from template binding
+                    //title: "\u2103", // Degrees C character,
+                }
             };
 
             var dataTable = createChartData(vm.data);
@@ -40,7 +45,6 @@
         };
 
         this.$onChanges = () => {
-            console.log("data: " + vm.data);
         }
     };
 
