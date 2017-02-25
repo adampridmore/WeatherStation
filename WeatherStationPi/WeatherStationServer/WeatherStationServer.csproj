@@ -142,8 +142,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\Component\plot\plot-template.html" />
+    <Content Include="app\Component\plot\plot.js" />
     <Content Include="app\Component\stationLastSensorValues\stationLastSensorValues-template.html" />
     <Content Include="app\Component\stationLastSensorValues\stationLastSensorValues.js" />
+    <Content Include="app\Modules\UniqueIdService.js" />
     <Content Include="app\Views\allWeatherSensorsView\allWeatherSensorsView-template.html" />
     <Content Include="app\Views\allWeatherSensorsView\allWeatherSensorsView.js" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -238,7 +241,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\DataService.js" />
+    <Content Include="app\Modules\DataService.js" />
     <Compile Include="App_Start\Bundles.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />

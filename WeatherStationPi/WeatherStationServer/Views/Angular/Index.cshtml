@@ -13,9 +13,6 @@
     [ng-cloak] { display: none !important; }
   </style>
   <base href="~/"/>
-
-  <!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
-  <!--<script type="text/javascript">google.load('visualization', '1', { 'packages': ['corechart', 'gauge'] });</script>-->
 </head>
 <body ng-cloak>
 
@@ -58,6 +55,9 @@
 @Scripts.Render("~/bundles/angular")
 @Scripts.Render("~/bundles/bootstrap")
 @Scripts.Render("~/bundles/app")
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">google.load('visualization', '1', { 'packages': ['corechart', 'gauge'] });</script>
 
 </body>
 </html>
