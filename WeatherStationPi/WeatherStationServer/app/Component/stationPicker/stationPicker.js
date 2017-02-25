@@ -1,16 +1,24 @@
 ﻿(function() {
     var controllerFunction = function() {
         var vm = this;
-        this.$onInit = () => {
-            if (vm.ids === undefined) {
-                vm.ids = [];
-            }
 
+        var setDefaultSelectedStation = () => {
             if (vm.currentStationId === undefined) {
                 if (vm.ids.length > 0) {
                     vm.currentStationId = vm.ids[0];
                 }
             }
+        }
+
+        this.$onInit = () => {
+            if (vm.ids === undefined) {
+                vm.ids = [];
+            }
+            setDefaultSelectedStation();
+        };
+
+        this.$onChanges = () => {
+            setDefaultSelectedStation();
         }
     };
 
