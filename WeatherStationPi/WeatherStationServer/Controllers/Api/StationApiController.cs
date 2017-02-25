@@ -26,12 +26,12 @@ namespace WeatherStationServer.Controllers.Api
 
         [HttpGet]
         [Route("api/station/lastValues/{stationId}")]
-        public JsonResult<StationData> GetStationData(string stationId)
+        public JsonResult<LastStationData> GetLastStationValues(string stationId)
         {
             var repository = new DataPointRepository();
             var lastValues = repository.GetLastValues(stationId);
 
-            var stationData = new StationData
+            var stationData = new LastStationData
             {
                 StationId = stationId,
                 LastValues = ToLastValues(lastValues)
