@@ -59,8 +59,7 @@ namespace WeatherStationServer.api
 
             return new GetDataPointsResponse {DataPoints = dataPoints.Select(ToDataPointApi).ToList()};
         }
-
-
+        
         public GetDataPointsResponse GetLastStationDataPoints(string stationId)
         {
             var repository = new DataPointRepository();

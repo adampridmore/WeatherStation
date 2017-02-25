@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Repository.RepositoryDto;
 
@@ -46,14 +47,30 @@ namespace Repository.UnitTests
             Assert.AreEqual(1, allValues.Count);
         }
 
-        private static DataPoint CreateDataPoint()
+        [TestMethod]
+        public void Get_stationIds()
+        {
+            var repository = new DataPointRepository(ConnectionString);
+
+            repository.DeleteAll();
+            repository.Save(CreateDataPoint(stationId:"s1"));
+            repository.Save(CreateDataPoint(stationId:"s1"));
+            repository.Save(CreateDataPoint(stationId:"s2"));
+
+            //var stationIds = repository.GetSummaryReport().StationIds;
+            var stationIds = repository.GetStationIds();
+
+            CollectionAssert.AreEqual(new List<string> {"s1","s2"}, stationIds);
+        }
+
+        private static DataPoint CreateDataPoint(string stationId = "MyStationId")
         {
             var dataPoint = new DataPoint
             {
                 ReceivedTimestampUtc = new DateTime(2001, 2, 3, 4, 5, 6),
                 SensorTimestampUtc = new DateTime(2001, 2, 3, 4, 5, 6),
                 SensorType = "MyTestSensor",
-                StationId = "MyStationId"
+                StationId = stationId
             };
             return dataPoint;
         }

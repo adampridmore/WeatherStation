@@ -75,6 +75,20 @@ ORDER BY StationId, SensorType";
             }
         }
 
+        public List<string> GetStationIds()
+        {
+            using (var context = CreateContext())
+            {
+                var query = context
+                    .DataPoints
+                    .AsQueryable()
+                    .GroupBy(d => d.StationId)
+                    .Select(g => g.Key);
+
+                return query.ToList();
+            }
+        }
+
         private WeatherStationDbContext CreateContext()
         {
             return new WeatherStationDbContext(_nameOrConnectionString);

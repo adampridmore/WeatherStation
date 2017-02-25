@@ -3,6 +3,7 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Repository;
 
 namespace WeatherStationServer.Controllers.Api
 {
@@ -12,7 +13,11 @@ namespace WeatherStationServer.Controllers.Api
         [Route("api/station/getIds")]
         public JsonResult<StationIdsResponse> Get()
         {
-            var data = new StationIdsResponse(new List<string> {"1", "2", "3"});
+            var repository = new DataPointRepository();
+
+            var stationIds = repository.GetStationIds();
+
+            var data = new StationIdsResponse(stationIds);
             return ToJson(data);
         }
 
