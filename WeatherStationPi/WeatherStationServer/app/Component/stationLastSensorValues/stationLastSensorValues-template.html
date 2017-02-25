@@ -1,0 +1,22 @@
+﻿<div>
+  <table class="table table-striped">
+    <thead class="thead-default">
+    <tr>
+      <th>Sensor</th>
+      <th>Current reading</th>
+      <th>Reading timestamp</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-ng-repeat="sensorValue in $ctrl.sensorValues">
+      <td>
+        <!--TODO - Make hyperlink to sensor guage-->
+        <!--<a href="/Sensor?stationId=weatherStation1_raspberrypi&amp;sensorType=Temperature&amp;size=550&amp;reloadSeconds=60">Temperature</a>-->
+        {{sensorValue.sensorType}}
+      </td>
+      <td>{{sensorValue.value}}</td>
+      <td>{{sensorValue.sensorTimestampUtc}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

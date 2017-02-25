@@ -142,6 +142,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\Component\stationLastSensorValues\stationLastSensorValues-template.html" />
+    <Content Include="app\Component\stationLastSensorValues\stationLastSensorValues.js" />
     <Content Include="app\Views\allWeatherSensorsView\allWeatherSensorsView-template.html" />
     <Content Include="app\Views\allWeatherSensorsView\allWeatherSensorsView.js" />
     <Content Include="Content\bootstrap-theme.css" />

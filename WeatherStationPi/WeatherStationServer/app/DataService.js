@@ -25,8 +25,23 @@
             }
         };
 
+        var getStationData = function(stationId) {
+            // TODO - should encode station id onto URL
+            var url = "api/Station/data/" + stationId;
+            return $http
+                .get(url)
+                .then(function(response) {
+                        var stationData = response.data;
+                        return stationData;
+                    },
+                    function(error) {
+                        console.log(error);
+                    });
+        }
+
         return {
-            getStationIds: getStationIds
+            getStationIds: getStationIds,
+            getStationData: getStationData
         };
     };
 
