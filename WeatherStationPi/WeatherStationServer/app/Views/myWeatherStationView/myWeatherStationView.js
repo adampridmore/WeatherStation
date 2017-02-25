@@ -7,7 +7,7 @@
 
         dataService.getStationIds()
             .then(function (stationIds) {
-                console.log(stationIds);
+                //console.log(stationIds);
                 $scope.stationIds = stationIds;
             });
 
