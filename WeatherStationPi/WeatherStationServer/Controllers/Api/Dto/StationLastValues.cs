@@ -2,7 +2,7 @@
 
 namespace WeatherStationServer.Controllers.Api.Dto
 {
-    public class LastStationData
+    public class StationLastValues
     {
         public string StationId { get; set; }
         public List<LastValue> LastValues { get; set; }
