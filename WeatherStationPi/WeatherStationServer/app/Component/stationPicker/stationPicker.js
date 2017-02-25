@@ -1,7 +1,16 @@
 ﻿(function() {
     var controllerFunction = function() {
+        var vm = this;
         this.$onInit = () => {
-            // console.log(this.ids);
+            if (vm.ids === undefined) {
+                vm.ids = [];
+            }
+
+            if (vm.currentStationId === undefined) {
+                if (vm.ids.length > 0) {
+                    vm.currentStationId = vm.ids[0];
+                }
+            }
         }
     };
 
@@ -9,7 +18,8 @@
         .component("stationPicker",
         {
             bindings: {
-                ids: "<"
+                ids: "<",
+                currentStationId: "<"
             },
             controller: [controllerFunction],
             templateUrl: "app/Component/stationPicker/stationPicker-template.html"

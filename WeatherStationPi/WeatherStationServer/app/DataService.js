@@ -2,13 +2,14 @@
     var dataService = function($http, $q) {
         var service = {
             getStationIds: function() {
-                var url = "api/Station";
+                var url = "api/Station/getIds";
                 return $http
                     .get(url)
-                    .then(function(responce) {
-                        var stationIdsResponse = responce.data;
-                        //console.table(people);
-                        return stationIdsResponse.stationIds;
+                    .then(function (response) {
+                        var stationIds = response.data.ids;
+                        return stationIds;
+                    },function(error) {
+                        console.log(error);
                     });
             }
         };
