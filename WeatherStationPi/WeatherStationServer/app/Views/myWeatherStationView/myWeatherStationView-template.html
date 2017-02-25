@@ -5,6 +5,8 @@
   </div>
   <div class="panel-body">
     <station-last-sensor-values sensor-values="lastStationData"></station-last-sensor-values>
-    <plot title="my title"></plot>
+    <div data-ng-repeat="sensor in sensors">
+      <plot title="{{sensor.sensorType}}" data="sensor.values" data="sensor.values"></plot>
+    </div>
   </div>
 </div>

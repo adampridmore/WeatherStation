@@ -3,24 +3,35 @@
         var vm = this;
         vm.elementId = uniqueIdService.getId();
 
+        var createChartData = function(data)
+        {
+            var rows = data.map(function (sensorValue) {
+                return [new Date(sensorValue.timestampUtc), sensorValue.value];
+            });
+
+            var dataTable = new google.visualization.DataTable();
+            dataTable.addColumn("date", "Time");
+            dataTable.addColumn("number", vm.title);
+            dataTable.addRows(rows);
+
+            return dataTable;
+        }
+
         var renderChart = function() {
-            var data = google.visualization.arrayToDataTable([
-                ['Year', 'Sales', 'Expenses'],
-                ['2004', 1000, 400],
-                ['2005', 1170, 460],
-                ['2006', 660, 1120],
-                ['2007', 1030, 540]
-            ]);
-            var options = {
-                title: vm.title
-            };
+            if (vm.data === undefined) {
+                return;
+            }
 
             var div = document.getElementById(vm.elementId);
-            console.log(div);
 
             var chart = new google.visualization.LineChart(div);
+            var options = {
+                title: vm.title,
+                legend: "none"
+            };
 
-            chart.draw(data, options);
+            var dataTable = createChartData(vm.data);
+            chart.draw(dataTable, options);
         };
 
         this.$postLink = () => {
@@ -29,6 +40,7 @@
         };
 
         this.$onChanges = () => {
+            console.log("data: " + vm.data);
         }
     };
 
@@ -37,7 +49,7 @@
         {
             bindings: {
                 title: "@",
-                dataPoints: "<"
+                data: "<"
             },
             controller: ["uniqueIdService", "$timeout", controllerFunction],
             templateUrl: "app/Component/plot/plot-template.html"

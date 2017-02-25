@@ -25,7 +25,7 @@
             }
         };
 
-        var getStationData = function(stationId) {
+        var getLastStationData = function(stationId) {
             // TODO - should encode station id onto URL
             var url = "api/Station/lastValues/" + stationId;
             return $http
@@ -37,11 +37,24 @@
                     function(error) {
                         console.log(error);
                     });
-        }
+        };
+
+        var getStationSensorsDataPoints = function(stationId) {
+            var url = "api/station/dataPoints/" + stationId;
+            return $http
+                .get(url)
+                .then(function(response) {
+                        return response.data;
+                    },
+                    function(error) {
+                        console.log(error);
+                    });
+        };
 
         return {
             getStationIds: getStationIds,
-            getStationData: getStationData
+            getLastStationData: getLastStationData,
+            getStationSensorsDataPoints: getStationSensorsDataPoints
         };
     };
 
