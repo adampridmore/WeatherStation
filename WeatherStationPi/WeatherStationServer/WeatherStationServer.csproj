@@ -242,7 +242,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AngularController.cs" />
-    <Compile Include="Controllers\Api\StationController.cs" />
+    <Compile Include="Controllers\Api\Dto\LastValue.cs" />
+    <Compile Include="Controllers\Api\StationApiController.cs" />
+    <Compile Include="Controllers\Api\Dto\StationIdsResponse.cs" />
+    <Compile Include="Controllers\Api\Dto\StationData.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SensorController.cs" />
     <Compile Include="Controllers\StationController.cs" />
