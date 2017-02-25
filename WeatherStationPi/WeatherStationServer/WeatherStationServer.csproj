@@ -245,6 +245,8 @@
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AngularController.cs" />
     <Compile Include="Controllers\Api\Dto\LastValue.cs" />
+    <Compile Include="Controllers\Api\Dto\SensorValues.cs" />
+    <Compile Include="Controllers\Api\Dto\SensorValue.cs" />
     <Compile Include="Controllers\Api\StationApiController.cs" />
     <Compile Include="Controllers\Api\Dto\StationIdsResponse.cs" />
     <Compile Include="Controllers\Api\Dto\StationLastValues.cs" />

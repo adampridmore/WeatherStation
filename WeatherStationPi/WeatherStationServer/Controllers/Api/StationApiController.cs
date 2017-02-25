@@ -45,9 +45,39 @@ namespace WeatherStationServer.Controllers.Api
         public JsonResult<StationDataPoints> GetStationDataPoints(string stationId)
         {
             var repository = new DataPointRepository();
-            //var summary = repository.GetDataPoints(stationId, "Temperature", DateTimeRange.Unbounded);
 
-            return ToJson(new StationDataPoints());
+            var dateTimeRange = DateTimeRange.Unbounded;
+
+            var sensorValuesList = SensorDetails.GetSensorTypeValues()
+                .SelectMany(type => repository.GetDataPoints(stationId, type, dateTimeRange))
+                .GroupBy(dp => dp.SensorType)
+                .Select(ToSensorValues)
+                .ToList()
+                ;
+
+            return ToJson(new StationDataPoints
+            {
+                StationId = stationId,
+                SensorValues = sensorValuesList
+            });
+        }
+
+        private SensorValues ToSensorValues(IGrouping<string, DataPoint> grouping)
+        {
+            return new SensorValues
+            {
+                SensorType = grouping.Key,
+                Values = grouping.Select(DataPointToSensorValue).ToList()
+            };
+        }
+
+        private SensorValue DataPointToSensorValue(DataPoint dataPoint)
+        {
+            return new SensorValue
+            {
+                Value = dataPoint.SensorValueNumber,
+                TimestampUtc = dataPoint.SensorTimestampUtc
+            };
         }
 
         private List<LastValue> ToLastValues(List<DataPoint> lastValues)
