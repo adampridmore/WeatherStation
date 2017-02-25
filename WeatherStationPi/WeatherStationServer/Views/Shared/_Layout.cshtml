@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using WeatherStationServer.ExtensionMethods
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -37,9 +38,9 @@
 <div class="container body-content">
     @RenderBody()
     <hr/>
-    <footer>
-        <p>&copy; @DateTime.Now.Year - WeatherStation (Version 10)</p>
-    </footer>
+  <footer>
+    <p>&copy; @DateTime.Now.Year - WeatherStation (Version @ApplicationVersion.Version())</p>
+  </footer>
 </div>
 
 <script src="~/Scripts/bootstrap.min.js"></script>

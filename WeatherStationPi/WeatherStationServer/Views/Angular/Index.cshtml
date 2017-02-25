@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization
+@using WeatherStationServer.ExtensionMethods
 @{
   Layout = "";
 }<!DOCTYPE html>
@@ -47,7 +48,7 @@
     <ng-view></ng-view>
     <hr/>
     <footer>
-      <p>&copy; 2017 - WeatherStation (Version 10)</p>
+      <p>&copy; @DateTime.Now.Year - WeatherStation (Version @ApplicationVersion.Version())</p>
     </footer>
   </div>
 </div>
