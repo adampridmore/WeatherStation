@@ -44,11 +44,11 @@ namespace WeatherStationServer.Controllers.Api
 
         [HttpGet]
         [Route("api/station/dataPoints/{stationId}")]
-        public JsonResult<StationDataPoints> GetStationDataPoints(string stationId)
+        public JsonResult<StationDataPoints> GetStationDataPoints(string stationId, int lastHours = 24)
         {
             var repository = new DataPointRepository();
 
-            var dateTimeRange = DateTimeRange.Unbounded;
+            var dateTimeRange = StationController.CreateDateTimeRange(lastHours.ToString());
 
             var sensorValuesList = SensorDetails.GetSensorTypeValues()
                 .SelectMany(type => repository.GetDataPoints(stationId, type, dateTimeRange))

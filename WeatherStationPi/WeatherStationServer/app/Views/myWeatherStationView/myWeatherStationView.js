@@ -2,6 +2,9 @@
     var controller = function($routeParams, $scope, dataService) {
         var currentStationId = $routeParams.stationId;
 
+        var lastHours = $routeParams.lastHours;
+        //console.log("LH:" + lastHours);
+
         var loadStationLastData = function() {
             if (currentStationId === undefined) {
                 return;
@@ -17,7 +20,7 @@
             if (currentStationId === undefined) {
                 return;
             }
-            dataService.getStationSensorsDataPoints(currentStationId)
+            dataService.getStationSensorsDataPoints(currentStationId, lastHours)
                 .then(function(data) {
                     // {"sensorTimestampUtc":"2016-11-17T17:42:29.477","value":27.623125076293945,"sensorType":"Temperature"}
                     $scope.sensors = data.sensorValues;

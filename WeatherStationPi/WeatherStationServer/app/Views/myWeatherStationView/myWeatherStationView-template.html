@@ -2,6 +2,20 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <station-picker current-station-id="currentStationId" ids="stationIds"></station-picker>
+
+    <div>
+      <a href="V2/MyWeatherStation/{{currentStationId}}?lastHours=8760">Last year</a>
+    </div>
+    <div>
+      <a href="V2/MyWeatherStation/{{currentStationId}}?lastHours=720">Last month</a>
+    </div>
+    <div>
+      <a href="V2/MyWeatherStation/{{currentStationId}}?lastHours=168">Last week</a>
+    </div>
+    <div>
+      <a href="V2/MyWeatherStation/{{currentStationId}}?lastHours=24">Last day</a>
+    </div>
+
   </div>
   <div class="panel-body">
     <station-last-sensor-values sensor-values="lastStationData"></station-last-sensor-values>

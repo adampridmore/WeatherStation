@@ -34,7 +34,7 @@ namespace WeatherStationServer.Controllers
             return View(model);
         }
 
-        private DateTimeRange CreateDateTimeRange(string lastHours)
+        public static DateTimeRange CreateDateTimeRange(string lastHours)
         {
             if (string.IsNullOrWhiteSpace(lastHours))
             {
