@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Repository.RepositoryDto;
 
@@ -22,7 +23,7 @@ namespace Repository.UnitTests.RepositoryDto
             var expectedValue =
                 @"StationId: myStationId, SensorType: mySensorType, SensorValueNumber: 12, SensorTimestampUtc: 10/01/2001 12:45:30, ReceivedTimestampUtc: 11/01/2001 12:45:30";
 
-            Assert.AreEqual(expectedValue, dataPoint.ToString());
+            dataPoint.ToString().Should().Be(expectedValue);
         }
 
         [TestMethod]
@@ -35,11 +36,11 @@ namespace Repository.UnitTests.RepositoryDto
                 new DateTime(2001, 1, 10),
                 new DateTime(2001, 1, 11));
 
-            Assert.AreEqual("myStationId", dataPoint.StationId);
-            Assert.AreEqual("mySensorType", dataPoint.SensorType);
-            Assert.AreEqual(12, dataPoint.SensorValueNumber);
-            Assert.AreEqual(new DateTime(2001, 1, 10), dataPoint.SensorTimestampUtc);
-            Assert.AreEqual(new DateTime(2001, 1, 11), dataPoint.ReceivedTimestampUtc);
+            dataPoint.StationId.Should().Be("myStationId");
+            dataPoint.SensorType.Should().Be("mySensorType");
+            dataPoint.SensorValueNumber.Should().Be(12);
+            dataPoint.SensorTimestampUtc.Should().Be(new DateTime(2001, 1, 10));
+            dataPoint.ReceivedTimestampUtc.Should().Be(new DateTime(2001, 1, 11));
         }
 
         [TestMethod]
@@ -47,11 +48,11 @@ namespace Repository.UnitTests.RepositoryDto
         {
             var dataPoint = DataPoint.Empty();
 
-            Assert.AreEqual(null, dataPoint.StationId);
-            Assert.AreEqual(null, dataPoint.SensorType);
-            Assert.AreEqual(0, dataPoint.SensorValueNumber);
-            Assert.AreEqual(DateTime.MinValue, dataPoint.ReceivedTimestampUtc);
-            Assert.AreEqual(DateTime.MinValue, dataPoint.SensorTimestampUtc);
+            dataPoint.StationId.Should().BeNull();
+            dataPoint.SensorType.Should().BeNull();
+            dataPoint.SensorValueNumber.Should().Be(0);
+            dataPoint.ReceivedTimestampUtc.Should().Be(DateTime.MinValue);
+            dataPoint.SensorTimestampUtc.Should().Be(DateTime.MinValue);
         }
 
         [TestMethod]
@@ -59,7 +60,7 @@ namespace Repository.UnitTests.RepositoryDto
         {
             var dataPoint = new DataPoint {SensorType = "Temperature"};
 
-            Assert.AreEqual(SensorTypeEnum.Temperature, dataPoint.SensorTypeEnum);
+            dataPoint.SensorTypeEnum.Should().Be(SensorTypeEnum.Temperature);
         }
 
         [TestMethod]
@@ -67,7 +68,7 @@ namespace Repository.UnitTests.RepositoryDto
         {
             var dataPoint = new DataPoint {SensorType = "NotValid"};
 
-            Assert.IsNull(dataPoint.SensorTypeEnum);
+            dataPoint.SensorTypeEnum.Should().BeNull();
         }
 
         [TestMethod]
@@ -76,8 +77,8 @@ namespace Repository.UnitTests.RepositoryDto
             var dp1 = new DataPoint();
             var dp2 = new DataPoint();
 
-            Assert.IsTrue(DataPoint.IdentityEquals(dp1, dp2));
-            Assert.IsTrue(DataPoint.IdentityEquals(dp1, dp1));
+            DataPoint.IdentityEquals(dp1, dp2).Should().BeTrue();
+            DataPoint.IdentityEquals(dp1, dp1).Should().BeTrue();
         }
 
         [TestMethod]
@@ -114,12 +115,12 @@ namespace Repository.UnitTests.RepositoryDto
                 SensorTimestampUtc = new DateTime(2001, 1, 11)
             };
 
-            Assert.IsTrue(DataPoint.IdentityEquals(dp1, dp1));
-            Assert.IsTrue(DataPoint.IdentityEquals(dp1, dp2));
+            DataPoint.IdentityEquals(dp1, dp1).Should().BeTrue();
+            DataPoint.IdentityEquals(dp1, dp2).Should().BeTrue();
 
-            Assert.IsFalse(DataPoint.IdentityEquals(dp1, dp3));
-            Assert.IsFalse(DataPoint.IdentityEquals(dp1, dp4));
-            Assert.IsFalse(DataPoint.IdentityEquals(dp1, dp5));
+            DataPoint.IdentityEquals(dp1, dp3).Should().BeFalse();
+            DataPoint.IdentityEquals(dp1, dp4).Should().BeFalse();
+            DataPoint.IdentityEquals(dp1, dp5).Should().BeFalse();
         }
 
         [TestMethod]
@@ -127,9 +128,9 @@ namespace Repository.UnitTests.RepositoryDto
         {
             var dp1 = new DataPoint {StationId = "s1"};
 
-            Assert.IsTrue(DataPoint.IdentityEquals(null, null));
-            Assert.IsFalse(DataPoint.IdentityEquals(dp1, null));
-            Assert.IsFalse(DataPoint.IdentityEquals(null, dp1));
+            DataPoint.IdentityEquals(null, null).Should().BeTrue();
+            DataPoint.IdentityEquals(dp1, null).Should().BeFalse();
+            DataPoint.IdentityEquals(null, dp1).Should().BeFalse();
         }
     }
 }
