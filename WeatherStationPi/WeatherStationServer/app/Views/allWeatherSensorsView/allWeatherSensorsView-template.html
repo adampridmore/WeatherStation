@@ -1,4 +1,4 @@
-﻿<h1>All Weather Sensors</h1>
+﻿<h1>All Weather Stations Sensors</h1>
 <table class="table table-striped">
   <thead class="thead-default">
   <tr>
@@ -10,7 +10,9 @@
   </tr>
   </thead>
   <tr data-ng-repeat="sensor in sensorList">
-    <td>{{sensor.stationId}}</td>
+    <td>
+      <a href="/V2/MyWeatherStation/{{sensor.stationId}}">{{sensor.stationId}}</a>
+    </td>
     <td>{{sensor.sensorType}}</td>
     <td>{{sensor.count}}</td>
     <td>{{sensor.min}}</td>
