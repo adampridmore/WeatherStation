@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Linq;
@@ -56,20 +57,24 @@ namespace Repository
         {
             using (var context = CreateContext())
             {
-                const string sql = @"
-SELECT StationId,SensorType, COUNT(*) AS Count, MIN(SensorTimestampUtc) AS Min,MAX(SensorTimestampUtc) AS Max
-FROM DataPoints
-GROUP BY StationId, SensorType
-ORDER BY StationId, SensorType";
+                var query =
+                        context
+                            .DataPoints
+                            .AsQueryable()
+                            .GroupBy(dp => new {dp.StationId, dp.SensorType})
+                            .Select(g => new SensorDetails
+                            {
+                                StationId = g.Key.StationId,
+                                SensorType= g.Key.SensorType,
+                                Count = g.Count(),
+                                Max = g.Max(dp=>dp.SensorTimestampUtc),
+                                Min= g.Min(dp=>dp.SensorTimestampUtc),
+                            })
+                            .OrderBy(dp => new {dp.StationId, dp.SensorType})
+                    ;
 
-                var results = context.Database.SqlQuery<SensorDetails>(sql);
-
-                var sensorDetails = results.ToList();
-
-                var stationIds = sensorDetails
-                    .GroupBy(s => s.StationId)
-                    .Select(g => g.Key)
-                    .ToList();
+                var sensorDetails = query.ToList();
+                var stationIds = sensorDetails.GroupBy(s => s.StationId).Select(g => g.Key).ToList();
 
                 return new SummaryReport(sensorDetails, stationIds);
             }
