@@ -10,11 +10,12 @@
             };
         };
 
+        var myWeatherStationView = createController("myWeatherStationView");
         $routeProvider
-            .when("/V2/MyWeatherStation/:stationId", createController("myWeatherStationView"))
-            .when("/V2/MyWeatherStation", createController("myWeatherStationView"))
+            .when("/V2/MyWeatherStation/:stationId", myWeatherStationView)
+            .when("/V2/MyWeatherStation", myWeatherStationView)
             .when("/V2/AllWeatherSensors", createController("allWeatherSensorsView"))
-            .otherwise({ template: "<h1>Otherwise</h1>" });
+            .otherwise(myWeatherStationView);
     };
     angular
         .module("myApp")
