@@ -14,6 +14,7 @@ namespace Repository.UnitTests.RepositoryDto
             Assert.IsNull(range.Start);
             Assert.IsNull(range.End);
         }
+
         [TestMethod]
         public void Last24Hours_test()
         {
@@ -23,8 +24,8 @@ namespace Repository.UnitTests.RepositoryDto
             Assert.AreEqual(DateTimeKind.Utc, range.Start.Value.Kind);
             Assert.IsNull(range.End);
 
-            Assert.IsTrue(range.Start.Value > DateTime.UtcNow -TimeSpan.FromDays(1) - TimeSpan.FromMinutes(1));
-            Assert.IsTrue(range.Start.Value < DateTime.UtcNow -TimeSpan.FromDays(1) + TimeSpan.FromMinutes(1));
+            Assert.IsTrue(range.Start.Value > DateTime.UtcNow - TimeSpan.FromDays(1) - TimeSpan.FromMinutes(1));
+            Assert.IsTrue(range.Start.Value < DateTime.UtcNow - TimeSpan.FromDays(1) + TimeSpan.FromMinutes(1));
         }
     }
 }

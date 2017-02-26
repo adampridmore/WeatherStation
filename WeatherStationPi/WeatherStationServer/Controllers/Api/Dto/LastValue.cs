@@ -5,6 +5,12 @@ namespace WeatherStationServer.Controllers.Api.Dto
 {
     public class LastValue
     {
+        public DateTime SensorTimestampUtc { get; set; }
+
+        public double Value { get; set; }
+
+        public string SensorType { get; set; }
+
         public static LastValue CreateFrom(DataPoint dataPoint)
         {
             return new LastValue
@@ -14,11 +20,5 @@ namespace WeatherStationServer.Controllers.Api.Dto
                 SensorTimestampUtc = dataPoint.SensorTimestampUtc
             };
         }
-
-        public DateTime SensorTimestampUtc { get; set; }
-
-        public double Value { get; set; }
-
-        public string SensorType { get; set; }
     }
 }

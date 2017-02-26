@@ -18,9 +18,7 @@ namespace WeatherStationServer.Controllers
         public string CreateTestData()
         {
             if (!Request.IsLocal)
-            {
                 throw new HttpException(401, "Unauthorized access");
-            }
 
             var repository = new DataPointRepository();
 
@@ -42,16 +40,14 @@ namespace WeatherStationServer.Controllers
                 });
 
             foreach (var dataPoint in points)
-            {
                 repository.Save(dataPoint);
-            }
 
             return "OK";
         }
 
         private double ToSensorValue(int i)
         {
-            return Math.Sin((i/100.0)*Math.PI)*10 + 10;
+            return Math.Sin(i/100.0*Math.PI)*10 + 10;
         }
     }
 }

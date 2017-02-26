@@ -16,7 +16,7 @@ namespace Repository.UnitTests.RepositoryDto
                 SensorType = "mySensorType",
                 SensorValueNumber = 12,
                 SensorTimestampUtc = new DateTime(2001, 1, 10, 12, 45, 30),
-                ReceivedTimestampUtc = new DateTime(2001, 1, 11, 12, 45, 30),
+                ReceivedTimestampUtc = new DateTime(2001, 1, 11, 12, 45, 30)
             };
 
             var expectedValue =
@@ -29,17 +29,17 @@ namespace Repository.UnitTests.RepositoryDto
         public void CreateTest()
         {
             var dataPoint = DataPoint.Create(
-                "myStationId", 
-                "mySensorType", 
-                12, 
+                "myStationId",
+                "mySensorType",
+                12,
                 new DateTime(2001, 1, 10),
                 new DateTime(2001, 1, 11));
 
             Assert.AreEqual("myStationId", dataPoint.StationId);
             Assert.AreEqual("mySensorType", dataPoint.SensorType);
             Assert.AreEqual(12, dataPoint.SensorValueNumber);
-            Assert.AreEqual(new DateTime(2001,1,10), dataPoint.SensorTimestampUtc);
-            Assert.AreEqual(new DateTime(2001,1,11), dataPoint.ReceivedTimestampUtc);
+            Assert.AreEqual(new DateTime(2001, 1, 10), dataPoint.SensorTimestampUtc);
+            Assert.AreEqual(new DateTime(2001, 1, 11), dataPoint.ReceivedTimestampUtc);
         }
 
         [TestMethod]
@@ -47,11 +47,11 @@ namespace Repository.UnitTests.RepositoryDto
         {
             var dataPoint = DataPoint.Empty();
 
-            Assert.AreEqual(null,dataPoint.StationId);
-            Assert.AreEqual(null,dataPoint.SensorType);
-            Assert.AreEqual(0,dataPoint.SensorValueNumber);
-            Assert.AreEqual(DateTime.MinValue,dataPoint.ReceivedTimestampUtc);
-            Assert.AreEqual(DateTime.MinValue,dataPoint.SensorTimestampUtc);
+            Assert.AreEqual(null, dataPoint.StationId);
+            Assert.AreEqual(null, dataPoint.SensorType);
+            Assert.AreEqual(0, dataPoint.SensorValueNumber);
+            Assert.AreEqual(DateTime.MinValue, dataPoint.ReceivedTimestampUtc);
+            Assert.AreEqual(DateTime.MinValue, dataPoint.SensorTimestampUtc);
         }
 
         [TestMethod]
@@ -83,11 +83,36 @@ namespace Repository.UnitTests.RepositoryDto
         [TestMethod]
         public void IdentityEqualsTest_with_fields()
         {
-            var dp1 = new DataPoint {StationId = "s1", SensorType = "st1", SensorTimestampUtc = new DateTime(2001,1,10)};
-            var dp2 = new DataPoint {StationId = "s1", SensorType = "st1", SensorTimestampUtc = new DateTime(2001,1,10)};
-            var dp3 = new DataPoint {StationId = "s2", SensorType = "st1", SensorTimestampUtc = new DateTime(2001,1,10)};
-            var dp4 = new DataPoint {StationId = "s1", SensorType = "st2", SensorTimestampUtc = new DateTime(2001,1,10)};
-            var dp5 = new DataPoint {StationId = "s1", SensorType = "st1", SensorTimestampUtc = new DateTime(2001,1,11)};
+            var dp1 = new DataPoint
+            {
+                StationId = "s1",
+                SensorType = "st1",
+                SensorTimestampUtc = new DateTime(2001, 1, 10)
+            };
+            var dp2 = new DataPoint
+            {
+                StationId = "s1",
+                SensorType = "st1",
+                SensorTimestampUtc = new DateTime(2001, 1, 10)
+            };
+            var dp3 = new DataPoint
+            {
+                StationId = "s2",
+                SensorType = "st1",
+                SensorTimestampUtc = new DateTime(2001, 1, 10)
+            };
+            var dp4 = new DataPoint
+            {
+                StationId = "s1",
+                SensorType = "st2",
+                SensorTimestampUtc = new DateTime(2001, 1, 10)
+            };
+            var dp5 = new DataPoint
+            {
+                StationId = "s1",
+                SensorType = "st1",
+                SensorTimestampUtc = new DateTime(2001, 1, 11)
+            };
 
             Assert.IsTrue(DataPoint.IdentityEquals(dp1, dp1));
             Assert.IsTrue(DataPoint.IdentityEquals(dp1, dp2));

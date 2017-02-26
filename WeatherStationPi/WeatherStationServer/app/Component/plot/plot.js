@@ -14,8 +14,7 @@
             dataTable.addRows(rows);
 
             return dataTable;
-        }
-
+        };
         var renderChart = function() {
             if (vm.data === undefined) {
                 return;
@@ -32,6 +31,7 @@
                 vAxis: {
                     // TODO Pass from template binding
                     //title: "\u2103", // Degrees C character,
+                
                 }
             };
 
@@ -45,7 +45,7 @@
         };
 
         this.$onChanges = () => {
-        }
+        };
     };
 
     angular.module("myApp")

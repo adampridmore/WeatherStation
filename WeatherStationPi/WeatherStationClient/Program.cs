@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using ApiDtos.ApiDto;
 
 namespace WeatherStationClient
 {
-    static class Program
+    internal static class Program
     {
-        static void Main()
+        private static void Main()
         {
             Console.WriteLine("Hello Weather Station Client");
 
-            var weatherStationServerApi =  new WeatherStationServerApi();
+            var weatherStationServerApi = new WeatherStationServerApi();
 
             //for (var i = 0; i < 30; i++)
             //{
@@ -19,7 +20,7 @@ namespace WeatherStationClient
             //    Console.WriteLine(weatherStationServerApi.ServerDateTimeUtc());
             //}
 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            Thread.Sleep(TimeSpan.FromSeconds(2));
 
             Console.WriteLine(weatherStationServerApi.ServerDateTimeUtc());
 
@@ -27,7 +28,7 @@ namespace WeatherStationClient
             {
                 new DataPoint
                 {
-                    SensorValueNumber= 123,
+                    SensorValueNumber = 123
                     //TimeStampUtc = DateTime.UtcNow.ToString("o")
                 }
             };

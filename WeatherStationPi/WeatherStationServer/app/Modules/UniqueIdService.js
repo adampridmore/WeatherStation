@@ -3,7 +3,7 @@
         var id = 0;
 
         return {
-            getId: function () {
+            getId: function() {
                 return ++id;
             }
         };

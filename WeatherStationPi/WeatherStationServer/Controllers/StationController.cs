@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -37,9 +37,7 @@ namespace WeatherStationServer.Controllers
         public static DateTimeRange CreateDateTimeRange(string lastHours)
         {
             if (string.IsNullOrWhiteSpace(lastHours))
-            {
                 return DateTimeRange.Unbounded;
-            }
 
             var hoursInt = int.Parse(lastHours);
             var timeSpan = TimeSpan.FromHours(hoursInt);
@@ -58,9 +56,9 @@ namespace WeatherStationServer.Controllers
                 .ToList();
         }
 
-        private static string GetChartHtmlForStationSensor(string stationId, 
-            DataPointRepository repository, 
-            string sensorType, 
+        private static string GetChartHtmlForStationSensor(string stationId,
+            DataPointRepository repository,
+            string sensorType,
             DateTimeRange dateTimeRange)
         {
             var dataPoints = repository.GetDataPoints(stationId, sensorType, dateTimeRange)
@@ -69,13 +67,11 @@ namespace WeatherStationServer.Controllers
                 .ToList();
 
             if (!dataPoints.Any())
-            {
                 return null;
-            }
-            
+
             var chart = Chart.Line(dataPoints, FSharpOption<IEnumerable<string>>.None,
                 FSharpOption<Configuration.Options>.None);
-            chart.WithOptions(new Configuration.Options() {title = sensorType});
+            chart.WithOptions(new Configuration.Options {title = sensorType});
 
             return chart.GetInlineHtml();
         }
@@ -83,16 +79,12 @@ namespace WeatherStationServer.Controllers
         private string GetStationId(List<string> allStationIds, string stationId)
         {
             if (!string.IsNullOrWhiteSpace(stationId))
-            {
                 return stationId;
-            }
 
             var foundStationId = allStationIds.FirstOrDefault(s => s == stationId);
 
             if (foundStationId == null)
-            {
                 return allStationIds.FirstOrDefault();
-            }
 
             return foundStationId;
         }

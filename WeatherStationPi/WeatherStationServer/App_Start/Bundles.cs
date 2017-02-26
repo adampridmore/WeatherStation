@@ -16,7 +16,7 @@ namespace WeatherStationServer
             bundles.Add(new ScriptBundle("~/bundles/angular")
                     .Include("~/Scripts/angular.js")
                     .Include("~/Scripts/angular-route.js")
-            ); 
+            );
 
             bundles.Add(new ScriptBundle("~/bundles/app")
                     .IncludeDirectory("~/app", "*.js", true)
@@ -29,9 +29,7 @@ namespace WeatherStationServer
         {
             bool value;
             if (bool.TryParse(ConfigurationManager.AppSettings["BundleTable.EnableOptimizations"], out value))
-            {
                 return value;
-            }
 
             return false;
         }

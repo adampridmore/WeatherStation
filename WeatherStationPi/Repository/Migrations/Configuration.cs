@@ -1,7 +1,7 @@
+using System.Data.Entity.Migrations;
+
 namespace Repository.Migrations
 {
-    using System.Data.Entity.Migrations;
-
     internal sealed class Configuration : DbMigrationsConfiguration<WeatherStationDbContext>
     {
         public Configuration()

@@ -1,67 +1,67 @@
 ﻿@using WeatherStationServer.Model
 @model WeatherStationServer.Model.Station.StationDetailsModel
 @{
-    ViewBag.Title = "Station";
+  ViewBag.Title = "Station";
 }
 
 <div class="row">
-    <h1>My Weather Station</h1>
-    <div class="panel panel-default">
+  <h1>My Weather Station</h1>
+  <div class="panel panel-default">
 
-        <div class="panel-heading">
-            <div class="dropdown">
-                Weather Station:
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    @Model.StationId
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    @foreach (var stationId in @Model.AllStationIds)
-                    {
-                        <li>@Html.RouteLink(stationId, "Default", new {Controller = "Station", Action = "Details", stationId = stationId})</li>
-                    }
-                </ul>
-            </div>
-            <div>
-                @Html.RouteLink("Last year", "Default", new {Controller = "Station", Action = "Details", LastHours = 365*24, stationId = Model.StationId})
-            </div>
-            <div>
-                @Html.RouteLink("Last month", "Default", new {Controller = "Station", Action = "Details", LastHours = 24*30, stationId = Model.StationId })
-            </div>
-            <div>
-                @Html.RouteLink("Last week", "Default", new {Controller = "Station", Action = "Details", LastHours = 24*7, stationId = Model.StationId })
-            </div>
-            <div>
-                @Html.RouteLink("Last day", "Default", new {Controller = "Station", Action = "Details", LastHours = 24, stationId = Model.StationId })
-            </div>
-        </div>
-
-        <div class="panel-body">
-            <table class="table table-striped">
-                <thead class="thead-default">
-                <tr>
-                    <th>Sensor</th>
-                    <th>Current reading</th>
-                    <th>Reading timestamp</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var dataPoint in Model.LatestDataPoints)
-                {
-                    <tr>
-                        <td>@Html.Partial("SensorLink", new SensorModel(dataPoint.StationId, dataPoint.SensorType))</td>
-                        <td>@dataPoint.SensorValueNumber</td>
-                        <td>@dataPoint.SensorTimestampUtc.ToString("s")</td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-            @foreach (var chartHtml in Model.ChartHtmlList)
-            {
-                <div class="row">
-                    @Html.Raw(chartHtml)
-                </div>
-            }
-        </div>
+    <div class="panel-heading">
+      <div class="dropdown">
+        Weather Station:
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          @Model.StationId
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          @foreach (var stationId in Model.AllStationIds)
+          {
+            <li>@Html.RouteLink(stationId, "Default", new {Controller = "Station", Action = "Details", stationId})</li>
+          }
+        </ul>
+      </div>
+      <div>
+        @Html.RouteLink("Last year", "Default", new {Controller = "Station", Action = "Details", LastHours = 365*24, stationId = Model.StationId})
+      </div>
+      <div>
+        @Html.RouteLink("Last month", "Default", new {Controller = "Station", Action = "Details", LastHours = 24*30, stationId = Model.StationId})
+      </div>
+      <div>
+        @Html.RouteLink("Last week", "Default", new {Controller = "Station", Action = "Details", LastHours = 24*7, stationId = Model.StationId})
+      </div>
+      <div>
+        @Html.RouteLink("Last day", "Default", new {Controller = "Station", Action = "Details", LastHours = 24, stationId = Model.StationId})
+      </div>
     </div>
+
+    <div class="panel-body">
+      <table class="table table-striped">
+        <thead class="thead-default">
+        <tr>
+          <th>Sensor</th>
+          <th>Current reading</th>
+          <th>Reading timestamp</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var dataPoint in Model.LatestDataPoints)
+        {
+          <tr>
+            <td>@Html.Partial("SensorLink", new SensorModel(dataPoint.StationId, dataPoint.SensorType))</td>
+            <td>@dataPoint.SensorValueNumber</td>
+            <td>@dataPoint.SensorTimestampUtc.ToString("s")</td>
+          </tr>
+        }
+        </tbody>
+      </table>
+      @foreach (var chartHtml in Model.ChartHtmlList)
+      {
+        <div class="row">
+          @Html.Raw(chartHtml)
+        </div>
+      }
+    </div>
+  </div>
 </div>

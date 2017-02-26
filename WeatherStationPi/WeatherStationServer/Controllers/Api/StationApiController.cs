@@ -51,10 +51,10 @@ namespace WeatherStationServer.Controllers.Api
             var dateTimeRange = StationController.CreateDateTimeRange(lastHours.ToString());
 
             var sensorValuesList = SensorDetails.GetSensorTypeValues()
-                .SelectMany(type => repository.GetDataPoints(stationId, type, dateTimeRange))
-                .GroupBy(dp => dp.SensorType)
-                .Select(ToSensorValues)
-                .ToList()
+                    .SelectMany(type => repository.GetDataPoints(stationId, type, dateTimeRange))
+                    .GroupBy(dp => dp.SensorType)
+                    .Select(ToSensorValues)
+                    .ToList()
                 ;
 
             return ToJson(new StationDataPoints
@@ -78,10 +78,10 @@ namespace WeatherStationServer.Controllers.Api
             return new SensorValue
             {
                 V = Math.Round(dataPoint.SensorValueNumber, 2),
-                T = dataPoint.SensorTimestampUtc.GetCurrentUnixTimestampMillis()// ToString("s")
+                T = dataPoint.SensorTimestampUtc.GetCurrentUnixTimestampMillis() // ToString("s")
             };
         }
-        
+
         private List<LastValue> ToLastValues(List<DataPoint> lastValues)
         {
             return lastValues

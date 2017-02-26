@@ -1,10 +1,10 @@
 ﻿@model WeatherStationServer.Model.SensorModel
 
-@if (Model == null || Model.SensorType == null)
+@if ((Model == null) || (Model.SensorType == null))
 {
-    <span>&lt;no sensor&gt;</span>
+  <span>&lt;no sensor&gt;</span>
 }
 else
 {
-    @Html.RouteLink(Model.SensorType, "Default", new {Controller = "Sensor", Action = "Details", stationId = Model.StationId, sensorType = Model.SensorType, size = 550, reloadSeconds = 60})
+  @Html.RouteLink(Model.SensorType, "Default", new {Controller = "Sensor", Action = "Details", stationId = Model.StationId, sensorType = Model.SensorType, size = 550, reloadSeconds = 60})
 }

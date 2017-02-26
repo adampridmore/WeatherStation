@@ -6,7 +6,6 @@ using Repository;
 using Repository.RepositoryDto;
 using WeatherStationServer.Model.Sensor;
 using XPlot.GoogleCharts;
-using DataPoint = Repository.RepositoryDto.DataPoint;
 
 namespace WeatherStationServer.Controllers
 {
@@ -48,9 +47,7 @@ namespace WeatherStationServer.Controllers
         private TimeSpan? GetReloadTimeSpan(int? reloadSeconds)
         {
             if (!reloadSeconds.HasValue)
-            {
                 return null;
-            }
 
             return TimeSpan.FromSeconds(reloadSeconds.Value);
         }
@@ -58,9 +55,7 @@ namespace WeatherStationServer.Controllers
         private string CreateTempratureGuageHtml(DataPoint dataPoint, int size)
         {
             if (dataPoint == null)
-            {
                 return string.Empty;
-            }
 
             var data = new List<Tuple<string, decimal>>
             {
@@ -108,7 +103,7 @@ namespace WeatherStationServer.Controllers
                         redTo = 30,
                         min = -10,
                         max = 30,
-                        minorTicks = 5,
+                        minorTicks = 5
                     };
                 case SensorTypeEnum.Pressure:
                     return new Configuration.Options
@@ -116,7 +111,7 @@ namespace WeatherStationServer.Controllers
                         min = 900,
                         max = 1100,
                         greenFrom = 970,
-                        greenTo = 980,
+                        greenTo = 980
                     };
                 default:
                     return new Configuration.Options();

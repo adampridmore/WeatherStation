@@ -1,5 +1,4 @@
-﻿
-namespace Repository.RepositoryDto
+﻿namespace Repository.RepositoryDto
 {
     public enum SensorTypeEnum
     {

@@ -6,7 +6,7 @@
         };
 
         this.$onChanges = () => {
-        }
+        };
     };
 
     angular.module("myApp")

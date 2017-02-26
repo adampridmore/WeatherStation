@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Linq;
@@ -40,14 +39,10 @@ namespace Repository
                     .Where(dataPoint => dataPoint.SensorType == sensorType);
 
                 if (dateTimeRange.Start.HasValue)
-                {
                     query = query.Where(dataPoint => dataPoint.SensorTimestampUtc > dateTimeRange.Start.Value);
-                }
 
                 if (dateTimeRange.End.HasValue)
-                {
                     query = query.Where(dataPoint => dataPoint.SensorTimestampUtc < dateTimeRange.End.Value);
-                }
 
                 return query.OrderBy(dp => dp.SensorTimestampUtc).ToList();
             }
@@ -65,10 +60,10 @@ namespace Repository
                             .Select(g => new SensorDetails
                             {
                                 StationId = g.Key.StationId,
-                                SensorType= g.Key.SensorType,
+                                SensorType = g.Key.SensorType,
                                 Count = g.Count(),
-                                Max = g.Max(dp=>dp.SensorTimestampUtc),
-                                Min= g.Min(dp=>dp.SensorTimestampUtc),
+                                Max = g.Max(dp => dp.SensorTimestampUtc),
+                                Min = g.Min(dp => dp.SensorTimestampUtc)
                             })
                             .OrderBy(dp => new {dp.StationId, dp.SensorType})
                     ;

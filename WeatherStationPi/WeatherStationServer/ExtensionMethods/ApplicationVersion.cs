@@ -1,10 +1,12 @@
-﻿namespace WeatherStationServer.ExtensionMethods
+﻿using System.Reflection;
+
+namespace WeatherStationServer.ExtensionMethods
 {
     public class ApplicationVersion
     {
         public static string Version()
         {
-            return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            return Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
     }
 }

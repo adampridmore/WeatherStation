@@ -8,8 +8,7 @@
                     vm.currentStationId = vm.ids[0];
                 }
             }
-        }
-
+        };
         this.$onInit = () => {
             if (vm.ids === undefined) {
                 vm.ids = [];
@@ -19,7 +18,7 @@
 
         this.$onChanges = () => {
             setDefaultSelectedStation();
-        }
+        };
     };
 
     angular.module("myApp")

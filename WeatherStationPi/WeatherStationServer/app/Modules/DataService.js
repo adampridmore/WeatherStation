@@ -39,7 +39,7 @@
                     });
         };
 
-        var getStationSensorsDataPoints = function (stationId, lastHours) {
+        var getStationSensorsDataPoints = function(stationId, lastHours) {
             var url = "api/station/dataPoints/" + stationId;
             if (lastHours !== undefined) {
                 url += "?lastHours=" + lastHours;

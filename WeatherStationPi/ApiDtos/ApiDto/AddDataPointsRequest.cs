@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ApiDtos.ApiDto
+﻿namespace ApiDtos.ApiDto
 {
     public class GetDataPointsRequest
     {

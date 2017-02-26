@@ -8,10 +8,10 @@ namespace Repository.UnitTests
     [TestClass]
     public class DataPointRepositoryTests
     {
-        private DataPointRepository _repository;
-
         private const string ConnectionString =
             @"server=.\SQLEXPRESS;database=WeatherStation_unitTests;Integrated Security = True";
+
+        private DataPointRepository _repository;
 
         [TestInitialize]
         public void TestInitialize()
@@ -52,9 +52,9 @@ namespace Repository.UnitTests
         [TestMethod]
         public void Get_stationIds()
         {
-            _repository.Save(CreateDataPoint(stationId: "s1"));
-            _repository.Save(CreateDataPoint(stationId: "s1"));
-            _repository.Save(CreateDataPoint(stationId: "s2"));
+            _repository.Save(CreateDataPoint("s1"));
+            _repository.Save(CreateDataPoint("s1"));
+            _repository.Save(CreateDataPoint("s2"));
 
             var stationIds = _repository.GetStationIds();
 
@@ -64,12 +64,12 @@ namespace Repository.UnitTests
         [TestMethod]
         public void GetDataPoints()
         {
-            var dataPoint1 = CreateDataPoint(stationId: "s1", sensorType: "mySensorType1");
+            var dataPoint1 = CreateDataPoint("s1", "mySensorType1");
             _repository.Save(dataPoint1);
 
-            _repository.Save(CreateDataPoint(stationId: "s1", sensorType: "mySensorType2"));
-            _repository.Save(CreateDataPoint(stationId: "s2", sensorType: "mySensorType1"));
-            _repository.Save(CreateDataPoint(stationId: "s2", sensorType: "mySensorType2"));
+            _repository.Save(CreateDataPoint("s1", "mySensorType2"));
+            _repository.Save(CreateDataPoint("s2", "mySensorType1"));
+            _repository.Save(CreateDataPoint("s2", "mySensorType2"));
 
             var loadedDataPoints = _repository.GetDataPoints("s1", "mySensorType1", DateTimeRange.Unbounded);
 
@@ -115,9 +115,9 @@ namespace Repository.UnitTests
         [TestMethod]
         public void DeleteAllByStationIdTest()
         {
-            var dataPointToKeep = CreateDataPoint(stationId: "s1");
+            var dataPointToKeep = CreateDataPoint("s1");
             _repository.Save(dataPointToKeep);
-            _repository.Save(CreateDataPoint(stationId: "s2"));
+            _repository.Save(CreateDataPoint("s2"));
 
             _repository.DeleteAllByStationId("s2");
 
@@ -142,9 +142,9 @@ namespace Repository.UnitTests
         [TestMethod]
         public void GetLastValues_for_sensorType_only_get_latest()
         {
-            var dataPoint = CreateDataPoint("s1", "st1", sensorTimestampUtc: new DateTime(2001, 2, 11));
+            var dataPoint = CreateDataPoint("s1", "st1", new DateTime(2001, 2, 11));
             _repository.Save(dataPoint);
-            _repository.Save(CreateDataPoint("s1", "st1", sensorTimestampUtc: new DateTime(2001, 2, 10)));
+            _repository.Save(CreateDataPoint("s1", "st1", new DateTime(2001, 2, 10)));
 
             var foundDataPoint = _repository.GetLastValues("s1", "st1");
 
@@ -155,11 +155,11 @@ namespace Repository.UnitTests
         public void GetLastValues_for_all_known_sensors()
         {
             var dataPoint1 = CreateDataPoint("s1", SensorTypeEnum.Temperature.ToString(),
-                sensorTimestampUtc: new DateTime(2001, 2, 11));
+                new DateTime(2001, 2, 11));
             _repository.Save(dataPoint1);
 
             var dataPoint2 = CreateDataPoint("s1", SensorTypeEnum.Pressure.ToString(),
-                sensorTimestampUtc: new DateTime(2001, 2, 10));
+                new DateTime(2001, 2, 10));
             _repository.Save(dataPoint2);
 
             var foundDataPoints = _repository.GetLastValues("s1");
@@ -183,12 +183,12 @@ namespace Repository.UnitTests
         [TestMethod]
         public void GetSummaryTest()
         {
-            _repository.Save(CreateDataPoint(stationId: "s1", sensorType: "st1",
-                sensorTimestampUtc: new DateTime(2001, 2, 10), sensorValueNumber:100));
-            _repository.Save(CreateDataPoint(stationId: "s1", sensorType: "st1",
-                sensorTimestampUtc: new DateTime(2001, 2, 11), sensorValueNumber: 200));
-            _repository.Save(CreateDataPoint(stationId: "s2", sensorType: "st2",
-                sensorTimestampUtc: new DateTime(2001, 2, 12), sensorValueNumber: 300));
+            _repository.Save(CreateDataPoint("s1", "st1",
+                new DateTime(2001, 2, 10), 100));
+            _repository.Save(CreateDataPoint("s1", "st1",
+                new DateTime(2001, 2, 11), 200));
+            _repository.Save(CreateDataPoint("s2", "st2",
+                new DateTime(2001, 2, 12), 300));
 
             var summaryReport = _repository.GetSummaryReport();
 
@@ -204,10 +204,10 @@ namespace Repository.UnitTests
         [TestMethod]
         public void GetSummaryTest_ordering()
         {
-            _repository.Save(CreateDataPoint(stationId: "s1", sensorType: "st1"));
-            _repository.Save(CreateDataPoint(stationId: "s2", sensorType: "st1"));
-            _repository.Save(CreateDataPoint(stationId: "s2", sensorType: "st2"));
-            _repository.Save(CreateDataPoint(stationId: "s1", sensorType: "st2"));
+            _repository.Save(CreateDataPoint("s1", "st1"));
+            _repository.Save(CreateDataPoint("s2", "st1"));
+            _repository.Save(CreateDataPoint("s2", "st2"));
+            _repository.Save(CreateDataPoint("s1", "st2"));
 
             var summaryReport = _repository.GetSummaryReport();
 
@@ -223,7 +223,6 @@ namespace Repository.UnitTests
 
             Assert.AreEqual("s2", summaryReport.SensorDetails[3].StationId);
             Assert.AreEqual("st2", summaryReport.SensorDetails[3].SensorType);
-
         }
 
         private static DataPoint CreateDataPoint(
@@ -233,9 +232,7 @@ namespace Repository.UnitTests
             double sensorValueNumber = 10)
         {
             if (!sensorTimestampUtc.HasValue)
-            {
                 sensorTimestampUtc = new DateTime(2001, 2, 3, 4, 5, 6);
-            }
 
             var dataPoint = new DataPoint
             {

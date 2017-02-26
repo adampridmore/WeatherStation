@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Net;
 using ApiDtos.ApiDto;
 using RestSharp;
@@ -46,7 +47,7 @@ namespace WeatherStationClient
             request.AddJsonBody(requestData);
 
             var url = _client.BuildUri(request);
-            System.Diagnostics.Debugger.Log(0, "", url.ToString());
+            Debugger.Log(0, "", url.ToString());
 
             var response = _client.Execute(request);
 

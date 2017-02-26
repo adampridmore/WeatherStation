@@ -25,7 +25,7 @@ namespace WeatherStationServer.api
         //string JsonData(string id);
 
         /// <summary>
-        ///  http://localhost/WeatherStationServer/api/serverDateTimeUtc
+        ///     http://localhost/WeatherStationServer/api/serverDateTimeUtc
         /// </summary>
         /// <returns></returns>
         [OperationContract]
@@ -36,12 +36,12 @@ namespace WeatherStationServer.api
         DateTime ServerDateTimeUtc();
 
         /// <summary>
-        /// POST: http://localhost:59653/api/dataPoints
-        /// {
-        ///   "DataPoints" : [{
+        ///     POST: http://localhost:59653/api/dataPoints
+        ///     {
+        ///     "DataPoints" : [{
         ///     "SensorValueText" : "ValueText"
-        ///  }]
-        ///}
+        ///     }]
+        ///     }
         /// </summary>
         /// <param name="dataPointsRequest"></param>
         /// <returns></returns>
@@ -54,7 +54,7 @@ namespace WeatherStationServer.api
         string AddDataPoints(AddDataPointsRequest dataPointsRequest);
 
         /// <summary>
-        ///  http://localhost/WeatherStationServer/api/dataPoints?stationId=weatherStation1_raspberrypi&sensorType=Temperature
+        ///     http://localhost/WeatherStationServer/api/dataPoints?stationId=weatherStation1_raspberrypi&sensorType=Temperature
         /// </summary>
         /// <param name="stationId"></param>
         /// <param name="sensorType"></param>
@@ -68,7 +68,7 @@ namespace WeatherStationServer.api
         GetDataPointsResponse GetDataPoints(string stationId, string sensorType);
 
         /// <summary>
-        ///  http://localhost/WeatherStationServer/api/lastStationDataPoints/weatherStation1_raspberrypi
+        ///     http://localhost/WeatherStationServer/api/lastStationDataPoints/weatherStation1_raspberrypi
         /// </summary>
         /// <param name="stationId"></param>
         /// <returns></returns>
