@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Results;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Repository;
 using Repository.ExtensionMethods;
 using Repository.RepositoryDto;
@@ -12,7 +10,7 @@ using WeatherStationServer.Controllers.Api.Dto;
 
 namespace WeatherStationServer.Controllers.Api
 {
-    public class StationApiController : ApiController
+    public class StationApiController : WeatherStationApiControllerBase
     {
         [HttpGet]
         [Route("api/station/getIds")]
@@ -87,16 +85,6 @@ namespace WeatherStationServer.Controllers.Api
             return lastValues
                 .Select(LastValue.CreateFrom)
                 .ToList();
-        }
-
-        private JsonResult<T> ToJson<T>(T data)
-        {
-            var settings = new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-
-            return Json(data, settings);
         }
     }
 }

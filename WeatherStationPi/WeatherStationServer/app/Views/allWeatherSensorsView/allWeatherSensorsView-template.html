@@ -1,11 +1,19 @@
 ﻿<h1>All Weather Sensors</h1>
-<table>
+<table class="table table-striped">
+  <thead class="thead-default">
   <tr>
-    <td>Station Id</td>
-    <td>Sensor</td>
+    <th>Station Id</th>
+    <th>Sensor</th>
+    <th>Number of data points</th>
+    <th>Earliest data point</th>
+    <th>Latest data point</th>
   </tr>
-  <tr>
-    <td>Cheese</td>
-    <td>1.123</td>
+  </thead>
+  <tr data-ng-repeat="sensor in sensorList">
+    <td>{{sensor.stationId}}</td>
+    <td>{{sensor.sensorType}}</td>
+    <td>{{sensor.count}}</td>
+    <td>{{sensor.min}}</td>
+    <td>{{sensor.max}}</td>
   </tr>
 </table>

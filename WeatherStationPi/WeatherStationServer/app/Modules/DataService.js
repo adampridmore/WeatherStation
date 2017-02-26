@@ -54,10 +54,22 @@
                     });
         };
 
+        var getSensorsSummary = function() {
+            var url = "api/sensor/list";
+            return $http.get(url)
+                .then(function(response) {
+                        return response.data;
+                    },
+                    function(error) {
+                        console.log(error);
+                    });
+        };
+
         return {
             getStationIds: getStationIds,
             getLastStationData: getLastStationData,
-            getStationSensorsDataPoints: getStationSensorsDataPoints
+            getStationSensorsDataPoints: getStationSensorsDataPoints,
+            getSensorsSummary: getSensorsSummary
         };
     };
 
