@@ -4,7 +4,6 @@
 
         dataService.getSensorsSummary()
             .then(function (data) {
-                console.log(data);
                 $scope.sensorList = data;
             });
     };

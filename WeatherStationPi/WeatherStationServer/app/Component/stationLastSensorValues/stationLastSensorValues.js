@@ -2,10 +2,10 @@
     var controllerFunction = function() {
         var vm = this;
 
-        this.$onInit = () => {
+        this.$onInit = function() {
         };
 
-        this.$onChanges = () => {
+        this.$onChanges = function() {
         };
     };
 

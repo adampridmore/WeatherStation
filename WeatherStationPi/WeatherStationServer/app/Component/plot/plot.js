@@ -39,12 +39,12 @@
             chart.draw(dataTable, options);
         };
 
-        this.$postLink = () => {
+        this.$postLink = function(){
             // This waits until the page is rendred before attaching the google chart.
             $timeout(renderChart, 0);
         };
 
-        this.$onChanges = () => {
+        this.$onChanges = function(){
         };
     };
 
