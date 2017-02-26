@@ -150,7 +150,34 @@ namespace Repository.UnitTests
 
             Assert.IsTrue(DataPoint.IdentityEquals(dataPoint, foundDataPoint));
         }
-        
+
+        [TestMethod]
+        public void GetLastValues_for_all_known_sensors()
+        {
+            var dataPoint1 = CreateDataPoint("s1", SensorTypeEnum.Temperature.ToString(), sensorTimestampUtc: new DateTime(2001, 2, 11));
+            _repository.Save(dataPoint1);
+
+            var dataPoint2 = CreateDataPoint("s1", SensorTypeEnum.Pressure.ToString(), sensorTimestampUtc: new DateTime(2001, 2, 10));
+            _repository.Save(dataPoint2);
+
+            var foundDataPoints = _repository.GetLastValues("s1");
+
+            Assert.AreEqual(2,foundDataPoints.Count);
+            Assert.IsTrue(DataPoint.IdentityEquals(dataPoint1, foundDataPoints[0]));
+            Assert.IsTrue(DataPoint.IdentityEquals(dataPoint2, foundDataPoints[1]));
+        }
+
+        [TestMethod]
+        public void GetLastValues__for_all_known_sensors_doesnt_get_unknown_types()
+        {
+            var dataPoint1 = CreateDataPoint("s1", "st2");
+            _repository.Save(dataPoint1);
+
+            var foundDataPoints = _repository.GetLastValues("s1");
+
+            Assert.AreEqual(0, foundDataPoints.Count);
+        }
+
         private static DataPoint CreateDataPoint(
             string stationId = "MyStationId",
             string sensorType = "MyTestSensor",
