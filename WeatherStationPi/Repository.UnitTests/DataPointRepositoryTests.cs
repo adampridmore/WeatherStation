@@ -8,16 +8,21 @@ namespace Repository.UnitTests
     [TestClass]
     public class DataPointRepositoryTests
     {
+        private DataPointRepository _repository;
+
         private const string ConnectionString =
             @"server=.\SQLEXPRESS;database=WeatherStation_unitTests;Integrated Security = True";
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            _repository = new DataPointRepository(ConnectionString);
+            _repository.DeleteAll();
+        }
 
         [TestMethod]
         public void SaveAndLoad()
         {
-            var repository = new DataPointRepository(ConnectionString);
-
-            repository.DeleteAll();
-
             var dataPoint = new DataPoint
             {
                 ReceivedTimestampUtc = new DateTime(2001, 2, 3, 4, 5, 6),
@@ -26,9 +31,9 @@ namespace Repository.UnitTests
                 StationId = "MyStationId"
             };
 
-            repository.Save(dataPoint);
+            _repository.Save(dataPoint);
 
-            var allValues = repository.FindAll();
+            var allValues = _repository.FindAll();
 
             Assert.AreEqual(1, allValues.Count);
         }
@@ -36,14 +41,10 @@ namespace Repository.UnitTests
         [TestMethod]
         public void Save_twice_is_idempotent()
         {
-            var repository = new DataPointRepository(ConnectionString);
+            _repository.Save(CreateDataPoint());
+            _repository.Save(CreateDataPoint());
 
-            repository.DeleteAll();
-
-            repository.Save(CreateDataPoint());
-            repository.Save(CreateDataPoint());
-
-            var allValues = repository.FindAll();
+            var allValues = _repository.FindAll();
 
             Assert.AreEqual(1, allValues.Count);
         }
@@ -51,15 +52,11 @@ namespace Repository.UnitTests
         [TestMethod]
         public void Get_stationIds()
         {
-            var repository = new DataPointRepository(ConnectionString);
+            _repository.Save(CreateDataPoint(stationId: "s1"));
+            _repository.Save(CreateDataPoint(stationId: "s1"));
+            _repository.Save(CreateDataPoint(stationId: "s2"));
 
-            repository.DeleteAll();
-            repository.Save(CreateDataPoint(stationId: "s1"));
-            repository.Save(CreateDataPoint(stationId: "s1"));
-            repository.Save(CreateDataPoint(stationId: "s2"));
-
-            //var stationIds = repository.GetSummaryReport().StationIds;
-            var stationIds = repository.GetStationIds();
+            var stationIds = _repository.GetStationIds();
 
             CollectionAssert.AreEqual(new List<string> {"s1", "s2"}, stationIds);
         }
@@ -67,17 +64,14 @@ namespace Repository.UnitTests
         [TestMethod]
         public void GetDataPoints()
         {
-            var repository = new DataPointRepository(ConnectionString);
-
-            repository.DeleteAll();
             var dataPoint1 = CreateDataPoint(stationId: "s1", sensorType: "mySensorType1");
-            repository.Save(dataPoint1);
+            _repository.Save(dataPoint1);
 
-            repository.Save(CreateDataPoint(stationId: "s1", sensorType: "mySensorType2"));
-            repository.Save(CreateDataPoint(stationId: "s2", sensorType: "mySensorType1"));
-            repository.Save(CreateDataPoint(stationId: "s2", sensorType: "mySensorType2"));
+            _repository.Save(CreateDataPoint(stationId: "s1", sensorType: "mySensorType2"));
+            _repository.Save(CreateDataPoint(stationId: "s2", sensorType: "mySensorType1"));
+            _repository.Save(CreateDataPoint(stationId: "s2", sensorType: "mySensorType2"));
 
-            var loadedDataPoints = repository.GetDataPoints("s1", "mySensorType1", DateTimeRange.Unbounded);
+            var loadedDataPoints = _repository.GetDataPoints("s1", "mySensorType1", DateTimeRange.Unbounded);
 
             Assert.AreEqual(1, loadedDataPoints.Count);
             Assert.IsTrue(DataPoint.IdentityEquals(dataPoint1, loadedDataPoints[0]));
@@ -86,15 +80,12 @@ namespace Repository.UnitTests
         [TestMethod]
         public void GetDataPoints_filter_by_date_has_start()
         {
-            var repository = new DataPointRepository(ConnectionString);
-
-            repository.DeleteAll();
             var dataPoint1 = CreateDataPoint(sensorTimestampUtc: new DateTime(2001, 1, 10));
             var dataPoint2 = CreateDataPoint(sensorTimestampUtc: new DateTime(2001, 1, 12));
-            repository.Save(dataPoint1);
-            repository.Save(dataPoint2);
+            _repository.Save(dataPoint1);
+            _repository.Save(dataPoint2);
 
-            var loadedDataPoints = repository.GetDataPoints(
+            var loadedDataPoints = _repository.GetDataPoints(
                 dataPoint1.StationId, 
                 dataPoint1.SensorType, 
                 DateTimeRange.Create(new DateTime(2001,1,11),null));
@@ -106,15 +97,12 @@ namespace Repository.UnitTests
         [TestMethod]
         public void GetDataPoints_filter_by_date_has_end()
         {
-            var repository = new DataPointRepository(ConnectionString);
-
-            repository.DeleteAll();
             var dataPoint1 = CreateDataPoint(sensorTimestampUtc: new DateTime(2001, 1, 10));
             var dataPoint2 = CreateDataPoint(sensorTimestampUtc: new DateTime(2001, 1, 12));
-            repository.Save(dataPoint1);
-            repository.Save(dataPoint2);
+            _repository.Save(dataPoint1);
+            _repository.Save(dataPoint2);
 
-            var loadedDataPoints = repository.GetDataPoints(
+            var loadedDataPoints = _repository.GetDataPoints(
                 dataPoint1.StationId,
                 dataPoint1.SensorType,
                 DateTimeRange.Create(null,new DateTime(2001, 1, 11)));
