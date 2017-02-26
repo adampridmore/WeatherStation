@@ -53,6 +53,7 @@
     <Compile Include="ExtensionMethods\DateTimeHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataPointRepositoryTests.cs" />
+    <Compile Include="RepositoryDto\DataPointTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Repository\Repository.csproj">

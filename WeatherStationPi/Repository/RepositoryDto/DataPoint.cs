@@ -60,5 +60,35 @@ namespace Repository.RepositoryDto
         {
             return new DataPoint();
         }
+
+        public static bool IdentityEquals(DataPoint dp1, DataPoint dp2)
+        {
+            if (dp1 == null && dp2 == null)
+            {
+                return true;
+            }
+
+            if (dp1 == null || dp2 == null)
+            {
+                return false;
+            }
+
+            if (dp1.StationId != dp2.StationId)
+            {
+                return false;
+            }
+
+            if (dp1.SensorType!= dp2.SensorType)
+            {
+                return false;
+            }
+
+            if (dp1.SensorTimestampUtc != dp2.SensorTimestampUtc)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
