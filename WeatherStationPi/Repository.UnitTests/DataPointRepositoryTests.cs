@@ -86,9 +86,9 @@ namespace Repository.UnitTests
             _repository.Save(dataPoint2);
 
             var loadedDataPoints = _repository.GetDataPoints(
-                dataPoint1.StationId, 
-                dataPoint1.SensorType, 
-                DateTimeRange.Create(new DateTime(2001,1,11),null));
+                dataPoint1.StationId,
+                dataPoint1.SensorType,
+                DateTimeRange.Create(new DateTime(2001, 1, 11), null));
 
             Assert.AreEqual(1, loadedDataPoints.Count);
             Assert.IsTrue(DataPoint.IdentityEquals(dataPoint2, loadedDataPoints[0]));
@@ -105,7 +105,7 @@ namespace Repository.UnitTests
             var loadedDataPoints = _repository.GetDataPoints(
                 dataPoint1.StationId,
                 dataPoint1.SensorType,
-                DateTimeRange.Create(null,new DateTime(2001, 1, 11)));
+                DateTimeRange.Create(null, new DateTime(2001, 1, 11)));
 
             Assert.AreEqual(1, loadedDataPoints.Count);
             Assert.IsTrue(DataPoint.IdentityEquals(dataPoint1, loadedDataPoints[0]));
@@ -154,15 +154,17 @@ namespace Repository.UnitTests
         [TestMethod]
         public void GetLastValues_for_all_known_sensors()
         {
-            var dataPoint1 = CreateDataPoint("s1", SensorTypeEnum.Temperature.ToString(), sensorTimestampUtc: new DateTime(2001, 2, 11));
+            var dataPoint1 = CreateDataPoint("s1", SensorTypeEnum.Temperature.ToString(),
+                sensorTimestampUtc: new DateTime(2001, 2, 11));
             _repository.Save(dataPoint1);
 
-            var dataPoint2 = CreateDataPoint("s1", SensorTypeEnum.Pressure.ToString(), sensorTimestampUtc: new DateTime(2001, 2, 10));
+            var dataPoint2 = CreateDataPoint("s1", SensorTypeEnum.Pressure.ToString(),
+                sensorTimestampUtc: new DateTime(2001, 2, 10));
             _repository.Save(dataPoint2);
 
             var foundDataPoints = _repository.GetLastValues("s1");
 
-            Assert.AreEqual(2,foundDataPoints.Count);
+            Assert.AreEqual(2, foundDataPoints.Count);
             Assert.IsTrue(DataPoint.IdentityEquals(dataPoint1, foundDataPoints[0]));
             Assert.IsTrue(DataPoint.IdentityEquals(dataPoint2, foundDataPoints[1]));
         }
@@ -178,10 +180,57 @@ namespace Repository.UnitTests
             Assert.AreEqual(0, foundDataPoints.Count);
         }
 
+        [TestMethod]
+        public void GetSummaryTest()
+        {
+            _repository.Save(CreateDataPoint(stationId: "s1", sensorType: "st1",
+                sensorTimestampUtc: new DateTime(2001, 2, 10), sensorValueNumber:100));
+            _repository.Save(CreateDataPoint(stationId: "s1", sensorType: "st1",
+                sensorTimestampUtc: new DateTime(2001, 2, 11), sensorValueNumber: 200));
+            _repository.Save(CreateDataPoint(stationId: "s2", sensorType: "st2",
+                sensorTimestampUtc: new DateTime(2001, 2, 12), sensorValueNumber: 300));
+
+            var summaryReport = _repository.GetSummaryReport();
+
+            CollectionAssert.AreEqual(new List<string> {"s1", "s2"}, summaryReport.StationIds);
+            Assert.AreEqual(2, summaryReport.SensorDetails.Count);
+            Assert.AreEqual("s1", summaryReport.SensorDetails[0].StationId);
+            Assert.AreEqual("st1", summaryReport.SensorDetails[0].SensorType);
+            Assert.AreEqual(2, summaryReport.SensorDetails[0].Count);
+            Assert.AreEqual(new DateTime(2001, 2, 10), summaryReport.SensorDetails[0].Min);
+            Assert.AreEqual(new DateTime(2001, 2, 11), summaryReport.SensorDetails[0].Max);
+        }
+
+        [TestMethod]
+        public void GetSummaryTest_ordering()
+        {
+            _repository.Save(CreateDataPoint(stationId: "s1", sensorType: "st1"));
+            _repository.Save(CreateDataPoint(stationId: "s2", sensorType: "st1"));
+            _repository.Save(CreateDataPoint(stationId: "s2", sensorType: "st2"));
+            _repository.Save(CreateDataPoint(stationId: "s1", sensorType: "st2"));
+
+            var summaryReport = _repository.GetSummaryReport();
+
+            Assert.AreEqual(4, summaryReport.SensorDetails.Count);
+            Assert.AreEqual("s1", summaryReport.SensorDetails[0].StationId);
+            Assert.AreEqual("st1", summaryReport.SensorDetails[0].SensorType);
+
+            Assert.AreEqual("s1", summaryReport.SensorDetails[1].StationId);
+            Assert.AreEqual("st2", summaryReport.SensorDetails[1].SensorType);
+
+            Assert.AreEqual("s2", summaryReport.SensorDetails[2].StationId);
+            Assert.AreEqual("st1", summaryReport.SensorDetails[2].SensorType);
+
+            Assert.AreEqual("s2", summaryReport.SensorDetails[3].StationId);
+            Assert.AreEqual("st2", summaryReport.SensorDetails[3].SensorType);
+
+        }
+
         private static DataPoint CreateDataPoint(
             string stationId = "MyStationId",
             string sensorType = "MyTestSensor",
-            DateTime? sensorTimestampUtc = null)
+            DateTime? sensorTimestampUtc = null,
+            double sensorValueNumber = 10)
         {
             if (!sensorTimestampUtc.HasValue)
             {
@@ -193,7 +242,8 @@ namespace Repository.UnitTests
                 ReceivedTimestampUtc = new DateTime(2001, 2, 3, 4, 5, 6),
                 SensorTimestampUtc = sensorTimestampUtc.Value,
                 SensorType = sensorType,
-                StationId = stationId
+                StationId = stationId,
+                SensorValueNumber = sensorValueNumber
             };
             return dataPoint;
         }
