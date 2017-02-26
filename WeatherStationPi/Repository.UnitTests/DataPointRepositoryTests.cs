@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Repository.RepositoryDto;
@@ -111,8 +112,7 @@ namespace Repository.UnitTests
             loadedDataPoints.Should().HaveCount(1);
             DataPoint.IdentityEquals(dataPoint1, loadedDataPoints[0]).Should().BeTrue();
         }
-
-
+        
         [TestMethod]
         public void DeleteAllByStationIdTest()
         {

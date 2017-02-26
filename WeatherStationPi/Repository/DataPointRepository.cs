@@ -29,7 +29,10 @@ namespace Repository
             }
         }
 
-        public IList<DataPoint> GetDataPoints(string stationId, string sensorType, DateTimeRange dateTimeRange)
+        public IList<DataPoint> GetDataPoints(
+            string stationId,
+            string sensorType,
+            DateTimeRange dateTimeRange)
         {
             using (var context = CreateContext())
             {
@@ -38,14 +41,23 @@ namespace Repository
                     .Where(dataPoint => dataPoint.StationId == stationId)
                     .Where(dataPoint => dataPoint.SensorType == sensorType);
 
-                if (dateTimeRange.Start.HasValue)
-                    query = query.Where(dataPoint => dataPoint.SensorTimestampUtc > dateTimeRange.Start.Value);
-
-                if (dateTimeRange.End.HasValue)
-                    query = query.Where(dataPoint => dataPoint.SensorTimestampUtc < dateTimeRange.End.Value);
+                query = AddDateRangeToQuery(dateTimeRange, query);
 
                 return query.OrderBy(dp => dp.SensorTimestampUtc).ToList();
             }
+        }
+
+        private static IQueryable<DataPoint> AddDateRangeToQuery(DateTimeRange dateTimeRange, IQueryable<DataPoint> query)
+        {
+            if (dateTimeRange.Start.HasValue)
+            {
+                query = query.Where(dataPoint => dataPoint.SensorTimestampUtc > dateTimeRange.Start.Value);
+            }
+            if (dateTimeRange.End.HasValue)
+            {
+                query = query.Where(dataPoint => dataPoint.SensorTimestampUtc < dateTimeRange.End.Value);
+            }
+            return query;
         }
 
         public SummaryReport GetSummaryReport()
