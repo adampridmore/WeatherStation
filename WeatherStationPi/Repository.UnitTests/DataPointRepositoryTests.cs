@@ -112,6 +112,20 @@ namespace Repository.UnitTests
         }
 
 
+        [TestMethod]
+        public void DeleteAllByStationIdTest()
+        {
+            var dataPointToKeep = CreateDataPoint(stationId: "s1");
+            _repository.Save(dataPointToKeep);
+            _repository.Save(CreateDataPoint(stationId: "s2"));
+
+            _repository.DeleteAllByStationId("s2");
+
+            var dataPoints = _repository.FindAll();
+            Assert.AreEqual(1, dataPoints.Count);
+            Assert.IsTrue(DataPoint.IdentityEquals(dataPointToKeep, dataPoints[0]));
+        }
+
         private static DataPoint CreateDataPoint(
             string stationId = "MyStationId",
             string sensorType = "MyTestSensor",
