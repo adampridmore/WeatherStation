@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using ApiDtos.ApiDto;
+using Repository;
 using Repository.Interfaces;
 using Repository.RepositoryDto;
 using DataPoint = ApiDtos.ApiDto.DataPoint;
@@ -22,9 +23,9 @@ namespace WeatherStationServer.api
         //    return "Request id: " + id;
         //}
 
-        public RestService(IDataPointRepository repository)
+        public RestService()
         {
-            _repository = repository;
+            _repository = new DataPointRepository(new DefaultConnectionStringFactory());
         }
 
         public DateTime ServerDateTimeUtc()
