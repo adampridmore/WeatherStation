@@ -1,13 +1,13 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Repository.RepositoryDto;
 
 namespace Repository.UnitTests.RepositoryDto
 {
-    [TestClass]
+    [TestFixture]
     public class DateTimeRangeTests
     {
-        [TestMethod]
+        [Test]
         public void Unbounded_test()
         {
             var range = DateTimeRange.Unbounded;
@@ -15,7 +15,7 @@ namespace Repository.UnitTests.RepositoryDto
             Assert.IsNull(range.End);
         }
 
-        [TestMethod]
+        [Test]
         public void Last24Hours_test()
         {
             var range = DateTimeRange.Last24Hours;

@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Repository.Interfaces;
 using Repository.RepositoryDto;
 using SimpleInjector;
 
 namespace Repository.UnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class DataPointRepositoryTests
     {
         private IDataPointRepository _repository;
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             var container = CreateContainer();
@@ -34,7 +34,7 @@ namespace Repository.UnitTests
             return container;
         }
 
-        [TestMethod]
+        [Test]
         public void SaveAndLoad()
         {
             var dataPoint = new DataPoint
@@ -52,7 +52,7 @@ namespace Repository.UnitTests
             allValues.Should().HaveCount(1);
         }
 
-        [TestMethod]
+        [Test]
         public void Save_twice_is_idempotent()
         {
             _repository.Save(CreateDataPoint());
@@ -63,7 +63,7 @@ namespace Repository.UnitTests
             allValues.Should().HaveCount(1);
         }
 
-        [TestMethod]
+        [Test]
         public void Get_stationIds()
         {
             _repository.Save(CreateDataPoint("s1"));
@@ -75,7 +75,7 @@ namespace Repository.UnitTests
             stationIds.Should().Equal(new List<string> {"s1", "s2"});
         }
 
-        [TestMethod]
+        [Test]
         public void GetDataPoints()
         {
             var dataPoint1 = CreateDataPoint("s1", "mySensorType1");
@@ -91,7 +91,7 @@ namespace Repository.UnitTests
             DataPoint.IdentityEquals(dataPoint1, loadedDataPoints[0]).Should().BeTrue();
         }
 
-        [TestMethod]
+        [Test]
         public void GetDataPoints_filter_by_date_has_start()
         {
             var dataPoint1 = CreateDataPoint(sensorTimestampUtc: new DateTime(2001, 1, 10));
@@ -108,7 +108,7 @@ namespace Repository.UnitTests
             DataPoint.IdentityEquals(dataPoint2, loadedDataPoints[0]).Should().BeTrue();
         }
 
-        [TestMethod]
+        [Test]
         public void GetDataPoints_filter_by_date_has_end()
         {
             var dataPoint1 = CreateDataPoint(sensorTimestampUtc: new DateTime(2001, 1, 10));
@@ -125,7 +125,7 @@ namespace Repository.UnitTests
             DataPoint.IdentityEquals(dataPoint1, loadedDataPoints[0]).Should().BeTrue();
         }
 
-        [TestMethod]
+        [Test]
         public void DeleteAllByStationIdTest()
         {
             var dataPointToKeep = CreateDataPoint("s1");
@@ -139,7 +139,7 @@ namespace Repository.UnitTests
             DataPoint.IdentityEquals(dataPointToKeep, dataPoints[0]).Should().BeTrue();
         }
 
-        [TestMethod]
+        [Test]
         public void GetLastValues_for_sensorType_filters_on_station_and_sensor()
         {
             var dataPoint = CreateDataPoint("s1", "st1");
@@ -152,7 +152,7 @@ namespace Repository.UnitTests
             DataPoint.IdentityEquals(dataPoint, foundDataPoint).Should().BeTrue();
         }
 
-        [TestMethod]
+        [Test]
         public void GetLastValues_for_sensorType_only_get_latest()
         {
             var dataPoint = CreateDataPoint("s1", "st1", new DateTime(2001, 2, 11));
@@ -164,7 +164,7 @@ namespace Repository.UnitTests
             DataPoint.IdentityEquals(dataPoint, foundDataPoint).Should().BeTrue();
         }
 
-        [TestMethod]
+        [Test]
         public void GetLastValues_for_all_known_sensors()
         {
             var dataPoint1 = CreateDataPoint("s1", SensorTypeEnum.Temperature.ToString(),
@@ -182,7 +182,7 @@ namespace Repository.UnitTests
             DataPoint.IdentityEquals(dataPoint2, foundDataPoints[1]).Should().BeTrue();
         }
 
-        [TestMethod]
+        [Test]
         public void GetLastValues__for_all_known_sensors_doesnt_get_unknown_types()
         {
             var dataPoint1 = CreateDataPoint("s1", "st2");
@@ -193,7 +193,7 @@ namespace Repository.UnitTests
             foundDataPoints.Should().BeEmpty();
         }
 
-        [TestMethod]
+        [Test]
         public void GetSummaryTest()
         {
             _repository.Save(CreateDataPoint("s1", "st1",
@@ -214,7 +214,7 @@ namespace Repository.UnitTests
             summaryReport.SensorDetails[0].Max.Should().Be(new DateTime(2001, 2, 11));
         }
 
-        [TestMethod]
+        [Test]
         public void GetSummaryTest_ordering()
         {
             _repository.Save(CreateDataPoint("s1", "st1"));

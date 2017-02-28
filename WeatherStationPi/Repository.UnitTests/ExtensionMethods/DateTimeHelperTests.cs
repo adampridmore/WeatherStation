@@ -1,13 +1,13 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Repository.ExtensionMethods;
 
 namespace Repository.UnitTests.ExtensionMethods
 {
-    [TestClass]
+    [TestFixture]
     public class DateTimeHelperTests
     {
-        [TestMethod]
+        [Test]
         public void Go()
         {
             var dateTime = new DateTime(2001, 1, 10, 12, 30, 45, DateTimeKind.Utc);
