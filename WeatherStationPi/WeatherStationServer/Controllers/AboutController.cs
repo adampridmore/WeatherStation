@@ -2,13 +2,20 @@
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Repository;
+using Repository.Interfaces;
 using Repository.RepositoryDto;
 
 namespace WeatherStationServer.Controllers
 {
     public class AboutController : Controller
     {
+        private readonly IDataPointRepository _repository;
+
+        public AboutController(IDataPointRepository repository)
+        {
+            _repository = repository;
+        }
+
         // GET: About
         public string Index()
         {
@@ -19,14 +26,12 @@ namespace WeatherStationServer.Controllers
         {
             if (!Request.IsLocal)
                 throw new HttpException(401, "Unauthorized access");
-
-            var repository = new DataPointRepository();
-
+            
             var stationId = "myTestStation";
             var sensorType = "Temperature";
             var startTime = new DateTime(2016, 1, 1);
 
-            repository.DeleteAllByStationId(stationId);
+            _repository.DeleteAllByStationId(stationId);
 
             var points = Enumerable
                 .Range(1, 5000)
@@ -40,7 +45,9 @@ namespace WeatherStationServer.Controllers
                 });
 
             foreach (var dataPoint in points)
-                repository.Save(dataPoint);
+            {
+                _repository.Save(dataPoint);
+            }
 
             return "OK";
         }

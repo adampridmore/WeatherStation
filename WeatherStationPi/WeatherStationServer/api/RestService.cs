@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using ApiDtos.ApiDto;
-using Repository;
+using Repository.Interfaces;
 using Repository.RepositoryDto;
 using DataPoint = ApiDtos.ApiDto.DataPoint;
 
@@ -10,6 +10,8 @@ namespace WeatherStationServer.api
 {
     public class RestService : IRestService
     {
+        private readonly IDataPointRepository _repository;
+
         //public string XmlData(string id)
         //{
         //    return "Request id: " + id;
@@ -19,6 +21,11 @@ namespace WeatherStationServer.api
         //{
         //    return "Request id: " + id;
         //}
+
+        public RestService(IDataPointRepository repository)
+        {
+            _repository = repository;
+        }
 
         public DateTime ServerDateTimeUtc()
         {
@@ -33,13 +40,11 @@ namespace WeatherStationServer.api
             if (dataPointsRequest.DataPoints == null)
                 return "no dataPointsRequest.DataPoints";
 
-            var repository = new DataPointRepository();
-
             foreach (var dataPoint in dataPointsRequest.DataPoints)
             {
                 Debugger.Log(0, "", $"{dataPoint.SensorValueNumber}{Environment.NewLine}");
 
-                repository.Save(CreateDataPointRepositoryDto(dataPoint, DateTime.UtcNow));
+                _repository.Save(CreateDataPointRepositoryDto(dataPoint, DateTime.UtcNow));
             }
 
             return "OK";
@@ -47,9 +52,7 @@ namespace WeatherStationServer.api
 
         public GetDataPointsResponse GetDataPoints(string stationId, string sensorType)
         {
-            var repository = new DataPointRepository();
-
-            var dataPoints = repository.GetDataPoints(
+            var dataPoints = _repository.GetDataPoints(
                 stationId,
                 sensorType,
                 DateTimeRange.Last24Hours);
@@ -59,9 +62,7 @@ namespace WeatherStationServer.api
 
         public GetDataPointsResponse GetLastStationDataPoints(string stationId)
         {
-            var repository = new DataPointRepository();
-
-            var lastValues = repository.GetLastValues(stationId);
+            var lastValues = _repository.GetLastValues(stationId);
 
             return new GetDataPointsResponse
             {

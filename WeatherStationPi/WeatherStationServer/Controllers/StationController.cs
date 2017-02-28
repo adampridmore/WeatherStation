@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.FSharp.Core;
-using Repository;
+using Repository.Interfaces;
 using Repository.RepositoryDto;
 using WeatherStationServer.Model.Station;
 using XPlot.GoogleCharts;
@@ -12,14 +12,21 @@ namespace WeatherStationServer.Controllers
 {
     public class StationController : Controller
     {
+        private readonly IDataPointRepository _repository;
+
+        public StationController(IDataPointRepository repository)
+        {
+            _repository = repository;
+        }
+
         //GET: Home
         public ActionResult Details(string stationId, string lastHours = "24")
         {
             //var dateTimeRange = DateTimeRange.Create(startDateTime, endDateTime);
             var dateTimeRange = CreateDateTimeRange(lastHours);
 
-            var repository = new DataPointRepository();
-            var stationIds = repository.GetStationIds();
+            
+            var stationIds = _repository.GetStationIds();
 
             stationId = GetStationId(stationIds, stationId);
 
@@ -28,7 +35,7 @@ namespace WeatherStationServer.Controllers
                 AllStationIds = stationIds,
                 StationId = stationId,
                 ChartHtmlList = CreateChartHtmlList(stationId, dateTimeRange),
-                LatestDataPoints = repository.GetLastValues(stationId)
+                LatestDataPoints = _repository.GetLastValues(stationId)
             };
 
             return View(model);
@@ -45,19 +52,17 @@ namespace WeatherStationServer.Controllers
             return DateTimeRange.Create(DateTime.UtcNow - timeSpan, null);
         }
 
-        private static List<string> CreateChartHtmlList(string stationId, DateTimeRange dateTimeRange)
+        private List<string> CreateChartHtmlList(string stationId, DateTimeRange dateTimeRange)
         {
-            var repository = new DataPointRepository();
-
             return SensorDetails
                 .GetSensorTypeValues()
-                .Select(sensorType => GetChartHtmlForStationSensor(stationId, repository, sensorType, dateTimeRange))
+                .Select(sensorType => GetChartHtmlForStationSensor(stationId, _repository, sensorType, dateTimeRange))
                 .Where(x => x != null)
                 .ToList();
         }
 
         private static string GetChartHtmlForStationSensor(string stationId,
-            DataPointRepository repository,
+            IDataPointRepository repository,
             string sensorType,
             DateTimeRange dateTimeRange)
         {

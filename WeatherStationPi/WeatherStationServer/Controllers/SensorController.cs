@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Microsoft.FSharp.Core;
-using Repository;
+using Repository.Interfaces;
 using Repository.RepositoryDto;
 using WeatherStationServer.Model.Sensor;
 using XPlot.GoogleCharts;
@@ -11,11 +11,17 @@ namespace WeatherStationServer.Controllers
 {
     public class SensorController : Controller
     {
+        private readonly IDataPointRepository _repository;
+
+        public SensorController(IDataPointRepository repository)
+        {
+            _repository = repository;
+        }
+
         // GET: Station
         public ActionResult Index()
         {
-            var repository = new DataPointRepository();
-            var summary = repository.GetSummaryReport();
+            var summary = _repository.GetSummaryReport();
 
             var model = new SensorIndexModel
             {
@@ -28,9 +34,7 @@ namespace WeatherStationServer.Controllers
         // GET: Sensor
         public ActionResult Details(string stationId, string sensorType, int size = 300, int? reloadSeconds = null)
         {
-            var repository = new DataPointRepository();
-
-            var dataPoint = repository.GetLastValues(stationId, sensorType);
+            var dataPoint = _repository.GetLastValues(stationId, sensorType);
 
             var model = new SensorDetailsModel
             {

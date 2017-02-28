@@ -1,25 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Repository.Interfaces;
 using Repository.RepositoryDto;
+using SimpleInjector;
 
 namespace Repository.UnitTests
 {
     [TestClass]
     public class DataPointRepositoryTests
     {
-        private const string ConnectionString =
-            @"server=.\SQLEXPRESS;database=WeatherStation_unitTests;Integrated Security = True";
-
-        private DataPointRepository _repository;
+        private IDataPointRepository _repository;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _repository = new DataPointRepository(ConnectionString);
+            var container = CreateContainer();
+
+            _repository = container.GetInstance<IDataPointRepository>();
+
             _repository.DeleteAll();
+        }
+
+        private static Container CreateContainer()
+        {
+            var container = new Container();
+
+            container.Register<IDataPointRepository, DataPointRepository>();
+            container.Register<IConnectionStringFactory, TestConnectionStringFactory>();
+
+            container.Verify();
+            return container;
         }
 
         [TestMethod]
@@ -112,7 +124,7 @@ namespace Repository.UnitTests
             loadedDataPoints.Should().HaveCount(1);
             DataPoint.IdentityEquals(dataPoint1, loadedDataPoints[0]).Should().BeTrue();
         }
-        
+
         [TestMethod]
         public void DeleteAllByStationIdTest()
         {

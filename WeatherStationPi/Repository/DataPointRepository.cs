@@ -2,21 +2,18 @@
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Linq;
+using Repository.Interfaces;
 using Repository.RepositoryDto;
 
 namespace Repository
 {
-    public class DataPointRepository
+    public class DataPointRepository : IDataPointRepository
     {
         private readonly string _nameOrConnectionString;
-
-        public DataPointRepository() : this("name = DefaultConnection")
+        
+        public DataPointRepository(IConnectionStringFactory connectionStringFactory)
         {
-        }
-
-        public DataPointRepository(string nameOrConnectionString)
-        {
-            _nameOrConnectionString = nameOrConnectionString;
+            _nameOrConnectionString = connectionStringFactory.GetNameOrConnectionString();
         }
 
         public void Save(DataPoint dataPoint)

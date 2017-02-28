@@ -13,7 +13,7 @@ let getChartHtml() =
     
   
 let getChartForSensor stationId sensorType = 
-    let repository = new Repository.DataPointRepository()
+    let repository = new Repository.DataPointRepository(new DefaultConnectionStringFactory())
 
     let data = 
         repository.GetDataPoints(stationId, sensorType,DateTimeRange.Unbounded) 

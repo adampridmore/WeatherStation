@@ -50,6 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionMethods\DateTimeHelper.cs" />
+    <Compile Include="Interfaces\IConnectionStringFactory.cs" />
+    <Compile Include="DefaultConnectionStringFactory.cs" />
+    <Compile Include="Interfaces\IDataPointRepository.cs" />
     <Compile Include="Migrations\201611211515240_V1.cs" />
     <Compile Include="Migrations\201611211515240_V1.Designer.cs">
       <DependentUpon>201611211515240_V1.cs</DependentUpon>

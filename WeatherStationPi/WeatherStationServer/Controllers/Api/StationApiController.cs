@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Results;
-using Repository;
 using Repository.ExtensionMethods;
+using Repository.Interfaces;
 using Repository.RepositoryDto;
 using WeatherStationServer.Controllers.Api.Dto;
 
@@ -12,13 +12,18 @@ namespace WeatherStationServer.Controllers.Api
 {
     public class StationApiController : WeatherStationApiControllerBase
     {
+        private readonly IDataPointRepository _repository;
+
+        public StationApiController(IDataPointRepository repository)
+        {
+            _repository = repository;
+        }
+
         [HttpGet]
         [Route("api/station/getIds")]
         public JsonResult<StationIdsResponse> Get()
         {
-            var repository = new DataPointRepository();
-
-            var stationIds = repository.GetStationIds();
+            var stationIds = _repository.GetStationIds();
 
             var data = new StationIdsResponse(stationIds);
             return ToJson(data);
@@ -28,8 +33,7 @@ namespace WeatherStationServer.Controllers.Api
         [Route("api/station/lastValues/{stationId}")]
         public JsonResult<StationLastValues> GetStationLastValues(string stationId)
         {
-            var repository = new DataPointRepository();
-            var lastValues = repository.GetLastValues(stationId);
+            var lastValues = _repository.GetLastValues(stationId);
 
             var stationData = new StationLastValues
             {
@@ -44,12 +48,10 @@ namespace WeatherStationServer.Controllers.Api
         [Route("api/station/dataPoints/{stationId}")]
         public JsonResult<StationDataPoints> GetStationDataPoints(string stationId, int lastHours = 24)
         {
-            var repository = new DataPointRepository();
-
             var dateTimeRange = StationController.CreateDateTimeRange(lastHours.ToString());
 
             var sensorValuesList = SensorDetails.GetSensorTypeValues()
-                    .SelectMany(type => repository.GetDataPoints(stationId, type, dateTimeRange))
+                    .SelectMany(type => _repository.GetDataPoints(stationId, type, dateTimeRange))
                     .GroupBy(dp => dp.SensorType)
                     .Select(ToSensorValues)
                     .ToList()
