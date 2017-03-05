@@ -19,5 +19,6 @@ namespace Repository.Interfaces
         IList<DataPoint> FindAll();
         void DeleteAll();
         void DeleteAllByStationId(string stationId);
+        IList<DataPoint> FindAllByStationId(string stationId);
     }
 }

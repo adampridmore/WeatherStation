@@ -14,6 +14,8 @@ namespace WeatherStationServer.ApiTests
     [Category("ApiTests")]
     public class ApiTests
     {
+        private string _apiTestsStationId = "apiTestsStationId";
+
         [Test]
         public void Get_serverDateTime()
         {
@@ -40,7 +42,7 @@ namespace WeatherStationServer.ApiTests
         {
             var repository = CreateContainer().GetInstance<DataPointRepository>();
 
-            repository.DeleteAll();
+            repository.DeleteAllByStationId(_apiTestsStationId);
 
             var url = "http://localhost:59653/api/";
 
@@ -57,7 +59,7 @@ namespace WeatherStationServer.ApiTests
                 {
                     new
                     {
-                        StationId = "myStationId",
+                        StationId = _apiTestsStationId,
                         SensorType = "mySensorType",
                         SensorValueNumber = "123",
                         SensorTimestampUtc = "2001-02-03T12:30:45Z"
@@ -72,9 +74,9 @@ namespace WeatherStationServer.ApiTests
 
             Assert.That(response.Content, Is.EqualTo(@"""OK"""));
 
-            var allDataPoints = repository.FindAll();
-            Assert.That(allDataPoints, Has.Length.EqualTo(1));
-            Assert.That(allDataPoints[0].StationId, Is.EqualTo("myStationId"));
+            var allDataPoints = repository.FindAllByStationId(_apiTestsStationId);
+            Assert.That(allDataPoints, Has.Count.EqualTo(1));
+            Assert.That(allDataPoints[0].StationId, Is.EqualTo(_apiTestsStationId));
             Assert.That(allDataPoints[0].SensorType, Is.EqualTo("mySensorType"));
             Assert.That(allDataPoints[0].SensorValueNumber, Is.EqualTo(123));
             Assert.That(allDataPoints[0].SensorTimestampUtc, Is.EqualTo(new DateTime(2001,2,3,12,30,45, DateTimeKind.Utc)));
@@ -97,7 +99,7 @@ namespace WeatherStationServer.ApiTests
     {
         public string GetNameOrConnectionString()
         {
-            return @"server=.\SQLEXPRESS;database=WeatherStation_ApiTests;Integrated Security = True; Connect Timeout = 5";
+            return @"server=.\SQLEXPRESS;database=WeatherStation;Integrated Security = True; Connect Timeout = 5";
         }
     }
 }

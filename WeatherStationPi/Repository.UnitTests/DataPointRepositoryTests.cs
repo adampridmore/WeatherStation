@@ -239,6 +239,18 @@ namespace Repository.UnitTests
             summaryReport.SensorDetails[3].SensorType.Should().Be("st2");
         }
 
+        [Test]
+        public void FindAllForStationId()
+        {
+            _repository.Save(CreateDataPoint(stationId:"myStationId1",sensorValueNumber:1));
+            _repository.Save(CreateDataPoint(stationId:"myStationId2", sensorValueNumber: 2));
+
+            IList<DataPoint> allForStationId = _repository.FindAllByStationId("myStationId1");
+
+            Assert.That(allForStationId, Has.Count.EqualTo(1));
+            Assert.That(allForStationId[0].SensorValueNumber, Is.EqualTo(1));
+        }
+
         private static DataPoint CreateDataPoint(
             string stationId = "MyStationId",
             string sensorType = "MyTestSensor",

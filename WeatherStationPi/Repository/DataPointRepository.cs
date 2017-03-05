@@ -169,5 +169,17 @@ ORDER BY SensorTimestampUtc DESC";
                 context.SaveChanges();
             }
         }
+
+        public IList<DataPoint> FindAllByStationId(string stationId)
+        {
+            using (var context = CreateContext())
+            {
+                return context
+                    .DataPoints
+                    .AsQueryable()
+                    .Where(dp=>dp.StationId == stationId)
+                    .ToList();
+            }
+        }
     }
 }
