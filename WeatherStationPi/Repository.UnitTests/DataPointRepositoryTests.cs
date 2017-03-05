@@ -9,6 +9,7 @@ using SimpleInjector;
 namespace Repository.UnitTests
 {
     [TestFixture]
+    [Category("RepositoryTests")]
     public class DataPointRepositoryTests
     {
         private IDataPointRepository _repository;
@@ -28,7 +29,7 @@ namespace Repository.UnitTests
             var container = new Container();
 
             container.Register<IDataPointRepository, DataPointRepository>();
-            container.Register<IConnectionStringFactory, TestConnectionStringFactory>();
+            container.Register<IConnectionStringFactory, UnitTestConnectionStringFactory>();
 
             container.Verify();
             return container;

@@ -25,20 +25,29 @@ namespace WeatherStationServer.Controllers
             //var dateTimeRange = DateTimeRange.Create(startDateTime, endDateTime);
             var dateTimeRange = CreateDateTimeRange(lastHours);
 
-            
+
             var stationIds = _repository.GetStationIds();
 
-            stationId = GetStationId(stationIds, stationId);
+            stationId = TryGetStationId(stationIds, stationId);
 
             var model = new StationDetailsModel
             {
                 AllStationIds = stationIds,
                 StationId = stationId,
                 ChartHtmlList = CreateChartHtmlList(stationId, dateTimeRange),
-                LatestDataPoints = _repository.GetLastValues(stationId)
+                LatestDataPoints = GetLatestDataPoints(stationId)
             };
 
             return View(model);
+        }
+
+        private List<DataPoint> GetLatestDataPoints(string stationId)
+        {
+            if (stationId == null)
+            {
+                return new List<DataPoint>();
+            }
+            return _repository.GetLastValues(stationId);
         }
 
         public static DateTimeRange CreateDateTimeRange(string lastHours)
@@ -54,6 +63,11 @@ namespace WeatherStationServer.Controllers
 
         private List<string> CreateChartHtmlList(string stationId, DateTimeRange dateTimeRange)
         {
+            if (stationId == null)
+            {
+                return new List<string>();
+            }
+
             return SensorDetails
                 .GetSensorTypeValues()
                 .Select(sensorType => GetChartHtmlForStationSensor(stationId, _repository, sensorType, dateTimeRange))
@@ -81,7 +95,7 @@ namespace WeatherStationServer.Controllers
             return chart.GetInlineHtml();
         }
 
-        private string GetStationId(List<string> allStationIds, string stationId)
+        private string TryGetStationId(List<string> allStationIds, string stationId)
         {
             if (!string.IsNullOrWhiteSpace(stationId))
                 return stationId;

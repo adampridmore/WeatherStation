@@ -3,7 +3,7 @@
 namespace Repository.UnitTests
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class TestConnectionStringFactory : IConnectionStringFactory
+    public class UnitTestConnectionStringFactory : IConnectionStringFactory
     {
         public string GetNameOrConnectionString()
         {

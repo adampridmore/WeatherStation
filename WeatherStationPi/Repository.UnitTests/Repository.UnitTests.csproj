@@ -65,7 +65,7 @@
     <Compile Include="DataPointRepositoryTests.cs" />
     <Compile Include="RepositoryDto\DataPointTests.cs" />
     <Compile Include="RepositoryDto\DateTimeRangeTests.cs" />
-    <Compile Include="TestConnectionStringFactory.cs" />
+    <Compile Include="UnitTestConnectionStringFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Repository\Repository.csproj">
