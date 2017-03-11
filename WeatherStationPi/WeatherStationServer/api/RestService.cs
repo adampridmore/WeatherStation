@@ -25,7 +25,7 @@ namespace WeatherStationServer.api
 
         public RestService()
         {
-            _repository = new DataPointRepository(new DefaultConnectionStringFactory());
+            _repository = new DataPointSqlRepository(new DefaultConnectionStringFactory());
         }
 
         public DateTime ServerDateTimeUtc()

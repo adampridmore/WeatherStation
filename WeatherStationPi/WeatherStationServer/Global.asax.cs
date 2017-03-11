@@ -47,7 +47,7 @@ namespace WeatherStationServer
 
         private static void RegisterTypes(Container container)
         {
-            container.Register<IDataPointRepository, DataPointRepository>(Lifestyle.Singleton);
+            container.Register<IDataPointRepository, DataPointSqlRepository>(Lifestyle.Singleton);
             container.Register<IConnectionStringFactory, DefaultConnectionStringFactory>(Lifestyle.Singleton);
         }
     }

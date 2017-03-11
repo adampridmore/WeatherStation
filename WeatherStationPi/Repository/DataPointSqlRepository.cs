@@ -7,11 +7,12 @@ using Repository.RepositoryDto;
 
 namespace Repository
 {
-    public class DataPointRepository : IDataPointRepository
+    // ReSharper disable once ClassNeverInstantiated.Global
+    public class DataPointSqlRepository : IDataPointRepository
     {
         private readonly string _nameOrConnectionString;
         
-        public DataPointRepository(IConnectionStringFactory connectionStringFactory)
+        public DataPointSqlRepository(IConnectionStringFactory connectionStringFactory)
         {
             _nameOrConnectionString = connectionStringFactory.GetNameOrConnectionString();
         }

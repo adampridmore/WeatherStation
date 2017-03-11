@@ -40,7 +40,7 @@ namespace WeatherStationServer.ApiTests
         [Test]
         public void Post_dataPoints()
         {
-            var repository = CreateContainer().GetInstance<DataPointRepository>();
+            var repository = CreateContainer().GetInstance<DataPointSqlRepository>();
 
             repository.DeleteAllByStationId(_apiTestsStationId);
 
@@ -87,7 +87,7 @@ namespace WeatherStationServer.ApiTests
         {
             var container = new Container();
 
-            container.Register<IDataPointRepository, DataPointRepository>();
+            container.Register<IDataPointRepository, DataPointSqlRepository>();
             container.Register<IConnectionStringFactory, ApiTestConnectionStringFactory>();
 
             container.Verify();

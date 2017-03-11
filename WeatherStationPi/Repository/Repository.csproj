@@ -45,7 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectionStringFactory.cs" />
+    <Compile Include="DataPointMongoDbRepository.cs" />
     <Compile Include="ExtensionMethods\DateTimeHelper.cs" />
+    <Compile Include="Interfaces\IMongoDbConnectionStringFactory.cs" />
     <Compile Include="Interfaces\IConnectionStringFactory.cs" />
     <Compile Include="DefaultConnectionStringFactory.cs" />
     <Compile Include="Interfaces\IDataPointRepository.cs" />
@@ -59,7 +61,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RepositoryDto\DataPoint.cs" />
-    <Compile Include="DataPointRepository.cs" />
+    <Compile Include="DataPointSqlRepository.cs" />
     <Compile Include="RepositoryDto\DateTimeRange.cs" />
     <Compile Include="RepositoryDto\SensorDetails.cs" />
     <Compile Include="RepositoryDto\SensorTypeEnum.cs" />

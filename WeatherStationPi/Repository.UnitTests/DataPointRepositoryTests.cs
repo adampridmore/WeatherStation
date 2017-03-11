@@ -10,7 +10,7 @@ namespace Repository.UnitTests
 {
     [TestFixture]
     [Category("RepositoryTests")]
-    public class DataPointRepositoryTests
+    public abstract class DataPointRepositoryTests
     {
         private IDataPointRepository _repository;
 
@@ -24,16 +24,7 @@ namespace Repository.UnitTests
             _repository.DeleteAll();
         }
 
-        private static Container CreateContainer()
-        {
-            var container = new Container();
-
-            container.Register<IDataPointRepository, DataPointRepository>();
-            container.Register<IConnectionStringFactory, UnitTestConnectionStringFactory>();
-
-            container.Verify();
-            return container;
-        }
+        protected abstract Container CreateContainer();
 
         [Test]
         public void SaveAndLoad()
