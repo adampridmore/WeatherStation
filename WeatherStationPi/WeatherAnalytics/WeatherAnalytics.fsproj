@@ -57,6 +57,7 @@
     <Content Include="packages.config" />
     <None Include="Script.fsx" />
     <Content Include="Google.DataTable.Net.Wrapper.XML" />
+    <None Include="WeatherForecast.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Deedle">
