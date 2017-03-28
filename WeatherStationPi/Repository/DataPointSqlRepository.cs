@@ -41,8 +41,25 @@ namespace Repository
 
                 query = AddDateRangeToQuery(dateTimeRange, query);
 
-                return query.OrderBy(dp => dp.SensorTimestampUtc).ToList();
+                return query
+                    .OrderBy(dp => dp.SensorTimestampUtc)
+                    .Where(IsValidValue)
+                    .ToList();
             }
+        }
+
+        private bool IsValidValue(DataPoint arg)
+        {
+            if (arg.SensorType == SensorTypeEnum.Pressure.ToString())
+            {
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                if (arg.SensorValueNumber == 0)
+                {
+                    return false;
+                }
+            }
+            
+            return true;
         }
 
         private static IQueryable<DataPoint> AddDateRangeToQuery(DateTimeRange dateTimeRange, IQueryable<DataPoint> query)

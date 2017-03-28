@@ -101,6 +101,25 @@ namespace Repository.UnitTests
         }
 
         [Test]
+        public void GetDataPoints_remove_invalid_values_for_pressure_values()
+        {
+            var invalidPressureValue = CreateDataPoint(
+                sensorTimestampUtc: new DateTime(2001, 1, 10),
+                sensorValueNumber: 0.0d,
+                sensorType: SensorTypeEnum.Pressure.ToString());
+
+
+            _repository.Save(invalidPressureValue);
+
+            var loadedDataPoints = _repository.GetDataPoints(
+                invalidPressureValue.StationId,
+                invalidPressureValue.SensorType,
+                DateTimeRange.Create(new DateTime(2001, 1, 11), null));
+
+            loadedDataPoints.Should().HaveCount(0);
+        }
+
+        [Test]
         public void GetDataPoints_filter_by_date_has_end()
         {
             var dataPoint1 = CreateDataPoint(sensorTimestampUtc: new DateTime(2001, 1, 10));
@@ -233,8 +252,8 @@ namespace Repository.UnitTests
         [Test]
         public void FindAllForStationId()
         {
-            _repository.Save(CreateDataPoint(stationId:"myStationId1",sensorValueNumber:1));
-            _repository.Save(CreateDataPoint(stationId:"myStationId2", sensorValueNumber: 2));
+            _repository.Save(CreateDataPoint(stationId: "myStationId1", sensorValueNumber: 1));
+            _repository.Save(CreateDataPoint(stationId: "myStationId2", sensorValueNumber: 2));
 
             IList<DataPoint> allForStationId = _repository.FindAllByStationId("myStationId1");
 
