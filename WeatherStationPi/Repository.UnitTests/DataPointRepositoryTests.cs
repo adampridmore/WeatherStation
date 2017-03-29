@@ -108,15 +108,32 @@ namespace Repository.UnitTests
                 sensorValueNumber: 0.0d,
                 sensorType: SensorTypeEnum.Pressure.ToString());
 
-
             _repository.Save(invalidPressureValue);
 
             var loadedDataPoints = _repository.GetDataPoints(
                 invalidPressureValue.StationId,
                 invalidPressureValue.SensorType,
-                DateTimeRange.Create(new DateTime(2001, 1, 11), null));
+                DateTimeRange.Unbounded);
 
             loadedDataPoints.Should().HaveCount(0);
+        }
+
+        [Test]
+        public void GetDataPoints_valid_values_for_pressure_values()
+        {
+            var validPressureValue = CreateDataPoint(
+                sensorTimestampUtc: new DateTime(2001, 1, 10),
+                sensorValueNumber: 1.0d,
+                sensorType: SensorTypeEnum.Pressure.ToString());
+
+            _repository.Save(validPressureValue);
+
+            var loadedDataPoints = _repository.GetDataPoints(
+                validPressureValue.StationId,
+                validPressureValue.SensorType,
+                DateTimeRange.Unbounded);
+
+            loadedDataPoints.Should().HaveCount(1);
         }
 
         [Test]
