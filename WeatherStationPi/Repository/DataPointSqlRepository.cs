@@ -48,7 +48,7 @@ namespace Repository
             }
         }
 
-        private bool IsValidValue(DataPoint arg)
+        public static bool IsValidValue(DataPoint arg)
         {
             if (arg.SensorType == SensorTypeEnum.Pressure.ToString())
             {

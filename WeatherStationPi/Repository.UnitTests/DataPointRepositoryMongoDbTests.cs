@@ -4,7 +4,7 @@ using SimpleInjector;
 
 namespace Repository.UnitTests
 {
-    [Ignore("Not implemented")]
+    [Ignore("Not finished")]
     public class DataPointRepositoryMongoDbTests : DataPointRepositoryTests
     {
         protected override Container CreateContainer()

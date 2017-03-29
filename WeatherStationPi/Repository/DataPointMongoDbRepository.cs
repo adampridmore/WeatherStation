@@ -1,19 +1,56 @@
 ﻿using System.Collections.Generic;
+using MongoDB.Driver;
+using MongoDB.Driver.Linq;
+using System.Linq;
 using Repository.Interfaces;
 using Repository.RepositoryDto;
+using static Repository.DataPointSqlRepository;
 
 namespace Repository
 {
     public class DataPointMongoDbRepository : IDataPointRepository
     {
-        public void Save(DataPoint dataPoint)
+        public DataPointMongoDbRepository(IConnectionStringFactory connectionStringFactory)
         {
-            throw new System.NotImplementedException();
+            var connectionString = connectionStringFactory.GetNameOrConnectionString();
+            Collection = GetCollection(connectionString);
         }
 
-        public IList<DataPoint> GetDataPoints(string stationId, string sensorType, DateTimeRange dateTimeRange)
+        public IMongoCollection<DataPoint> Collection { get; set; }
+
+        public void Save(DataPoint dataPoint)
         {
-            throw new System.NotImplementedException();
+            Collection.InsertOne(dataPoint);
+        }
+
+        public IList<DataPoint> GetDataPoints(
+            string stationId, 
+            string sensorType, 
+            DateTimeRange dateTimeRange)
+        {
+            var query = Collection.AsQueryable()
+                .Where(dp => dp.StationId == stationId)
+                .Where(dp => dp.SensorType == sensorType)
+                ;
+
+            query = AddDateRangeToQuery(dateTimeRange, query);
+
+            return query
+                .ToList()
+                .Where(dp => DataPointSqlRepository.IsValidValue(dp)).ToList();
+        }
+
+        private static IMongoQueryable<DataPoint> AddDateRangeToQuery(DateTimeRange dateTimeRange, IMongoQueryable<DataPoint> query)
+        {
+            if (dateTimeRange.Start.HasValue)
+            {
+                query = query.Where(dataPoint => dataPoint.SensorTimestampUtc > dateTimeRange.Start.Value);
+            }
+            if (dateTimeRange.End.HasValue)
+            {
+                query = query.Where(dataPoint => dataPoint.SensorTimestampUtc < dateTimeRange.End.Value);
+            }
+            return query;
         }
 
         public SummaryReport GetSummaryReport()
@@ -38,22 +75,38 @@ namespace Repository
 
         public IList<DataPoint> FindAll()
         {
-            throw new System.NotImplementedException();
+            return Collection
+                .FindSync(FilterDefinition<DataPoint>.Empty)
+                .ToList();
         }
 
         public void DeleteAll()
         {
-            throw new System.NotImplementedException();
+            Collection.DeleteMany(FilterDefinition<DataPoint>.Empty);
         }
 
         public void DeleteAllByStationId(string stationId)
         {
-            throw new System.NotImplementedException();
+            Collection.DeleteMany(dp=>dp.StationId == stationId);
         }
 
         public IList<DataPoint> FindAllByStationId(string stationId)
         {
-            throw new System.NotImplementedException();
+            return Collection
+                .AsQueryable()
+                .Where(dp => dp.StationId == stationId)
+                .ToList();
+        }
+
+        private static IMongoCollection<DataPoint> GetCollection(string connectionString)
+        {
+            var url = new MongoUrl(connectionString);
+            var client = new MongoClient(url);
+
+            var database = client.GetDatabase(url.DatabaseName);
+
+            var collection = database.GetCollection<DataPoint>("dataPoint");
+            return collection;
         }
     }
 }

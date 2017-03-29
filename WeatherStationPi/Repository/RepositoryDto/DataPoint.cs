@@ -1,6 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Conventions;
 
 namespace Repository.RepositoryDto
 {
@@ -81,5 +84,10 @@ namespace Repository.RepositoryDto
 
             return true;
         }
+
+
+        [NotMapped]
+        [BsonExtraElements]
+        public BsonDocument AdditionalColumns { get; set; }
     }
 }

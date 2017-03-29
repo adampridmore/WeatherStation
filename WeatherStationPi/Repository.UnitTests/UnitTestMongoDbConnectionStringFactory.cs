@@ -7,7 +7,7 @@ namespace Repository.UnitTests
     {
         public string GetNameOrConnectionString()
         {
-            throw new NotImplementedException();
+            return "mongodb://localhost/WeatherStation_unitTests";
         }
     }
 }
