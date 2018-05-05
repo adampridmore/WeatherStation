@@ -6,10 +6,13 @@ namespace Repository.RepositoryDto
 {
     public class DataPointId
     {
+        [BsonElement(Order = 1)]
         public string StationId { get; set; }
 
+        [BsonElement(Order = 2)]
         public string SensorType { get; set; }
 
+        [BsonElement(Order = 3)]
         public DateTime SensorTimestampUtc { get; set; }
     }
     public class DataPointMongoDb

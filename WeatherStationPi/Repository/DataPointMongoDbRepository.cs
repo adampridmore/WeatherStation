@@ -16,11 +16,26 @@ namespace Repository
             Collection = GetCollection(connectionString);
         }
 
-        public IMongoCollection<DataPoint> Collection { get; set; }
+        public IMongoCollection<DataPointMongoDb> Collection { get; set; }
 
         public void Save(DataPoint dataPoint)
         {
-            Collection.InsertOne(dataPoint);
+            var mongoDbDataPoint = DataPointMongoDb.FromDataPoint(dataPoint);
+
+            var found = Collection.Find(
+                doc => doc.Id.StationId == mongoDbDataPoint.Id.StationId &&
+                    doc.Id.SensorType == mongoDbDataPoint.Id.SensorType &&
+                    doc.Id.SensorTimestampUtc == mongoDbDataPoint.Id.SensorTimestampUtc
+                    );
+
+            if (found.Any())
+            {
+                // TODO - Update?
+            }
+            else
+            {
+                Collection.InsertOne(mongoDbDataPoint);
+            }
         }
 
         public IList<DataPoint> GetDataPoints(
@@ -29,26 +44,28 @@ namespace Repository
             DateTimeRange dateTimeRange)
         {
             var query = Collection.AsQueryable()
-                .Where(dp => dp.StationId == stationId)
-                .Where(dp => dp.SensorType == sensorType)
+                .Where(dp => dp.Id.StationId == stationId)
+                .Where(dp => dp.Id.SensorType == sensorType)
                 ;
 
             query = AddDateRangeToQuery(dateTimeRange, query);
 
             return query
                 .ToList()
-                .Where(dp => DataPointSqlRepository.IsValidValue(dp)).ToList();
+                .Select(DataPointMongoDb.ToDataPoint)
+                .Where(dp => DataPointSqlRepository.IsValidValue(dp))
+                .ToList();
         }
 
-        private static IMongoQueryable<DataPoint> AddDateRangeToQuery(DateTimeRange dateTimeRange, IMongoQueryable<DataPoint> query)
+        private static IMongoQueryable<DataPointMongoDb> AddDateRangeToQuery(DateTimeRange dateTimeRange, IMongoQueryable<DataPointMongoDb> query)
         {
             if (dateTimeRange.Start.HasValue)
             {
-                query = query.Where(dataPoint => dataPoint.SensorTimestampUtc > dateTimeRange.Start.Value);
+                query = query.Where(dataPoint => dataPoint.Id.SensorTimestampUtc > dateTimeRange.Start.Value);
             }
             if (dateTimeRange.End.HasValue)
             {
-                query = query.Where(dataPoint => dataPoint.SensorTimestampUtc < dateTimeRange.End.Value);
+                query = query.Where(dataPoint => dataPoint.Id.SensorTimestampUtc < dateTimeRange.End.Value);
             }
             return query;
         }
@@ -62,7 +79,7 @@ namespace Repository
         {
             return Collection
                 .Aggregate()
-                .Group(new BsonDocument { { "_id", "$StationId" } })
+                .Group(new BsonDocument { { "_id", "$_id.StationId" } })
                 .ToList()
                 .Select(row => row["_id"].AsString)
                 .OrderBy(x=>x)
@@ -82,36 +99,40 @@ namespace Repository
         public IList<DataPoint> FindAll()
         {
             return Collection
-                .FindSync(FilterDefinition<DataPoint>.Empty)
+                .FindSync(FilterDefinition<DataPointMongoDb>.Empty)
+                .ToList()
+                .Select(DataPointMongoDb.ToDataPoint)
                 .ToList();
         }
 
         public void DeleteAll()
         {
-            Collection.DeleteMany(FilterDefinition<DataPoint>.Empty);
+            Collection.DeleteMany(FilterDefinition<DataPointMongoDb>.Empty);
         }
 
         public void DeleteAllByStationId(string stationId)
         {
-            Collection.DeleteMany(dp=>dp.StationId == stationId);
+            Collection.DeleteMany(dp=>dp.Id.StationId == stationId);
         }
 
         public IList<DataPoint> FindAllByStationId(string stationId)
         {
             return Collection
                 .AsQueryable()
-                .Where(dp => dp.StationId == stationId)
+                .Where(dp => dp.Id.StationId == stationId)
+                .ToList()
+                .Select(DataPointMongoDb.ToDataPoint)
                 .ToList();
         }
 
-        private static IMongoCollection<DataPoint> GetCollection(string connectionString)
+        private static IMongoCollection<DataPointMongoDb> GetCollection(string connectionString)
         {
             var url = new MongoUrl(connectionString);
             var client = new MongoClient(url);
 
             var database = client.GetDatabase(url.DatabaseName);
 
-            var collection = database.GetCollection<DataPoint>("dataPoint");
+            var collection = database.GetCollection<DataPointMongoDb>("dataPoint");
             return collection;
         }
     }
