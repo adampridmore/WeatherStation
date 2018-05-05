@@ -4,7 +4,7 @@ using MongoDB.Driver.Linq;
 using System.Linq;
 using Repository.Interfaces;
 using Repository.RepositoryDto;
-using static Repository.DataPointSqlRepository;
+using MongoDB.Bson;
 
 namespace Repository
 {
@@ -60,7 +60,13 @@ namespace Repository
 
         public List<string> GetStationIds()
         {
-            throw new System.NotImplementedException();
+            return Collection
+                .Aggregate()
+                .Group(new BsonDocument { { "_id", "$StationId" } })
+                .ToList()
+                .Select(row => row["_id"].AsString)
+                .OrderBy(x=>x)
+                .ToList(); ;
         }
 
         public DataPoint GetLastValues(string stationId, string sensorType)
