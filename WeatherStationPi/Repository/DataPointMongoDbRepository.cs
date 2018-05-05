@@ -22,25 +22,20 @@ namespace Repository
         {
             var mongoDbDataPoint = DataPointMongoDb.FromDataPoint(dataPoint);
 
-            var found = Collection.Find(
-                doc => doc.Id.StationId == mongoDbDataPoint.Id.StationId &&
-                    doc.Id.SensorType == mongoDbDataPoint.Id.SensorType &&
-                    doc.Id.SensorTimestampUtc == mongoDbDataPoint.Id.SensorTimestampUtc
-                    );
-
-            if (found.Any())
-            {
-                // TODO - Update?
-            }
-            else
-            {
-                Collection.InsertOne(mongoDbDataPoint);
-            }
+            Collection.ReplaceOne(
+                    new BsonDocument("_id", new BsonDocument
+                    {
+                        new BsonElement("StationId", mongoDbDataPoint.Id.StationId),
+                        new BsonElement("SensorType", mongoDbDataPoint.Id.SensorType),
+                        new BsonElement("SensorTimestampUtc", mongoDbDataPoint.Id.SensorTimestampUtc)
+                    }),
+                    mongoDbDataPoint,
+                    new UpdateOptions { IsUpsert = true });
         }
 
         public IList<DataPoint> GetDataPoints(
-            string stationId, 
-            string sensorType, 
+            string stationId,
+            string sensorType,
             DateTimeRange dateTimeRange)
         {
             var query = Collection.AsQueryable()
@@ -82,7 +77,7 @@ namespace Repository
                 .Group(new BsonDocument { { "_id", "$_id.StationId" } })
                 .ToList()
                 .Select(row => row["_id"].AsString)
-                .OrderBy(x=>x)
+                .OrderBy(x => x)
                 .ToList(); ;
         }
 
@@ -112,7 +107,7 @@ namespace Repository
 
         public void DeleteAllByStationId(string stationId)
         {
-            Collection.DeleteMany(dp=>dp.Id.StationId == stationId);
+            Collection.DeleteMany(dp => dp.Id.StationId == stationId);
         }
 
         public IList<DataPoint> FindAllByStationId(string stationId)
