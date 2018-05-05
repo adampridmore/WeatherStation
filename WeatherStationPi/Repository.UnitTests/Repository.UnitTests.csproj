@@ -76,6 +76,7 @@
     <Compile Include="DataPointRepositoryTests.cs" />
     <Compile Include="RepositoryDto\DataPointTests.cs" />
     <Compile Include="RepositoryDto\DateTimeRangeTests.cs" />
+    <Compile Include="RepositoryDto\MongoDb\DataPointMongoDbTests.cs" />
     <Compile Include="UnitTestSqlConnectionStringFactory.cs" />
     <Compile Include="UnitTestMongoDbConnectionStringFactory.cs" />
   </ItemGroup>
