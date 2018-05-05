@@ -1,31 +1,31 @@
 ﻿using System;
-using NUnit.Framework;
+using Xunit;
 using Repository.RepositoryDto;
 
 namespace Repository.UnitTests.RepositoryDto
 {
-    [TestFixture]
+    
     public class DateTimeRangeTests
     {
-        [Test]
+        [Fact]
         public void Unbounded_test()
         {
             var range = DateTimeRange.Unbounded;
-            Assert.IsNull(range.Start);
-            Assert.IsNull(range.End);
+            Assert.Null(range.Start);
+            Assert.Null(range.End);
         }
 
-        [Test]
+        [Fact]
         public void Last24Hours_test()
         {
             var range = DateTimeRange.Last24Hours;
 
-            Assert.IsTrue(range.Start.HasValue);
-            Assert.AreEqual(DateTimeKind.Utc, range.Start.Value.Kind);
-            Assert.IsNull(range.End);
+            Assert.True(range.Start.HasValue);
+            Assert.Equal(DateTimeKind.Utc, range.Start.Value.Kind);
+            Assert.Null(range.End);
 
-            Assert.IsTrue(range.Start.Value > DateTime.UtcNow - TimeSpan.FromDays(1) - TimeSpan.FromMinutes(1));
-            Assert.IsTrue(range.Start.Value < DateTime.UtcNow - TimeSpan.FromDays(1) + TimeSpan.FromMinutes(1));
+            Assert.True(range.Start.Value > DateTime.UtcNow - TimeSpan.FromDays(1) - TimeSpan.FromMinutes(1));
+            Assert.True(range.Start.Value < DateTime.UtcNow - TimeSpan.FromDays(1) + TimeSpan.FromMinutes(1));
         }
     }
 }

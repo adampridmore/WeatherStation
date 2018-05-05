@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Net;
 using Newtonsoft.Json;
-using NUnit.Framework;
+using Xunit;
+using FluentAssertions;
 using Repository;
 using Repository.Interfaces;
 using RestSharp;
@@ -10,13 +11,12 @@ using SimpleInjector;
 
 namespace WeatherStationServer.ApiTests
 {
-    [TestFixture]
-    [Category("ApiTests")]
+    [Trait("Category", "ApiTests")]
     public class ApiTests
     {
         private string _apiTestsStationId = "apiTestsStationId";
 
-        [Test]
+        [Fact]
         public void Get_serverDateTime()
         {
             var url = "http://localhost:59653/api/";
@@ -29,15 +29,16 @@ namespace WeatherStationServer.ApiTests
             var request = new RestRequest("serverDateTimeUtc", Method.GET);
 
             var response = client.Execute(request);
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
 
             var responseData = JsonConvert.DeserializeObject<dynamic>(response.Content);
             DateTime serverDateTimeUtcResult = responseData.ServerDateTimeUtcResult;
 
-            Assert.That(serverDateTimeUtcResult, Is.EqualTo(DateTime.UtcNow).Within(TimeSpan.FromSeconds(5)));
+            serverDateTimeUtcResult.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(5));
         }
 
-        [Test]
+        [Fact]
         public void Post_dataPoints()
         {
             var repository = CreateContainer().GetInstance<DataPointSqlRepository>();
@@ -70,17 +71,17 @@ namespace WeatherStationServer.ApiTests
             request.AddJsonBody(postData);
 
             var response = client.Post(request);
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-            Assert.That(response.Content, Is.EqualTo(@"""OK"""));
+            response.Content.Should().Be(@"""OK""");
 
             var allDataPoints = repository.FindAllByStationId(_apiTestsStationId);
-            Assert.That(allDataPoints, Has.Count.EqualTo(1));
-            Assert.That(allDataPoints[0].StationId, Is.EqualTo(_apiTestsStationId));
-            Assert.That(allDataPoints[0].SensorType, Is.EqualTo("mySensorType"));
-            Assert.That(allDataPoints[0].SensorValueNumber, Is.EqualTo(123));
-            Assert.That(allDataPoints[0].SensorTimestampUtc, Is.EqualTo(new DateTime(2001,2,3,12,30,45, DateTimeKind.Utc)));
-            Assert.That(allDataPoints[0].ReceivedTimestampUtc, Is.EqualTo(DateTime.UtcNow).Within(TimeSpan.FromSeconds(5)));
+            allDataPoints.Should().HaveCount(1);
+            allDataPoints[0].StationId.Should().Be(_apiTestsStationId);
+            allDataPoints[0].SensorType.Should().Be("mySensorType");
+            allDataPoints[0].SensorValueNumber.Should().Be(123);
+            allDataPoints[0].SensorTimestampUtc.Should().Be(new DateTime(2001,2,3,12,30,45, DateTimeKind.Utc));
+            allDataPoints[0].ReceivedTimestampUtc.Should().BeCloseTo(DateTime.UtcNow,TimeSpan.FromSeconds(5));
         }
 
         public Container CreateContainer()

@@ -1,18 +1,17 @@
 ﻿using System;
-using NUnit.Framework;
 using Repository.ExtensionMethods;
+using Xunit;
 
 namespace Repository.UnitTests.ExtensionMethods
 {
-    [TestFixture]
     public class DateTimeHelperTests
     {
-        [Test]
+        [Fact]
         public void Go()
         {
             var dateTime = new DateTime(2001, 1, 10, 12, 30, 45, DateTimeKind.Utc);
 
-            Assert.AreEqual(979129845000L, dateTime.GetCurrentUnixTimestampMillis());
+            Assert.Equal(979129845000L, dateTime.GetCurrentUnixTimestampMillis());
         }
     }
 }

@@ -1,14 +1,13 @@
 ﻿using System;
 using FluentAssertions;
-using NUnit.Framework;
 using Repository.RepositoryDto;
+using Xunit;
 
 namespace Repository.UnitTests.RepositoryDto
 {
-    [TestFixture]
     public class DataPointTests
     {
-        [Test]
+        [Fact]
         public void ToStringTest()
         {
             var dataPoint = new DataPoint
@@ -26,7 +25,7 @@ namespace Repository.UnitTests.RepositoryDto
             dataPoint.ToString().Should().Be(expectedValue);
         }
 
-        [Test]
+        [Fact]
         public void CreateTest()
         {
             var dataPoint = DataPoint.Create(
@@ -43,7 +42,7 @@ namespace Repository.UnitTests.RepositoryDto
             dataPoint.ReceivedTimestampUtc.Should().Be(new DateTime(2001, 1, 11));
         }
 
-        [Test]
+        [Fact]
         public void EmptyTest()
         {
             var dataPoint = DataPoint.Empty();
@@ -55,7 +54,7 @@ namespace Repository.UnitTests.RepositoryDto
             dataPoint.SensorTimestampUtc.Should().Be(DateTime.MinValue);
         }
 
-        [Test]
+        [Fact]
         public void SensorTypeEnumTest_Temperature()
         {
             var dataPoint = new DataPoint {SensorType = "Temperature"};
@@ -63,7 +62,7 @@ namespace Repository.UnitTests.RepositoryDto
             dataPoint.SensorTypeEnum.Should().Be(SensorTypeEnum.Temperature);
         }
 
-        [Test]
+        [Fact]
         public void SensorTypeEnumTest_Unknown()
         {
             var dataPoint = new DataPoint {SensorType = "NotValid"};
@@ -71,7 +70,7 @@ namespace Repository.UnitTests.RepositoryDto
             dataPoint.SensorTypeEnum.Should().BeNull();
         }
 
-        [Test]
+        [Fact]
         public void IdentityEqualsTest_for_blank()
         {
             var dp1 = new DataPoint();
@@ -81,7 +80,7 @@ namespace Repository.UnitTests.RepositoryDto
             DataPoint.IdentityEquals(dp1, dp1).Should().BeTrue();
         }
 
-        [Test]
+        [Fact]
         public void IdentityEqualsTest_with_fields()
         {
             var dp1 = new DataPoint
@@ -123,7 +122,7 @@ namespace Repository.UnitTests.RepositoryDto
             DataPoint.IdentityEquals(dp1, dp5).Should().BeFalse();
         }
 
-        [Test]
+        [Fact]
         public void IdentityEqualsTest_for_null()
         {
             var dp1 = new DataPoint {StationId = "s1"};
