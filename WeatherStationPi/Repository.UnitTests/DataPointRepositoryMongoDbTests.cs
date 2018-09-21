@@ -4,7 +4,6 @@ using Xunit;
 
 namespace Repository.UnitTests
 {
-    // Commented out as xunit doesn't let you ignore this fixture.
     public class DataPointRepositoryMongoDbTests : DataPointRepositoryTests
     {
         protected override Container CreateContainer()
@@ -25,20 +24,23 @@ namespace Repository.UnitTests
         [Fact(Skip = "Not implimented")]
         public override void GetLastValues_for_all_known_sensors()
         {
-
         }
+
         [Fact(Skip = "Not implimented")]
         public override void GetLastValues_for_sensorType_filters_on_station_and_sensor()
         {
         }
+
         [Fact(Skip = "Not implimented")]
         public override void GetLastValues_for_sensorType_only_get_latest()
         {
         }
+
         [Fact(Skip = "Not implimented")]
         public override void GetSummaryTest()
         {
         }
+
         [Fact(Skip = "Not implimented")]
         public override void GetSummaryTest_ordering()
         {
