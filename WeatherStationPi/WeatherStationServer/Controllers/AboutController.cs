@@ -19,7 +19,7 @@ namespace WeatherStationServer.Controllers
         // GET: About
         public string Index()
         {
-            return "Abount Page";
+            return "About Page";
         }
 
         public string CreateTestData()

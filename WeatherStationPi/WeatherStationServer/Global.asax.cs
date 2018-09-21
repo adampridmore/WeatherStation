@@ -47,8 +47,13 @@ namespace WeatherStationServer
 
         private static void RegisterTypes(Container container)
         {
-            container.Register<IDataPointRepository, DataPointSqlRepository>(Lifestyle.Singleton);
+            // MS Sql Server
             container.Register<IConnectionStringFactory, DefaultConnectionStringFactory>(Lifestyle.Singleton);
+            container.Register<IDataPointRepository, DataPointSqlRepository>(Lifestyle.Singleton);
+        
+            // MongoDb
+            //container.Register<IConnectionStringFactory, MongoDbConnectionStringFactory>(Lifestyle.Singleton);
+            //container.Register<IDataPointRepository, DataPointMongoDbRepository>(Lifestyle.Singleton);
         }
     }
 }

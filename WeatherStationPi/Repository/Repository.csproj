@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="ConnectionStringFactory.cs" />
     <Compile Include="DataPointMongoDbRepository.cs" />
+    <Compile Include="MongoDbConnectionStringFactory.cs" />
     <Compile Include="ExtensionMethods\DateTimeHelper.cs" />
     <Compile Include="Interfaces\IMongoDbConnectionStringFactory.cs" />
     <Compile Include="Interfaces\IConnectionStringFactory.cs" />
