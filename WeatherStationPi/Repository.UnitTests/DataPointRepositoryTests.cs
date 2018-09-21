@@ -166,7 +166,7 @@ namespace Repository.UnitTests
         }
 
         [Fact]
-        public void GetLastValues_for_sensorType_filters_on_station_and_sensor()
+        public virtual void GetLastValues_for_sensorType_filters_on_station_and_sensor()
         {
             var dataPoint = CreateDataPoint("s1", "st1");
             _repository.Save(dataPoint);
@@ -179,7 +179,7 @@ namespace Repository.UnitTests
         }
 
         [Fact]
-        public void GetLastValues_for_sensorType_only_get_latest()
+        public virtual void GetLastValues_for_sensorType_only_get_latest()
         {
             var dataPoint = CreateDataPoint("s1", "st1", new DateTime(2001, 2, 11));
             _repository.Save(dataPoint);
@@ -191,7 +191,7 @@ namespace Repository.UnitTests
         }
 
         [Fact]
-        public void GetLastValues_for_all_known_sensors()
+        public virtual void GetLastValues_for_all_known_sensors()
         {
             var dataPoint1 = CreateDataPoint("s1", SensorTypeEnum.Temperature.ToString(),
                 new DateTime(2001, 2, 11));
@@ -209,7 +209,7 @@ namespace Repository.UnitTests
         }
 
         [Fact]
-        public void GetLastValues__for_all_known_sensors_doesnt_get_unknown_types()
+        public virtual void GetLastValues__for_all_known_sensors_doesnt_get_unknown_types()
         {
             var dataPoint1 = CreateDataPoint("s1", "st2");
             _repository.Save(dataPoint1);
@@ -220,7 +220,7 @@ namespace Repository.UnitTests
         }
 
         [Fact]
-        public void GetSummaryTest()
+        public virtual void GetSummaryTest()
         {
             _repository.Save(CreateDataPoint("s1", "st1",
                 new DateTime(2001, 2, 10), 100));
@@ -241,7 +241,7 @@ namespace Repository.UnitTests
         }
 
         [Fact]
-        public void GetSummaryTest_ordering()
+        public virtual void GetSummaryTest_ordering()
         {
             _repository.Save(CreateDataPoint("s1", "st1"));
             _repository.Save(CreateDataPoint("s2", "st1"));
