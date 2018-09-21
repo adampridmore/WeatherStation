@@ -1,0 +1,54 @@
+#%RAML 1.0
+title: weather-station-p
+version: 1
+baseUri: http://weather-station-app.cloudhub.io/api/
+uses: 
+  dt: types/data-types.raml
+
+/weather-stations:
+  get:
+    responses: 
+      200:
+        body: 
+          application/json:
+            type: dt.station[]
+            example:
+              [{ 
+                "id" : "123",
+              }]
+            
+/weather-stations/{stationId}:
+  uriParameters: 
+    stationId: 
+      example: weatherStation1_raspberrypi
+  get:
+    responses: 
+      200:
+        body: 
+          application/json:
+            type: dt.station
+            example:
+              { 
+                "id" : "123",
+              }
+
+/weather-stations/{stationId}/data-points:
+  uriParameters: 
+    stationId: 
+      example: weatherStation1_raspberrypi
+  get:
+    queryParameters: 
+      lastValuesOnly:
+        type: boolean
+        required: false
+        description: Only return the last 1 value for each sensor on this station. Must specify this or lastHours
+      lastHours:
+        type: integer
+        required: false
+        description: Must specify this or lastValuesOnly
+    responses:
+      200:
+        body:
+          application/json:
+            type: dt.dataPoint[]
+            example: !include examples/data-point.json
